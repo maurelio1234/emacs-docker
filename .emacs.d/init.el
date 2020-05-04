@@ -14,43 +14,14 @@
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
                                           gc-cons-percentage 0.1)))
 
-;; Straight bootstrapper
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(require 'bootstrap "~/.emacs.d/bootstrap.el")
 
 ;; Compute init loading time (from: https://github.com/emacs-dashboard/emacs-dashboard/issues/57)
 (defvar me/init-el-start-time (current-time) "Time when init.el was started.")
 (add-hook 'after-init-hook (lambda () (message " ★ Emacs initialized in %.2fs ★ " (float-time (time-subtract (current-time) me/init-el-start-time)))))
 
-;;;; Basic dependencies
-(add-to-list 'load-path "/usr/share/emacs/site-lisp")
-
-(setq package-enable-at-startup nil)
-(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                         ("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
-
-(straight-use-package 'use-package)
-(require 'straight)
-(require 'use-package)
-(setq use-package-always-ensure nil)
-(setq straight-use-package-by-default t)
-
 ;; TODO test it without that :)
-;;(require 'transient)
-
-;; Unbind C-z, we are in 2019
-(global-set-key (kbd "C-z") nil)
+(require 'transient nil t)
 
 ;; TODO: automate installation of eterm-color (https://www.emacswiki.org/emacs/AnsiTermHints)
 
@@ -612,21 +583,22 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
    (ivy-mode (counsel-grep-or-swiper))
    (t (occur))))
 
-
 ;;; Hooks
 (defun me/emacs-startup-hook ()
   "Things to do on startup."
-  ;; (message "Default theme...")
-  ;; (me/dark-mode) ;; FIX Reactivate
+  (unless
+      (string-equal "true" (getenv "BOOTSTRAPING"))
+    (message "Default theme...")
+    (me/dark-mode) ;; FIX Reactivate
 
-  (set-face-attribute 'default nil :height 180)
+    (set-face-attribute 'default nil :height 180)
 
-  ;; Disable tab bar
-  (tab-bar-mode -1)
+    ;; Disable tab bar
+    (tab-bar-mode -1)
 
-  (message "Changing caps lock for ctrl...")
-  (when (eq window-system 'x)
-    (me/fix-caps))) ; caps:backspace
+    (message "Changing caps lock for ctrl...")
+    (when (eq window-system 'x)
+      (me/fix-caps))))
 
 (defun me/minibuffer-hook ()
   "Things to do when entering minibuffer."
@@ -758,10 +730,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/find-something (pattern)
   "Helper function to find files ressembling a given PATTERN upwards from current path."
   (car (or (file-expand-wildcards pattern)
-          (file-expand-wildcards (concat "../" pattern))
-          (file-expand-wildcards (concat "../../" pattern))
-          (file-expand-wildcards (concat "../../../" pattern))
-          (file-expand-wildcards (concat "../../../.." pattern)))))
+           (file-expand-wildcards (concat "../" pattern))
+           (file-expand-wildcards (concat "../../" pattern))
+           (file-expand-wildcards (concat "../../../" pattern))
+           (file-expand-wildcards (concat "../../../.." pattern)))))
 
 (defun me/nunit-find-test-dll ()
   "Find the generated test DLL."
@@ -842,7 +814,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     (setq cc-cedict-cache (cc-cedict-parse)))
   (seq-filter
    (lambda (entry) (or (string= chinese (cc-cedict-entry-traditional entry))
-                  (string= chinese (cc-cedict-entry-simplified entry))))
+                       (string= chinese (cc-cedict-entry-simplified entry))))
    cc-cedict-cache))
 
 ;;; CC-CEDIT Popup Dictionary
@@ -1091,8 +1063,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq shell-command-prompt-show-cwd t)
   (setq shell-command-dont-erase-buffer 'beg-last-out)
 
-  (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
-  (set-face-attribute 'default t :font "JetBrains Mono")
+  (unless
+      (string-equal "true" (getenv "DOCKER"))
+    (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
+    (set-face-attribute 'default t :font "JetBrains Mono"))
 
   ;; Modes
   (display-time-mode 1)
@@ -1130,11 +1104,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq
    cc-cedict-file
-   "/home/marcos/Downloads/cedict_1_0_ts_utf-8_mdbg/cedict_ts.u8"))
-
-(use-package vterm
-  :ensure t
-  :init (setq vterm-always-compile-module t))
+   "~/Downloads/cedict_1_0_ts_utf-8_mdbg/cedict_ts.u8"))
 
 (use-package org
   :straight nil
@@ -1195,9 +1165,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq kubernetes-poll-frequency (* 60 60)))
 
-(use-package all-the-icons-ivy
-  :config
-  (all-the-icons-ivy-setup))
+(unless
+    (string-equal "true" (getenv "DOCKER"))
+  (use-package all-the-icons-ivy
+    :config
+    (all-the-icons-ivy-setup)))
 
 (use-package deft
   :bind
@@ -1284,7 +1256,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
               ("C-<f12>" . 'me/cc-cedict-selection-hide))
   :hook (
          (eww-mode . (lambda () (visual-line-mode 1)))
-         (eww-after-render . 'me/eww-after-render-hook))
+         (eww-after-render . me/eww-after-render-hook))
   :config
   (setq me/eww-saved-history eww-history)
   (setq me/eww-saved-history-position eww-history-position)
@@ -1578,12 +1550,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package nginx-mode :mode "\\nginx.*.confg'")
 
-(use-package pdf-tools
-  :config
-  (when
-      (eq "true" (getenv "BOOTSTRAPING"))
-    (pdf-tools-install t nil t)))
-
 (use-package elpy
   :init
   (setq elpy-rpc-python-command "python3")
@@ -1770,6 +1736,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 
 (provide 'init)
+
 ;;; init.el ends here
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
