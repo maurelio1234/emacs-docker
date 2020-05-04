@@ -6,7 +6,8 @@
 ;;;; Initialization
 (require 'package)
 
-;; No GC, https://github.com/hlissner/doom-emacs/wiki/FAQ#how-is-dooms-startup-so-fast
+;; No GC
+;; https://github.com/hlissner/doom-emacs/wiki/FAQ#how-is-dooms-startup-so-fast
 (setq gc-cons-threshold 402653184
       gc-cons-percentage 0.6)
 
@@ -16,22 +17,38 @@
 
 (require 'bootstrap "~/.emacs.d/bootstrap.el")
 
-;; Compute init loading time (from: https://github.com/emacs-dashboard/emacs-dashboard/issues/57)
+;; Compute init loading time
+;; (from: https://github.com/emacs-dashboard/emacs-dashboard/issues/57)
 (defvar me/init-el-start-time (current-time) "Time when init.el was started.")
-(add-hook 'after-init-hook (lambda () (message " ★ Emacs initialized in %.2fs ★ " (float-time (time-subtract (current-time) me/init-el-start-time)))))
+(add-hook
+ 'after-init-hook
+ (lambda
+   ()
+   (message
+    " ★ Emacs initialized in %.2fs ★ "
+    (float-time (time-subtract (current-time) me/init-el-start-time)))))
 
-;; TODO test it without that :)
+;; TODO I don't really know why I need it
 (require 'transient nil t)
 
-;; TODO: automate installation of eterm-color (https://www.emacswiki.org/emacs/AnsiTermHints)
+;; TODO: automate installation of eterm-color
+;; (https://www.emacswiki.org/emacs/AnsiTermHints)
 
 ;;;; My variables
 
-(defvar me/dotfiles nil "The place where I checked out my dotfiles github repository.")
+(defvar
+  me/dotfiles
+  nil
+  "The place where I checked out my dotfiles github repository.")
 
-(defvar me/github nil "The place where I checked out all my github repositories.")
+(defvar
+  me/github
+  nil
+  "The place where I checked out all my github repositories.")
 
-(setenv "DOTNET_SKIP_FIRST_TIME_EXPERIENCE" "true") ; so that dotnet stops printing obnoxious messages
+(setenv
+ "DOTNET_SKIP_FIRST_TIME_EXPERIENCE"
+ "true") ; so that dotnet stops printing obnoxious messages
 
 (setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
 
@@ -61,13 +78,21 @@
                                      (powerline-raw mode-line-mule-info nil 'l)
                                      (powerline-buffer-id nil 'l)
                                      (when tabs
-                                       (powerline-raw (concat " -" tab-name "- ")))
-                                     (when (and (boundp 'which-func-mode) which-func-mode)
+                                       (powerline-raw
+                                        (concat " -" tab-name "- ")))
+                                     (when
+                                         (and
+                                          (boundp 'which-func-mode)
+                                          which-func-mode)
                                        (powerline-raw which-func-format nil 'l))
                                      (powerline-raw " ")
                                      (funcall separator-left mode-line face1)
-                                     (when (boundp 'erc-modified-channels-object)
-                                       (powerline-raw erc-modified-channels-object face1 'l))
+                                     (when
+                                         (boundp 'erc-modified-channels-object)
+                                       (powerline-raw
+                                        erc-modified-channels-object
+                                        face1
+                                        'l))
                                      (powerline-major-mode face1 'l)
                                      (powerline-process face1)
                                      (powerline-minor-modes face1 'l)
@@ -94,14 +119,19 @@
   (interactive)
   ;; Looking for tree root
   (save-excursion
-    (let* ((exported-file (let ((org-confirm-babel-evaluate nil)) (org-reveal-export-to-html)))
-           (viewer-buffer (car (-filter (lambda
-                                          (buffer)
-                                          (and
-                                           (equal 'exwm-mode (buffer-local-value 'major-mode buffer))
-                                           (s-contains-p "chrome" (buffer-name buffer) t)
-                                           ))
-                                        (buffer-list)))))
+    (let* ((exported-file (let
+                              ((org-confirm-babel-evaluate nil))
+                            (org-reveal-export-to-html)))
+           (viewer-buffer (car
+                           (-filter
+                            (lambda
+                              (buffer)
+                              (and
+                               (equal
+                                'exwm-mode
+                                (buffer-local-value 'major-mode buffer))
+                               (s-contains-p "chrome" (buffer-name buffer) t)))
+                            (buffer-list)))))
       (when exported-file
         (if viewer-buffer
             (switch-to-buffer viewer-buffer)
@@ -124,8 +154,13 @@
   "Fix things I hate in this mode."
   (read-only-mode 1)
   (when (and (eq major-mode 'shell-mode) (get-buffer-process (current-buffer)))
-    (rename-buffer (concat "*Process* "  list-buffers-directory " " (string-join (process-command (get-buffer-process (current-buffer))) " "))
-                   t)))
+    (rename-buffer
+     (concat
+      "*Process* "
+      list-buffers-directory
+      " "
+      (string-join (process-command (get-buffer-process (current-buffer))) " "))
+     t)))
 
 (defun me/fix-async-processes ()
   "Fix async processes so they are nicer to use."
@@ -173,6 +208,7 @@ To be used on a minibuffer."
   (ansi-term "/bin/bash")
   (term-line-mode))
 
+;; TODO port it to docker
 (defun me/fix-caps ()
   "Fix caps lock key."
   (interactive)
@@ -194,7 +230,9 @@ Useful when switching back and forth between two buffers."
 Optionlly, FRAME is the frame to turn to fullscreen.
 This code is based on the code of `toogle-frame-fullscreen'"
   (let* ((fullscreen (frame-parameter frame 'fullscreen)))
-    (modify-frame-parameters frame `((fullscreen . fullboth) (fullscreen-restore . ,fullscreen)))
+    (modify-frame-parameters frame
+                             `((fullscreen . fullboth)
+                               (fullscreen-restore . ,fullscreen)))
     (when (featurep 'cocoa) (sleep-for 0.5))))
 
 (defun me/cd-buffer-directory ()
@@ -268,13 +306,19 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
         (number t)
         (symbol t)
         (ambiguous nil))
-    (let ((char-list (wiki/make-password-char-list upper lower number symbol ambiguous))
+    (let ((char-list (wiki/make-password-char-list upper
+                                                   lower
+                                                   number
+                                                   symbol
+                                                   ambiguous))
           position
           password)
       (random t)
       (loop for i from 1 to length
             do (setq position (random (length char-list))
-                     password (concat password (string (nth position char-list)))))
+                     password (concat
+                               password
+                               (string (nth position char-list)))))
       (kill-new password)
       (message "New password generated and added to kill ring!"))))
 
@@ -404,7 +448,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let* ((ring-commands-list (ring-elements eshell-history-ring))
          (history-list (with-temp-buffer
                          (insert-file-contents-literally "~/.bash_history")
-                         (insert-file-contents-literally eshell-history-file-name)
+                         (insert-file-contents-literally
+                          eshell-history-file-name)
                          (split-string (buffer-string) "\n" t)))
          (complete-list (-distinct (append ring-commands-list history-list)))
          (command (completing-read "Command: " complete-list)))
@@ -445,7 +490,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (setenv "XDG_CURRENT_DESKTOP" "GNOME")
   (setenv "_JAVA_AWT_WM_NONREPARENTING" "1")
-  (async-shell-command "wine \"/home/marcos/.wine/drive_c/Program Files \(x86\)/Balsamiq Mockups 3/Balsamiq Mockups 3.exe\""))
+  (async-shell-command
+   "wine \"/home/marcos/.wine/drive_c/Program Files \(x86\)/Balsamiq Mockups 3/Balsamiq Mockups 3.exe\""))
 
 (defun me/firefox ()
   "Open firefox."
@@ -458,9 +504,14 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let ((clockify-buffer (car (-filter (lambda
                                          (buffer)
                                          (and
-                                          (equal 'exwm-mode (buffer-local-value 'major-mode buffer))
-                                          (s-contains-p "clockify" (buffer-name buffer) t)
-                                          ))
+                                          (equal
+                                           'exwm-mode
+                                           (buffer-local-value
+                                            'major-mode
+                                            buffer))
+                                          (s-contains-p
+                                           "clockify"
+                                           (buffer-name buffer) t)))
                                        (buffer-list)))))
     (if clockify-buffer
         (switch-to-buffer clockify-buffer)
@@ -494,7 +545,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let* ((direction ?v)
          (continue  t))
     (while continue
-      (pcase (read-char (concat "Resize float window " (pcase direction (?h "horizontally") (?v "vertically")) ":"))
+      (pcase (read-char
+              (concat
+               "Resize float window "
+               (pcase direction (?h "horizontally") (?v "vertically")) ":"))
         (?+
          (pcase direction
            (?h
@@ -549,7 +603,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let* ((initial-text (if (use-region-p)
                            (progn
                              (deactivate-mark)
-                             (buffer-substring-no-properties (region-beginning) (region-end)))
+                             (buffer-substring-no-properties
+                              (region-beginning)
+                              (region-end)))
                          (thing-at-point 'word 'no-properties)))
          (subword-mode-enabled subword-mode))
     (subword-mode -1)
@@ -565,7 +621,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let* ((initial-text (if (use-region-p)
                            (progn
                              (deactivate-mark)
-                             (buffer-substring-no-properties (region-beginning) (region-end)))
+                             (buffer-substring-no-properties
+                              (region-beginning)
+                              (region-end)))
                          (thing-at-point 'word 'no-properties)))
          (subword-mode-enabled subword-mode))
     (subword-mode -1)
@@ -596,9 +654,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     ;; Disable tab bar
     (tab-bar-mode -1)
 
-    (message "Changing caps lock for ctrl...")
-    (when (eq window-system 'x)
-      (me/fix-caps))))
+    (unless
+        (string-equal "true" (getenv "DOCKER"))
+      (message "Changing caps lock for ctrl...")
+      (when (eq window-system 'x)
+        (me/fix-caps)))))
 
 (defun me/minibuffer-hook ()
   "Things to do when entering minibuffer."
@@ -723,7 +783,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                       (concat "--include:" category)
                     (concat "--where \"cat == " category "\""))
                 ""))
-         (cmd (concat "mono  --debug " exe " --config=Debug " (concat default-directory dll) " " cat)))
+         (cmd (concat
+               "mono  --debug "
+               exe
+               " --config=Debug "
+               (concat default-directory dll)
+               " "
+               cat)))
     cmd)) ; --runtime=4.5.1
 
 ;; TODO test: locate-dominating-file
@@ -750,12 +816,18 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/csharp-build-csproj ()
   "Build curent csproj."
   (interactive)
-  (compile (concat "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= " (me/csharp-find-csproj))))
+  (compile
+   (concat
+    "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
+    (me/csharp-find-csproj))))
 
 (defun me/csharp-build-sln ()
   "Build current sln."
   (interactive)
-  (compile (concat "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= " (me/csharp-find-sln))))
+  (compile
+   (concat
+    "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
+    (me/csharp-find-sln))))
 
 (defun me/nunit2-run-tests-me ()
   "Run TestMe NUnit2."
@@ -988,7 +1060,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                   ;; (dired-omit-mode 1)
                   ))
   (text-mode . (lambda ()
-                 (when (eq 0 (string-match "^build_.*step.*container.*txt" (buffer-name)))
+                 (when
+                     (zerop
+                      (string-match
+                       "^build_.*step.*container.*txt"
+                       (buffer-name)))
                    (circleci-build-mode 1))))
   :config
   ;; Settings
@@ -1082,7 +1158,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (global-auto-revert-mode -1)
   (global-hl-line-mode 1)
   (global-whitespace-mode 1)
-  (tab-bar-mode -1) ; Its off by default, it works, it's just not visible, so it's a win-win
+
+  ;; Its off by default, it works, it's just not visible, so it's a win-win
+  (tab-bar-mode -1)
   (global-so-long-mode 1)
 
   ;; Hooks
@@ -1122,8 +1200,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq org-todo-keywords '((sequence "TODO" "DOING" "|" "CANCELLED" "DONE"))
         org-startup-with-inline-images t
         org-log-done 'time)
-  (use-package jq-mode)
-  (use-package ob-http)
+  (require 'jq-mode)
+  (require 'ob-http)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js . t)
@@ -1136,10 +1214,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
      (shell . t)
      (http . t)
      (emacs-lisp . t)))
-  (use-package org-indent
-    :straight nil)
-  (use-package htmlize)
-  (use-package ox-reveal)
+  (require 'org-indent)
+  (require 'htmlize)
+  (require 'ox-reveal)
   (setq org-catch-invisible-edits 'error)
   (setq org-default-notes-file (concat (concat me/github "/perso/notes.org")))
   (define-key global-map "\C-cc" 'org-capture))
@@ -1149,7 +1226,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package speed-type
   :config
-  (use-package disable-mouse)
+  (require 'disable-mouse)
   (defun me/speed-type ()
     (interactive)
     (speed-type-text)
@@ -1235,7 +1312,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                    :branch "master"))
 
 (use-package vue-mode
-                                        ; https://github.com/AdamNiederer/vue-mode/issues/74
+  ;; https://github.com/AdamNiederer/vue-mode/issues/74
   :hook ((vue-mode . (lambda () (setq syntax-ppss-table nil))))
   :config
   (add-hook 'mmm-mode-hook
@@ -1248,7 +1325,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package eww
   :init
-  (use-package youdao-dictionary)
+  (require 'youdao-dictionary)
   :bind (:map eww-mode-map
               ("C-c f" . 'me/eww/open-page-firefox)
               ("C-c y" . 'youdao-dictionary-search-at-point-tooltip)
@@ -1363,7 +1440,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (defun me/count-connected-displays ()
   "Number of connected displays."
-  (string-to-number (shell-command-to-string "xrandr | grep \" connected\" | wc -l ")))
+  (string-to-number
+   (shell-command-to-string "xrandr | grep \" connected\" | wc -l ")))
 
 (defun me/xrandr-enable (other)
   "Enable OTHER monitor detected by xrandr."
@@ -1423,65 +1501,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (exwm-input-set-simulation-keys exwm-input-simulation-keys))
 
-;; (use-package exwm
-;;   :bind
-;;   ("C-c 5 r" . 'me/resize-floating-window)
-;;   :config
-;;   (require 'exwm-randr)
-;;   (setq exwm-randr-workspace-monitor-plist `(0 ,me/exwm-default-monitor))
-;;   (setq exwm-workspace-number 1)
-
-;;   ;; (require 'exwm-systemtray)
-;;   ;; (exwm-systemtray-enable) ; Doesn't work TODO
-
-;;   (exwm-randr-enable)
-;;   (setq exwm-replace nil)
-;;   (setq exwm-input-global-keys
-;;         `(
-;;           ([?\s-r] . exwm-reset)
-;;           ([?\s-w] . exwm-workspace-switch)
-;;           ([?\s-&] . (lambda (command)
-;;                        (interactive (list (read-shell-command "$ ")))
-;;                        (start-process-shell-command command nil command)))
-;;           ,@(mapcar (lambda (i)
-;;                       `(,(kbd (format "s-%d" i)) .
-;;                         (lambda ()
-;;                           (interactive)
-;;                           (exwm-workspace-switch-create ,i))))
-;;                     (number-sequence 0 9))))
-;;   (setq exwm-input-simulation-keys
-;;         '(([?\C-b] . [left])
-;;           ([?\M-b] . [C-left])
-;;           ([?\C-f] . [right])
-;;           ([?\M-f] . [C-right])
-;;           ([?\C-p] . [up])
-;;           ([?\C-n] . [down])
-;;           ([?\C-x ?h] . [?\C-a])
-;;           ([?\C-a] . [home])
-;;           ([?\C-e] . [end])
-;;           ([?\M-w] . [?\C-c])
-;;           ([?\C-w] . [?\C-x])
-;;           ([?\C-y] . [?\C-v])
-;;           ([?\M-v] . [prior])
-;;           ([?\C-v] . [next])
-;;           ([?\C-d] . [delete])
-;;           ([?\C-k] . [S-end ?\C-x])
-;;           ([?\C-s] . [?\C-f])
-;;           ([?\C-\_] . [?\C-z])
-;;           ([?\C-d] . [delete])
-;;           ([?\M-d] . [C-S-right delete])
-;;           ([134217855] . [C-S-left delete]) ; M-DEL ; doesn't seem to work ; TODO
-;;           ([C-delete] . [C-S-left delete]) ; C-DEL
-;;           ([?\M-<] . [C-home])
-;;           ([?\M->] . [C-end])
-;;           ))
-;;   (add-hook 'exwm-randr-screen-change-hook #'me/xrandr-enable-single-monitor-hook)
-;;   (add-hook 'exwm-randr-screen-change-hook #'me/fix-caps) ; for some weid reason, everytime I need to do it again...
-;;   (add-hook 'exwm-update-class-hook #'me/exwm-refresh-buffer-name)
-;;   (add-hook 'exwm-update-title-hook #'me/exwm-refresh-buffer-name)
-
-;;   (exwm-enable))
-
 (defun me/exwm-refresh-buffer-name ()
   "Refresh buffer name from class."
   (exwm-workspace-rename-buffer (concat exwm-class-name))) ;  " - " exwm-title
@@ -1517,10 +1536,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-x C-f" . 'counsel-find-file)
   ("C-c y" . 'counsel-yank-pop)
   :config
-  (use-package dash-docs
-    :straight (:host github :repo "dash-docs-el/dash-docs"
-                     :branch "master"))
-  (use-package counsel-dash)
+  (require 'dash-docs)
+  (require 'counsel-dash)
   (use-package counsel-projectile
     :config
     (counsel-projectile-mode 1))
@@ -1566,14 +1583,16 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package magit
   :init
-  (use-package transient)
   (require 'transient)
   :hook (git-commit-setup . me/magit-commit-setup)
   :bind
   ("C-c g" . 'me/magit-status-full-screen)
   (:map magit-process-mode-map ("C-c f" . 'browse-url-firefox)))
 
-(when (display-graphic-p) (use-package pretty-mode :config (global-pretty-mode t)))
+(when
+    (display-graphic-p)
+  (use-package pretty-mode
+    :config (global-pretty-mode t)))
 
 (use-package csharp-mode
   :mode "\\.cake\\'"
@@ -1610,7 +1629,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq buffer-save-without-query t))
 
-(use-package restclient :mode ("\\.rest\\'" . restclient-mode))
+(use-package restclient
+  :mode ("\\.rest\\'" . restclient-mode))
 
 (use-package ace-window
   :bind
@@ -1632,7 +1652,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-add-key-based-replacements "C-c j" "Avy jump")
   (which-key-add-key-based-replacements "C-c b" "Build")
   (which-key-add-key-based-replacements "C-c m" "Multiple cursors")
-  ;; (which-key-add-key-based-replacements "C-c d" "Docker")
   (which-key-add-key-based-replacements "C-c y" "Yasnippets")
   (which-key-add-key-based-replacements "C-c 5" "Frames")
   (setq which-key-idle-delay 0.1
@@ -1676,7 +1695,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package multiple-cursors
   :init
-  (use-package phi-search)
   (require 'phi-search)
   :bind
   ("C-c m e" . 'mc/edit-lines)
@@ -1699,30 +1717,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :straight (:host github :repo "HParker/yaml-mode"
                    :branch "master")
   :mode ("\\.yml\\'" . yaml-mode))
-
-;; '(custom-variable-tag ((t (:foreground "deep sky blue" :weight bold))))
-;; '(ivy-minibuffer-match-face-1 ((t (:background "blue"))))
-;; '(ivy-minibuffer-match-face-2 ((t (:background "dark violet" :weight bold))))
-;; '(ivy-minibuffer-match-face-3 ((t (:background "slate blue" :weight bold))))
-;; '(ivy-minibuffer-match-face-4 ((t (:background "magenta4" :weight bold))))
-;; '(magit-diff-context-highlight ((t (:extend t :background "gray15" :foreground "grey50"))))
-;; '(magit-diff-removed-highlight ((t (:extend t :background "gray15" :foreground "#aa2222"))))
-;; '(magit-section-highlight ((t (:extend t :background "gray15"))))
-;; '(minibuffer-prompt ((t (:foreground "deep sky blue"))))
-;; '(mode-line ((t (:stipple nil :foreground "#082628" :box (:line-width 3 :color "grey75" :style released-button) :weight semi-bold :height 0.7))))
-;; '(org-document-title ((t (:foreground "deep sky blue" :weight bold))))
-;; '(powerline-active1 ((t (:background "#d2b58d" :foreground "#082628"))))
-;; '(powerline-active2 ((t (:background "#d2b58d" :foreground "#082628"))))
-;; '(tab-bar-tab ((t (:inherit tab-bar :inverse-video nil :box (:line-width 5 :style released-button) :height 0.75))))
-;; '(Tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "grey75" :slant italic :height 0.65))))
-;; '(widget-field ((t (:extend t :background "dim gray"))))
-
-;; The end of the file
-
-(use-package docker-tramp)
-(use-package docker)
-(use-package dockerfile-mode)
-
 
 (message "init.el successfully loaded!")
 (custom-set-faces

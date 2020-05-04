@@ -1,8 +1,10 @@
 FROM silex/emacs:27.0-dev
 
 ENV CMAKE=https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz
-ENV BOOTSTRAPING=false # true only during bootstraping
-ENV DOCKER=true        # you are running on a docker container
+# true only during bootstraping
+ENV BOOTSTRAPING=false
+# you are running on a docker container
+ENV DOCKER=true
 
 # Install base system tools
 RUN apt-get update && \
