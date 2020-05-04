@@ -47,7 +47,7 @@
 (setq straight-use-package-by-default t)
 
 ;; TODO test it without that :)
-(require 'transient)
+;;(require 'transient)
 
 ;; Unbind C-z, we are in 2019
 (global-set-key (kbd "C-z") nil)
@@ -616,8 +616,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 ;;; Hooks
 (defun me/emacs-startup-hook ()
   "Things to do on startup."
-  (message "Default theme...")
-  (me/dark-mode)
+  ;; (message "Default theme...")
+  ;; (me/dark-mode) ;; FIX Reactivate
 
   (set-face-attribute 'default nil :height 180)
 
@@ -1128,10 +1128,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package cc-cedict
   :config
-  (setq cc-cedict-file "/home/marcos/Downloads/cedict_1_0_ts_utf-8_mdbg/cedict_ts.u8"))
+  (setq
+   cc-cedict-file
+   "/home/marcos/Downloads/cedict_1_0_ts_utf-8_mdbg/cedict_ts.u8"))
 
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :init (setq vterm-always-compile-module t))
 
 (use-package org
   :straight nil
@@ -1214,7 +1217,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package guru-mode
   :diminish (guru-mode . "")
-  :config (guru-global-mode +1))
+  :config (guru-global-mode -1))
 
 (use-package eshell
   :defer t
@@ -1575,7 +1578,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package nginx-mode :mode "\\nginx.*.confg'")
 
-(use-package pdf-tools :config (pdf-tools-install))
+(use-package pdf-tools
+  :config
+  (when
+      (eq "true" (getenv "BOOTSTRAPING"))
+    (pdf-tools-install t nil t)))
 
 (use-package elpy
   :init
