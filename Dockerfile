@@ -134,7 +134,8 @@ RUN git config --global user.name "Marcos Almeida" && \
         git config --global core.autocrlf input
 
 # Copy the files that (almost) never change
-COPY --chown=$USER:$USER ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
+# TODO find a way to read user name from variable
+COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 
 # Bootstrap emacs packages
 # || true so I can fix things even if the build breaks
@@ -144,4 +145,5 @@ RUN BOOTSTRAPING=true \
         || true
 
 # Now copy the files that change all the time
-COPY --chown=$USER:$USER ./.emacs.d/ /home/$USER/.emacs.d/
+# TODO find a way to read user name from variable
+COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
