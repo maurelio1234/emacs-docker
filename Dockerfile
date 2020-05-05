@@ -117,7 +117,7 @@ RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
 
 # Define main user
 
-ENV USER=marcos
+ARG USER=marcos
 RUN addgroup $USER
 RUN adduser --disabled-password \
         --shell /bin/bash \
@@ -125,7 +125,7 @@ RUN adduser --disabled-password \
         $USER
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-USER marcos
+USER $USER
 WORKDIR /home/marcos
 
 # Configure git
