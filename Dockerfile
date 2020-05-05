@@ -32,6 +32,8 @@ RUN apt-get install -y \
         x11-apps \
         clang \
         libdbus-1-dev \
+        # https://askubuntu.com/questions/1005623/libdbusmenu-glib-warning-unable-to-get-session-bus-failed-to-execute-child
+        dbus-x11 \
         libgtk2.0-dev \
         libnotify-dev \
         libgnome-keyring-dev \
@@ -52,8 +54,8 @@ RUN locale-gen C.UTF-8 || true
 ENV LANG=C.UTF-8
 
 # Install Chinese Dictionary
-RUN mkdir -p ~/Downloads/ && \
-        cd ~/Downloads && \
+RUN mkdir -p ~/Downloads/cedict_1_0_ts_utf-8_mdbg && \
+        cd ~/Downloads/cedict_1_0_ts_utf-8_mdbg && \
         wget https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip && \
         unzip cedict_1_0_ts_utf-8_mdbg.zip
 
@@ -107,6 +109,11 @@ RUN apt-get -q update && \
 
 RUN npm install -g gulp-cli
 RUN npm install npm@$NPM_VERSION -g
+
+# Configure git
+RUN git config --global user.name "Marcos Almeida" && \
+        git config --global user.email marcos.almeida@xcomponent.com && \
+        git config --global core.autocrlf input
 
 # Copy the files that (almost) never change
 COPY ./.emacs.d/bootstrap.el /root/.emacs.d/

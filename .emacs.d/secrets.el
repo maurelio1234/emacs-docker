@@ -5,8 +5,13 @@
 
 (defun me/secret-settings ()
   "Set secret configuration."
-                                        ;Nothing for now
-  )
+  (setq projectile-project-search-path '("~/github/"
+                                         "~/bitbucket/"))
+  (setq me/dotfiles "~/github/dotFiles")
+  (setq me/github "~/github")
+
+  (setenv "WORK" "~/bitbucket/work")
+  (projectile-add-known-project "~/exercism"))
 
 (provide 'me/secrets)
 ;;; secrets.el ends here
