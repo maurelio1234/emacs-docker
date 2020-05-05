@@ -1,0 +1,5 @@
+sut:
+  build: .
+  command: emacs -batch \
+        --eval "(progn (require 'init \"/home/$USER/.emacs.d/init.el\") (me/ert))"
+
