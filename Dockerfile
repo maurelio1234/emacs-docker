@@ -110,24 +110,38 @@ RUN apt-get -q update && \
 RUN npm install -g gulp-cli
 RUN npm install npm@$NPM_VERSION -g
 
+# Add SSL certificates
+RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
+        && curl https://curl.haxx.se/ca/cacert.pem > ~/cacert.pem \
+        && sudo cert-sync ~/cacert.pem
+
+# Define main user
+
+ENV USER=marcos
+RUN addgroup $USER
+RUN adduser --disabled-password \
+        --shell /bin/bash \
+        --ingroup sudo \
+        $USER
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+USER marcos
+WORKDIR /home/marcos
+
 # Configure git
 RUN git config --global user.name "Marcos Almeida" && \
         git config --global user.email marcos.almeida@xcomponent.com && \
         git config --global core.autocrlf input
 
 # Copy the files that (almost) never change
-COPY ./.emacs.d/bootstrap.el /root/.emacs.d/
-
-# Add SSL certificates
-RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
-    && curl https://curl.haxx.se/ca/cacert.pem > ~/cacert.pem \
-        && sudo cert-sync ~/cacert.pem
-
+COPY --chown=$USER:$USER ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 
 # Bootstrap emacs packages
 # || true so I can fix things even if the build breaks
 RUN BOOTSTRAPING=true \
-        emacs -batch --eval "(require 'init \"/root/.emacs.d/bootstrap.el\")" || true
+        emacs -batch \
+        --eval "(require 'bootstrap \"/home/$USER/.emacs.d/bootstrap.el\")" \
+        || true
 
 # Now copy the files that change all the time
-COPY ./.emacs.d/ /root/.emacs.d/
+COPY --chown=$USER:$USER ./.emacs.d/ /home/$USER/.emacs.d/
