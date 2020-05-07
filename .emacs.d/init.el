@@ -1164,7 +1164,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (global-so-long-mode 1)
 
   ;; Hooks
-  (add-hook 'after-save-hook 'me/run-tests-on-init-save-hook)
   (add-hook 'prog-mode-hook 'me/prog-mode-hook)
   (add-hook 'after-init-hook 'me/frame-fullscreen)
   (add-hook 'after-init-hook 'me/load-secret-stuff)
