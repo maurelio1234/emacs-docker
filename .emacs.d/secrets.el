@@ -9,6 +9,8 @@
                                          "~/bitbucket/"))
   (setq me/dotfiles "~/github/dotFiles")
   (setq me/github "~/github")
+  (setenv "PATH"
+          (concat "/home/" (user-login-name) "/bin" ":" (getenv "PATH")))
 
   (setenv "WORK" "~/bitbucket/work")
   (projectile-add-known-project "~/exercism"))

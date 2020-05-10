@@ -155,6 +155,13 @@ RUN git config --global user.name "Marcos Almeida" && \
         git config --global user.email marcos.almeida@xcomponent.com && \
         git config --global core.autocrlf input
 
+# Configure Exercism
+RUN cd /home/$USER/ && \
+        mkdir -p bin && \
+        cd bin && \
+        wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
+        tar -xf exercism-3.0.13-linux-x86_64.tar.gz
+
 # Copy the files that (almost) never change
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
