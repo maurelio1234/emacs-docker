@@ -1027,6 +1027,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("M-s-o" . 'me/switch-to-last-buffer)
   ("M-<dead-circumflex>" . 'delete-indentation)
   ("C-<dead-circumflex>" . 'join-line)
+  ("M-^" . 'delete-indentation)
+  ("C-^" . 'join-line)
   ("M-s-à" . 'delete-window)
   ("C-x é" . 'split-window)        ; comme C-x 2 mais on se passe de MAJ
   ("C-x \"" . 'split-window-horizontally) ;C-x 3
