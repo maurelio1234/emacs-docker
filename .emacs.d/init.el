@@ -569,6 +569,14 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          (setq continue nil))))))
 
 ;;; Exercism
+(defun me/exercism-configure (token)
+  "Configure Exercism TOKEN and config directory."
+  (interactive "sAPI token: ")
+  (shell-command (concat
+                  "exercism configure "
+                  "--token " token
+                  " --workspace " "/home/" (user-login-name) "/exercism/")))
+
 (defun me/exercism-submit ()
   "Submit current file as exercism solution."
   (interactive)
