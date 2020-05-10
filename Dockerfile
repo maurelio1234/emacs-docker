@@ -1,16 +1,22 @@
 FROM silex/emacs:27.0-dev
 
+# Bring back man pages
+# https://github.com/tianon/docker-brew-ubuntu-core/issues/122#issuecomment-380529430
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+# Reinstall all currently installed packages in order to get the man pages back
+RUN apt-get update && \
+        dpkg -l | grep ^ii | cut -d' ' -f3 | \
+        xargs apt-get install -y --reinstall
+
 ENV CMAKE=https://cmake.org/files/v3.17/cmake-3.17.0-Linux-x86_64.tar.gz
 # true only during bootstraping
 ENV BOOTSTRAPING=false
 # you are running on a docker container
 ENV DOCKER=true
 
-# Update
-RUN apt-get update
-
 # Install base system tools
-RUN apt-get install -y \
+RUN apt-get update && \
+        apt-get install -y \
         wget \
         libtool-bin \
         unzip \
@@ -114,6 +120,22 @@ RUN npm install npm@$NPM_VERSION -g
 RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
         && curl https://curl.haxx.se/ca/cacert.pem > ~/cacert.pem \
         && sudo cert-sync ~/cacert.pem
+
+# Man pages
+RUN apt install -y man manpages manpages-posix manpages-dev
+
+# Helm
+RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+# Azure CLI
+RUN apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
+        gpg --dearmor | \
+        sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+RUN AZ_REPO=$(lsb_release -cs) && \
+        echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
+RUN apt-get update && apt-get install azure-cli
 
 # Define main user
 
