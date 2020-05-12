@@ -140,7 +140,11 @@
 ;;; Misc
 (defun me/magit-commit-setup ()
   "Generate magit commit template."
-  (insert (concat (magit-get-current-branch) ": ")))
+  (unless
+      (or (save-excursion
+           (search-forward "Merge branch" nil t))
+         (equal (magit-get-current-branch) "master"))
+    (insert (concat (magit-get-current-branch) ": "))))
 
 (defun me/eww-after-render-hook ()
   "Things to do after rendereing a eww page."
