@@ -126,6 +126,10 @@ RUN apt install -y man manpages manpages-posix manpages-dev
 
 # Helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+# Kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
+        chmod +x ./kubectl && \
+        sudo mv ./kubectl /usr/local/bin/kubectl
 
 # Azure CLI
 RUN apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
