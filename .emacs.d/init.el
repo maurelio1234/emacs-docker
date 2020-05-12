@@ -1599,7 +1599,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (:map magit-process-mode-map ("C-c f" . 'browse-url-firefox)))
 
 (when
-    (display-graphic-p)
+    (and (display-graphic-p) (string-equal "false" (getenv "DOCKER")))
   (use-package pretty-mode
     :config (global-pretty-mode t)))
 
