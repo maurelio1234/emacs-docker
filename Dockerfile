@@ -176,3 +176,7 @@ RUN BOOTSTRAPING=true \
 # Now copy the files that change all the time
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
+
+# Avoid errors like
+#        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
+ENV NO_AT_BRIDGE=1
