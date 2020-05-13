@@ -1035,6 +1035,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package emacs
   :diminish (subword-mode . " sW")
   :bind
+  ("C-z" . nil) ; disables C-z
   ("C-c 5 b" . 'select-frame-by-name)
   ("C-c D" . 'cd)
   ("C-c E m" . 'me/Emacsd)
