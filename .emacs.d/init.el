@@ -1616,9 +1616,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (:map magit-process-mode-map ("C-c f" . 'browse-url-firefox)))
 
 (when
-    (and (display-graphic-p) (not me/in-docker-p)))
-(use-package pretty-mode
-  :config (global-pretty-mode t)))
+    (and (display-graphic-p) (not me/in-docker-p))
+  (use-package pretty-mode
+    :config (global-pretty-mode t)))
 
 (use-package csharp-mode
   :mode "\\.cake\\'"
