@@ -38,12 +38,12 @@
 
 (defvar
   me/dotfiles
-  nil
+  "~/github/dotFiles"
   "The place where I checked out my dotfiles github repository.")
 
 (defvar
   me/github
-  nil
+  "~/github"
   "The place where I checked out all my github repositories.")
 
 (setenv
@@ -687,12 +687,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Things to do when entering minibuffer."
   (electric-pair-local-mode 1))
 
-(defun me/load-secret-stuff ()
-  "Load module with secred stuff."
-  (require 'me/secrets "~/.emacs.d/secrets.el")
-  (me/secret-settings)
-  (setenv "GITHUB" me/github))
-
 (defun me/prog-mode-hook ()
   "Prog mode hook."
   (interactive)
@@ -1169,6 +1163,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
   (set-face-attribute 'default t :font "JetBrains Mono")
 
+  (setenv "PATH"
+          (concat "/home/" (user-login-name) "/bin" ":" (getenv "PATH")))
+  (setenv "WORK" "~/bitbucket/work")
+
   ;; Modes
   (display-time-mode 1)
   (display-battery-mode 1)
@@ -1191,7 +1189,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ;; Hooks
   (add-hook 'prog-mode-hook 'me/prog-mode-hook)
   (add-hook 'after-init-hook 'me/frame-fullscreen)
-  (add-hook 'after-init-hook 'me/load-secret-stuff)
   (add-hook 'emacs-startup-hook 'me/emacs-startup-hook)
   (add-hook 'shell-mode-hook 'me/shell-hook)
 
@@ -1584,7 +1581,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c p C-R" . 'projectile-discover-projects-in-search-path)
   (:map projectile-mode-map ("C-c p" . 'projectile-command-map))
   :config
-  (projectile-mode +1))
+  (projectile-mode +1)
+  (setq projectile-project-search-path '("~/github/"
+                                         "~/bitbucket/"))
+  (projectile-add-known-project "~/exercism"))
 
 (use-package paredit
   :diminish " 🄿"
