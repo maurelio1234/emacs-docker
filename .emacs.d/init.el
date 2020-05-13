@@ -88,7 +88,7 @@
                                      (powerline-raw mode-line-mule-info nil 'l)
                                      (powerline-buffer-id nil 'l)
                                      (when me/in-docker-p
-                                       (powerline-raw "(DOCKER)"))
+                                       (powerline-raw " (DOCKER) "))
                                      (when tabs
                                        (powerline-raw
                                         (concat " -" tab-name "- ")))
