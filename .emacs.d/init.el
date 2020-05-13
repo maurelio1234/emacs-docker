@@ -13,7 +13,7 @@
 
 ;; Then reset it as late as possible; these are the reasonable defaults I use.
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
-                                          gc-cons-percentage 0.1)))
+                                               gc-cons-percentage 0.1)))
 
 (require 'bootstrap "~/.emacs.d/bootstrap.el")
 
@@ -52,6 +52,11 @@
 
 (setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
 
+(defvar
+  me/in-docker-p
+  (string-equal "true" (getenv "DOCKER"))
+  "Are we on a docker container?")
+
 ;;;; My functions
 (defun me/dockerfile-mode-hook ()
   "Hook for dockerfile mode, fixes indent."
@@ -82,6 +87,8 @@
                                      (powerline-buffer-size nil 'l)
                                      (powerline-raw mode-line-mule-info nil 'l)
                                      (powerline-buffer-id nil 'l)
+                                     (when me/in-docker-p
+                                       (powerline-raw "(DOCKER)"))
                                      (when tabs
                                        (powerline-raw
                                         (concat " -" tab-name "- ")))
@@ -147,8 +154,8 @@
   "Generate magit commit template."
   (unless
       (or (save-excursion
-           (search-forward "Merge branch" nil t))
-         (equal (magit-get-current-branch) "master"))
+            (search-forward "Merge branch" nil t))
+          (equal (magit-get-current-branch) "master"))
     (insert (concat (magit-get-current-branch) ": "))))
 
 (defun me/eww-after-render-hook ()
@@ -671,8 +678,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     ;; Disable tab bar
     (tab-bar-mode -1)
 
-    (unless
-        (string-equal "true" (getenv "DOCKER"))
+    (unless me/in-docker-p
       (message "Changing caps lock for ctrl...")
       (when (eq window-system 'x)
         (me/fix-caps)))))
@@ -1261,8 +1267,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq kubernetes-poll-frequency (* 60 60)))
 
-(unless
-    (string-equal "true" (getenv "DOCKER"))
+(unless me/in-docker-p
   (use-package all-the-icons-ivy
     :config
     (all-the-icons-ivy-setup)))
@@ -1609,9 +1614,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (:map magit-process-mode-map ("C-c f" . 'browse-url-firefox)))
 
 (when
-    (and (display-graphic-p) (string-equal "false" (getenv "DOCKER")))
-  (use-package pretty-mode
-    :config (global-pretty-mode t)))
+    (and (display-graphic-p) (not me/in-docker-p)))
+(use-package pretty-mode
+  :config (global-pretty-mode t)))
 
 (use-package csharp-mode
   :mode "\\.cake\\'"
