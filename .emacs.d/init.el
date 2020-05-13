@@ -702,6 +702,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq-local show-leading-whitespace t)
   (setq-local indicate-empty-lines t)
   (when (or
+         (s-ends-with-p ".cake" (buffer-file-name))
          (s-ends-with-p "/data.json" (buffer-file-name))
          (string-suffix-p ".vue" (buffer-file-name))
          (and
