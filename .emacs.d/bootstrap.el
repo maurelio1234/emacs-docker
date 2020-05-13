@@ -47,7 +47,14 @@
                    :branch "master"))
 (use-package counsel-dash)
 (use-package counsel-projectile)
-(use-package omnisharp)
+(use-package omnisharp
+  :config
+  (setq omnisharp-server-executable-path
+        (concat
+         "/home/"
+         (user-login-name)
+         "/.emacs.d/.cache/omnisharp/server/v1.34.5/run"))
+  (omnisharp--install-server nil t))
 (use-package company-jedi)
 (use-package helm-company)
 (use-package phi-search)
