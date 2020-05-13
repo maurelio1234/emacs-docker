@@ -1158,10 +1158,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq shell-command-prompt-show-cwd t)
   (setq shell-command-dont-erase-buffer 'beg-last-out)
 
-  (unless
-      (string-equal "true" (getenv "DOCKER"))
-    (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
-    (set-face-attribute 'default t :font "JetBrains Mono"))
+  (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
+  (set-face-attribute 'default t :font "JetBrains Mono")
 
   ;; Modes
   (display-time-mode 1)

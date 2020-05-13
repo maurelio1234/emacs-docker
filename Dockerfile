@@ -166,6 +166,12 @@ RUN cd /home/$USER/ && \
         wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
         tar -xf exercism-3.0.13-linux-x86_64.tar.gz
 
+# Add JetBrains Font
+RUN mkdir -p ~/.local/share/fonts && \
+    wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
+    unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
+    fc-cache -f -v
+
 # Copy the files that (almost) never change
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
