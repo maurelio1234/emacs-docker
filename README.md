@@ -16,7 +16,6 @@ docker run -it \
     -v /mnt/data/exercism:/home/$USER/exercism \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --net=host
-    -p X-Y:X-Y
     maurelio1234/emacs-docker
 ```
 
@@ -32,6 +31,5 @@ docker run -it \
     -v /mnt/data/exercism:/home/$USER/exercism \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --net=host
-    -p X-Y:X-Y
     maurelio1234/emacs-docker 
 ```
