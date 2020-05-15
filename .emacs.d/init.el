@@ -152,11 +152,18 @@
 ;;; Misc
 (defun me/magit-commit-setup ()
   "Generate magit commit template."
-  (unless
-      (or (save-excursion
-            (search-forward "Merge branch" nil t))
-          (equal (magit-get-current-branch) "master"))
-    (insert (concat (magit-get-current-branch) ": "))))
+  (let ((branch-name (magit-get-current-branch)))
+    (unless
+        (or (save-excursion
+              (search-forward "Merge branch" nil t))
+            (save-excursion
+              (and
+               (prog2
+                   (goto-char 0)
+                   (search-forward branch-name nil t))
+               (= (1+ (length branch-name)) (point))))
+            (equal branch-name "master"))
+      (insert (concat branch-name ": ")))))
 
 (defun me/eww-after-render-hook ()
   "Things to do after rendereing a eww page."
