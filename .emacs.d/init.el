@@ -152,18 +152,28 @@
 ;;; Misc
 (defun me/magit-commit-setup ()
   "Generate magit commit template."
-  (let ((branch-name (magit-get-current-branch)))
-    (unless
-        (or (save-excursion
-              (search-forward "Merge branch" nil t))
-            (save-excursion
-              (and
-               (prog2
-                   (goto-char 0)
-                   (search-forward branch-name nil t))
-               (= (1+ (length branch-name)) (point))))
-            (equal branch-name "master"))
-      (insert (concat branch-name ": ")))))
+  (let* ((branch-name    (magit-get-current-branch))
+         (merge-commit?  (save-excursion
+                           (search-forward "Merge branch" nil t)))
+         (amend-commit?  (save-excursion
+                           (and
+                            (prog2
+                                (goto-char 0)
+                                (search-forward branch-name nil t))
+                            (= (1+ (length branch-name)) (point)))))
+         (master-branch? (equal branch-name "master"))
+         (staged-files   (magit-staged-files))
+         (staged-file    (car staged-files))
+         (category       (if (= 1 (length staged-files))
+                             (concat (f-filename staged-file) ": ")
+                           ""))
+         (branch-prefix  (if
+                             (or merge-commit?
+                                 amend-commit?
+                                 master-branch?)
+                             ""
+                             (concat branch-name ": "))))
+    (insert branch-prefix category)))
 
 (defun me/eww-after-render-hook ()
   "Things to do after rendereing a eww page."
