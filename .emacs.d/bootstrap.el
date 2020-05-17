@@ -96,7 +96,9 @@
 (use-package counsel)
 (use-package doom-themes)
 (use-package no-littering)
-(use-package projectile)
+(use-package projectile
+  :straight (:host github :repo "maurelio1234/projectile"
+                   :branch "master"))
 (use-package paredit)
 (use-package nginx-mode)
 (use-package pdf-tools
