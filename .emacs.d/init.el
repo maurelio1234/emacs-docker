@@ -1177,6 +1177,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq async-shell-command-buffer 'rename-buffer)
   (setq shell-command-prompt-show-cwd t)
   (setq shell-command-dont-erase-buffer 'beg-last-out)
+  (setq vterm-shell "/bin/bash")
 
   (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
   (set-face-attribute 'default t :font "JetBrains Mono")
