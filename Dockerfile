@@ -53,6 +53,7 @@ dbus-x11 \
     gcc-multilib \
     g++-multilib \
     rabbitmq-server \
+    python3-pip \
     && \
     wget -qO- "$CMAKE" | tar --strip-components=1 -xz -C /usr/local
 
@@ -180,13 +181,12 @@ RUN mkdir -p ~/.local/share/fonts && \
         mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
         fc-cache -f -v
 
-# Python Modules for teaching
-RUN apt install python3-pip -y
-RUN pip3 install pycrypto
-
 # Copy the files that (almost) never change
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
+
+# Python Modules for teaching
+RUN pip3 install --user pycrypto
 
 # Bootstrap emacs packages
 # || true so I can fix things even if the build breaks
