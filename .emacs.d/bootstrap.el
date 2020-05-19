@@ -94,7 +94,6 @@
 (use-package avy)
 (use-package anzu)
 (use-package wgrep)
-(use-package ivy-posframe)
 (use-package ivy)
 (use-package counsel)
 (use-package doom-themes)

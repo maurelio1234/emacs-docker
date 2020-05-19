@@ -46,12 +46,6 @@
   "~/github"
   "The place where I checked out all my github repositories.")
 
-(setenv
- "DOTNET_SKIP_FIRST_TIME_EXPERIENCE"
- "true") ; so that dotnet stops printing obnoxious messages
-
-(setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
-
 (defvar
   me/in-docker-p
   (string-equal "true" (getenv "DOCKER"))
@@ -59,7 +53,7 @@
 
 ;;;; My functions
 (defun me/db (server user password db)
-  "Connect to db."
+  "Connect to DB in SERVER using USER and PASSWORD."
   (interactive)
   (let
       ((buffer-name (format "*mssql %s@%s@%s*" user db server))
@@ -141,30 +135,6 @@
                              (powerline-fill face2 (powerline-width rhs))
                              (powerline-render rhs)))))))
 
-;;; Org reveal
-(defun me/reveal/cycle ()
-  "Export and view current org reveal presentation."
-  (interactive)
-  ;; Looking for tree root
-  (save-excursion
-    (let* ((exported-file (let
-                              ((org-confirm-babel-evaluate nil))
-                            (org-reveal-export-to-html)))
-           (viewer-buffer (car
-                           (-filter
-                            (lambda
-                              (buffer)
-                              (and
-                               (equal
-                                'exwm-mode
-                                (buffer-local-value 'major-mode buffer))
-                               (s-contains-p "chrome" (buffer-name buffer) t)))
-                            (buffer-list)))))
-      (when exported-file
-        (if viewer-buffer
-            (switch-to-buffer viewer-buffer)
-          (browse-url-chrome exported-file t))))))
-
 ;;; Misc
 (defun me/magit-commit-setup ()
   "Generate magit commit template."
@@ -207,6 +177,7 @@
     (plist-get eww-data :title)
     " - "
     (plist-get eww-data :url))))
+
 (defun me/shell-hook ()
   "Fix things I hate in this mode."
   (read-only-mode 1)
@@ -241,12 +212,6 @@
   (interactive)
   (revert-buffer nil t))
 
-(defun me/run-tests-on-init-save-hook ()
-  "Run init.el unit test cases upon save."
-  (when (string-equal (buffer-file-name) "/home/marcos/.emacs.d/init.el")
-    (load-file "init-test.el")
-    (me/ert)))
-
 (defun me/insert-buffer-name ()
   "Insert the name of the current (non minibuffer) buffer in the current bufer.
 To be used on a minibuffer."
@@ -259,22 +224,11 @@ To be used on a minibuffer."
   (setenv "NODE_NO_READLINE" "1") ;avoid fancy terminal codes
   (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
 
-(defun me/ansi-term ()
-  "Open ansi term on bash."
-  (interactive)
-  (ansi-term "/bin/bash")
-  (term-line-mode))
-
 ;; TODO port it to docker
 (defun me/fix-caps ()
   "Fix caps lock key."
   (interactive)
   (shell-command "setxkbmap -layout fr -option ctrl:nocaps"))
-
-(defun me/eww/open-page-xwidget ()
-  "Opens current eww page in xwidget."
-  (interactive)
-  (xwidget-webkit-browse-url (plist-get eww-data :url) t))
 
 (defun me/switch-to-last-buffer ()
   "Switch to latest buffer.
@@ -291,31 +245,6 @@ This code is based on the code of `toogle-frame-fullscreen'"
                              `((fullscreen . fullboth)
                                (fullscreen-restore . ,fullscreen)))
     (when (featurep 'cocoa) (sleep-for 0.5))))
-
-(defun me/cd-buffer-directory ()
-  "CD to current buffer's file directory."
-  (interactive)
-  (when (buffer-file-name)
-    (cd (file-name-directory (buffer-file-name)))))
-
-(defun me/switch-browser ()
-  "Switch default browser."
-  (interactive)
-  (let* ((browser-str (completing-read "Browser: " '("w3m" "eww" "firefox")))
-         (browser-function (pcase browser-str
-                             ("w3m" 'w3m-browse-url)
-                             ("eww" 'eww-browse-url)
-                             ("firefox" 'browse-url-firefox))))
-    (setq browse-url-browser-function browser-function)))
-
-;; https://stackoverflow.com/questions/2472273/how-do-i-run-a-sudo-command-in-emacs
-(defun stackoverflow/sudo-shell-command (command)
-  "Run COMMAND as sudo."
-  (interactive "MShell command (root): ")
-  (with-temp-buffer
-    (cd "/sudo::/")
-    (let ((async-shell-command-buffer 'rename-buffer))
-      (async-shell-command command))))
 
 (defun stackoverflow/current-buffer-not-mini ()
   "Return 'current-buffer' if current buffer is not the *mini-buffer* else return buffer before minibuf is activated."
@@ -419,51 +348,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(defun me/volume ()
-  "Fine control of volume."
-  (interactive)
-  (let* ((continue  t))
-    (while continue
-      (pcase (read-char "Change volume: ")
-        (?+
-         (me/volume-up))
-        (?-
-         (me/volume-down))
-        (?0
-         (me/volume-zero))
-        (_
-         (setq continue nil))))))
-
-(defun me/volume-up ()
-  "Tune the volume up."
-  (interactive)
-  (start-process "pactl" nil "pactl" "--" "set-sink-volume" "0" "+10%"))
-
-(defun me/volume-50 ()
-  "Tune the volume to 50%."
-  (interactive)
-  (start-process "pactl" nil "pactl" "--" "set-sink-volume" "0" "50%"))
-
-(defun me/volume-down ()
-  "Tune the volume down."
-  (interactive)
-  (start-process "pactl" nil "pactl" "--" "set-sink-volume" "0" "-10%"))
-
-(defun me/volume-zero ()
-  "Tune the volume down to 0."
-  (interactive)
-  (start-process "pactl" nil "pactl" "--" "set-sink-volume" "0" "0%"))
-
-(defun me/brightness-up ()
-  "Tune the brightness up."
-  (interactive)
-  (start-process "xrandr" nil "xrandr" "--output" "eDP-1" "--brightness" "1"))
-
-(defun me/brightness-down ()
-  "Tune the brightness down."
-  (interactive)
-  (start-process "xrandr" nil "xrandr" "--output" "eDP-1" "--brightness" "0.2"))
-
 (defun me/SaveConfigs ()
   "Save configuration files onto github dotfiles project."
   (interactive)
@@ -521,110 +405,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
    (not (string-prefix-p "cat " input))
    (not (string-prefix-p "find-file " input))))
 
-;;; Exwm
-(defun me/gnome-control-center ()
-  "Start gnome control center, so I can control things like internet, keyboard, etc."
-  (interactive)
-  (setenv "XDG_CURRENT_DESKTOP" "GNOME")
-  (async-shell-command "gnome-control-center"))
-
-(defun me/rider ()
-  "Start rider."
-  (interactive)
-  (setenv "XDG_CURRENT_DESKTOP" "GNOME")
-  (setenv "_JAVA_AWT_WM_NONREPARENTING" "1")
-  (async-shell-command "rider"))
-
-(defun me/netbeans ()
-  "Start netbeans."
-  (interactive)
-  (setenv "XDG_CURRENT_DESKTOP" "GNOME")
-  (setenv "_JAVA_AWT_WM_NONREPARENTING" "1")
-  (async-shell-command "netbeans"))
-
-(defun me/balsamiq ()
-  "Start netbeans."
-  (interactive)
-  (setenv "XDG_CURRENT_DESKTOP" "GNOME")
-  (setenv "_JAVA_AWT_WM_NONREPARENTING" "1")
-  (async-shell-command
-   "wine \"/home/marcos/.wine/drive_c/Program Files \(x86\)/Balsamiq Mockups 3/Balsamiq Mockups 3.exe\""))
-
-(defun me/firefox ()
-  "Open firefox."
-  (interactive)
-  (browse-url-firefox "about:blank" t))
-
-(defun me/clockify ()
-  "If clockify is open, switch to it, otherwise opens it in Firefox."
-  (interactive)
-  (let ((clockify-buffer (car (-filter (lambda
-                                         (buffer)
-                                         (and
-                                          (equal
-                                           'exwm-mode
-                                           (buffer-local-value
-                                            'major-mode
-                                            buffer))
-                                          (s-contains-p
-                                           "clockify"
-                                           (buffer-name buffer) t)))
-                                       (buffer-list)))))
-    (if clockify-buffer
-        (switch-to-buffer clockify-buffer)
-      (browse-url-firefox "https://clockify.me/tracker" t))))
-
-(defun me/eww/open-page-firefox ()
-  "Opens current eww page in firefox."
-  (interactive)
-  (browse-url-firefox (plist-get eww-data :url) t))
-
-(defun me/suspend ()
-  "Suspend computer."
-  (interactive)
-  (me/lock)
-  (stackoverflow/sudo-shell-command "sudo systemctl suspend"))
-
-(defun me/screenshot ()
-  "Create a screenshot."
-  (interactive)
-  (let ((async-shell-command-display-buffer nil))
-    (async-shell-command "gnome-screenshot --interactive")))
-
-(defun me/lock ()
-  "Lock computer."
-  (interactive)
-  (shell-command "gnome-screensaver-command --lock"))
-
-(defun me/resize-floating-window ()
-  "Resize current floating window."
-  (interactive)
-  (let* ((direction ?v)
-         (continue  t))
-    (while continue
-      (pcase (read-char
-              (concat
-               "Resize float window "
-               (pcase direction (?h "horizontally") (?v "vertically")) ":"))
-        (?+
-         (pcase direction
-           (?h
-            (exwm-layout-enlarge-window-horizontally 10))
-           (?v
-            (exwm-layout-enlarge-window 10))))
-        (?-
-         (pcase direction
-           (?h
-            (exwm-layout-shrink-window-horizontally 10))
-           (?v
-            (exwm-layout-shrink-window 10))))
-        (?h
-         (setq direction ?h))
-        (?v
-         (setq direction ?v))
-        (_
-         (setq continue nil))))))
-
 ;;; Exercism
 (defun me/exercism-configure (token)
   "Configure Exercism TOKEN and config directory."
@@ -654,7 +434,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (let* ((download-command (read-string "Download command: "))
          (download-path (with-temp-buffer
                           (shell-command download-command (current-buffer) nil)
-                          (beginning-of-buffer)
+                          (goto-char (point-min))
                           (forward-line 2)
                           (kill-line)
                           (car kill-ring))))
@@ -757,16 +537,16 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Narrow current buffer to log beloging to a given TEST-NAME."
   (interactive "sTest name: ")
   (setq test-name (or test-name (me/circleci--current-test-name)))
-  (beginning-of-buffer)
+  (goto-char (point-min))
   (search-forward-regexp test-name)
   (move-beginning-of-line nil)
   (let ((start-test (point)))
     (unless (search-forward-regexp me/circleci-test-marker nil t 2)
-      (end-of-buffer))
+      (goto-char (point-max)))
     (move-end-of-line nil)
     (let ((end-test (point)))
       (narrow-to-region start-test end-test)
-      (beginning-of-buffer))))
+      (goto-char (point-min)))))
 
 (defun me/circleci--current-test-name ()
   "Return the name of the current test."
@@ -829,7 +609,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (revert-buffer nil t)
 
   ;; selects last file, since it's probably the one I want to open
-  (end-of-buffer)
+  (goto-char (point-max))
   (dired-previous-line 1))
 
 ;;; CSharp mode customizations
@@ -950,7 +730,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
    cc-cedict-cache))
 
 ;;; CC-CEDIT Popup Dictionary
-
 (defvar me/cc-cedict-cache
   nil
   "Cache dictionary ZH->Pinyin/English.")
@@ -1211,6 +990,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
           (concat "/home/" (user-login-name) "/bin" ":" (getenv "PATH")))
   (setenv "WORK" "~/bitbucket/work")
 
+  (setenv
+   "DOTNET_SKIP_FIRST_TIME_EXPERIENCE"
+   "true") ; so that dotnet stops printing obnoxious messages
+
+  (setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
+
   ;; Modes
   (display-time-mode 1)
   (display-battery-mode 1)
@@ -1238,10 +1023,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
   ;; Enabled advanced commands
   (put 'narrow-to-region 'disabled nil))
-
-(use-package youtube-dl
-  :config
-  (setq youtube-dl-directory "/mnt/data/videos/"))
 
 (use-package cc-cedict
   :config
@@ -1480,90 +1261,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (global-anzu-mode +1)
   (global-set-key [remap query-replace] 'anzu-query-replace)
   (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
-
-;; TODO: support two connected monitors
-
-(defvar me/exwm-default-monitor "eDP-1"
-  "Name of default monitor.")
-
-(defun me/list-connected-displays ()
-  "Compute list of displays from xrandr."
-  (let* ((connected-cmd "xrandr -q|awk '/ connected/ {print $1}'")
-         (connected (process-lines "bash" "-lc" connected-cmd)))
-    connected))
-
-(defun me/count-connected-displays ()
-  "Number of connected displays."
-  (string-to-number
-   (shell-command-to-string "xrandr | grep \" connected\" | wc -l ")))
-
-(defun me/xrandr-enable (other)
-  "Enable OTHER monitor detected by xrandr."
-  (interactive
-   (list (completing-read "Select display to enable: " (me/list-connected-displays))))
-  (start-process-shell-command
-   "xrandr" nil (concat "xrandr --output " other " --right-of " me/exwm-default-monitor " --auto"))
-  (unless (member other exwm-randr-workspace-monitor-plist)
-    (let ((new-workspace-idx (/ (length exwm-randr-workspace-monitor-plist) 2)))
-      (setq exwm-randr-workspace-monitor-plist (append exwm-randr-workspace-monitor-plist `(1 ,other))))
-    (setq exwm-workspace-number (1+ exwm-workspace-number))
-    (exwm-randr-enable)))
-
-(defun me/xrandr-enable-primary-only ()
-  "Enable primary monitor only."
-  (interactive)
-  (setq exwm-randr-workspace-output-plist `(0 ,me/exwm-default-monitor))
-  (setq exwm-workspace-number 1)
-  (exwm-randr-enable)
-  (delete-other-frames))
-
-(defun me/xrandr-3-screens ()
-  "Set it up the way I like with three screens at work."
-  (interactive)
-  (start-process-shell-command "xrandr" nil "--output DVI-I-1-1 --auto")
-  (start-process-shell-command "xrandr" nil "--output DVI-I-2-2 --right-of eDP-1 --auto")
-  (start-process-shell-command "xrandr" nil "--output DVI-I-1-1 --left-of eDP-1 --auto --rotate left")
-  (setq exwm-randr-workspace-monitor-plist '(0  "DVI-I-1-1" 1 "DVI-I-2-2" 2 "eDP-1" ))
-  (setq exwm-workspace-number 2)
-  (exwm-randr-refresh)
-  (delete-other-frames))
-
-(defun me/xrandr-3-screens-primary-right ()
-  "Set it up the way I like with three screens at work."
-  (interactive)
-  (call-process-shell-command "xrandr" nil nil nil "--output DVI-I-2-2 --auto")
-  (call-process-shell-command "xrandr" nil nil nil "--output DVI-I-1-1 --auto")
-  (call-process-shell-command "xrandr" nil nil nil "--output DVI-I-1-1 --right-of eDP-1 --auto")
-  (call-process-shell-command "xrandr" nil nil nil "--output DVI-I-2-2 --right-of DVI-I-1-1")
-  (call-process-shell-command "xrandr" nil nil nil "--output DVI-I-2-2 --rotate left")
-  (setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "DVI-I-1-1" 2 "DVI-I-2-2" ))
-  (setq exwm-workspace-number 3)
-  (exwm-randr-enable)
-  (delete-other-frames))
-
-(defun me/xrandr-enable-single-monitor-hook ()
-  "Hook to enable single monitor when plugged in."
-  (let* ((secondary-monitors (delete me/exwm-default-monitor (me/list-connected-displays))))
-    (pcase (length secondary-monitors)
-      (1
-       (me/xrandr-enable (car secondary-monitors)))
-      (0
-       (me/xrandr-enable-primary-only)))))
-
-(defun me/exwm-refresh-simulation-keys ()
-  "Refresh current set of simulation keys."
-  (interactive)
-  (exwm-input-set-simulation-keys exwm-input-simulation-keys))
-
-(defun me/exwm-refresh-buffer-name ()
-  "Refresh buffer name from class."
-  (exwm-workspace-rename-buffer (concat exwm-class-name))) ;  " - " exwm-title
-
-(use-package ivy-posframe
-  :config
-  (ivy-posframe-mode -1)
-  (setq ivy-posframe-style 'window-center)
-  (setq ivy-posframe-border-width 5))
 
 (use-package ivy
   :diminish ""
