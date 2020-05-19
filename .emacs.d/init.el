@@ -1085,6 +1085,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c t RET" . 'tab-switcher)
 
   (:map minibuffer-local-map ("<f5>" . 'me/insert-buffer-name))
+  (:map paredit-mode-map ("C-c b" . 'eval-buffer))
 
   :hook
   (minibuffer-setup . me/minibuffer-hook)
