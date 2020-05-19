@@ -1091,11 +1091,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq kubernetes-poll-frequency (* 60 60)))
 
-(unless me/in-docker-p
-  (use-package all-the-icons-ivy
-    :config
-    (all-the-icons-ivy-setup)))
-
 (use-package deft
   :bind
   ("M-s-d" . 'deft)

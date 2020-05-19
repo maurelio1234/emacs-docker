@@ -95,6 +95,16 @@
 (use-package anzu)
 (use-package wgrep)
 (use-package ivy)
+(use-package all-the-icons-ivy
+  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup)
+  :config
+  (let
+      ;; yes that's cheating, but otherwise
+      ;; the installer code will get confused when bootstraping
+      ;; happens in batch mode
+      ((window-system 'x))
+      (all-the-icons-install-fonts t)))
+
 (use-package counsel)
 (use-package doom-themes)
 (use-package no-littering)
