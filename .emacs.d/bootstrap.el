@@ -28,6 +28,11 @@
                          ("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
 
+(defvar
+  me/bootstraping-p
+  (string-equal "true" (getenv "BOOTSTRAPING"))
+  "Are we bootstraping?")
+
 (straight-use-package 'use-package)
 (require 'straight)
 (require 'use-package)
@@ -98,12 +103,13 @@
 (use-package all-the-icons-ivy
   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup)
   :config
-  (let
-      ;; yes that's cheating, but otherwise
-      ;; the installer code will get confused when bootstraping
-      ;; happens in batch mode
-      ((window-system 'x))
-      (all-the-icons-install-fonts t)))
+  (when me/bootstraping-p
+    (let
+        ;; yes that's cheating, but otherwise
+        ;; the installer code will get confused when bootstraping
+        ;; happens in batch mode
+        ((window-system 'x))
+      (all-the-icons-install-fonts t))))
 
 (use-package counsel)
 (use-package doom-themes)
@@ -113,7 +119,7 @@
 (use-package pdf-tools
   :config
   (when
-      (string-equal "true" (getenv "BOOTSTRAPING"))
+      me/bootstraping-p
     (pdf-tools-install t nil t)))
 (use-package elpy)
 (use-package terraform-mode)

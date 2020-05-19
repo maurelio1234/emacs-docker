@@ -490,7 +490,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/emacs-startup-hook ()
   "Things to do on startup."
   (unless
-      (string-equal "true" (getenv "BOOTSTRAPING"))
+      me/bootstraping-p
     (message "Default theme...")
     (me/dark-mode) ;; FIX Reactivate
 
