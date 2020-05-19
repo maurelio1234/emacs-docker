@@ -126,6 +126,7 @@
 (use-package docker-tramp)
 (use-package docker)
 (use-package dockerfile-mode)
+(use-package slack)
 
 (provide 'bootstrap)
 ;;; bootstrap.el ends here
