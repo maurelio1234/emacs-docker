@@ -1594,6 +1594,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package no-littering :config (require 'no-littering))
 
 (use-package projectile
+  :straight (:host github :repo "maurelio1234/projectile"
+                   :branch "master")
   :diminish (projectile-mode . "")
   :init
   (setq projectile-switch-project-action #'me/projectile-project-dashboard)
