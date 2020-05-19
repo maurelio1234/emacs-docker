@@ -102,6 +102,10 @@ RUN apt-get -q update && \
     apt-get install -y \
     dotnet-sdk-3.1
 
+# Install MS SQL tools
+RUN ACCEPT_EULA=y apt-get install -y mssql-cli && \
+    apt-get install -f
+
 # Install Web/Node Tools
 RUN apt-get install -y firefox
 
