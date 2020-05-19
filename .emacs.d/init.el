@@ -63,10 +63,13 @@
                  password
                  db
                  server)))
-    (vterm-other-window buffer-name)
-    (with-current-buffer buffer-name
-      (vterm-send-string command)
-      (vterm-send-return))))
+    (if (get-buffer buffer-name)
+        (switch-to-buffer buffer-name)
+      (vterm buffer-name)
+      (with-current-buffer buffer-name
+        (vterm-send-string command)
+        (vterm-send-return)))
+    buffer-name))
 
 (defun me/dockerfile-mode-hook ()
   "Hook for dockerfile mode, fixes indent."
