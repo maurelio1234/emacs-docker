@@ -46,6 +46,9 @@
   :straight (:host github :repo "dash-docs-el/dash-docs"
                    :branch "master"))
 (use-package counsel-dash)
+(use-package projectile
+  :straight (:host github :repo "maurelio1234/projectile"
+                   :branch "master"))
 (use-package counsel-projectile)
 (use-package omnisharp
   :config
@@ -96,9 +99,6 @@
 (use-package counsel)
 (use-package doom-themes)
 (use-package no-littering)
-(use-package projectile
-  :straight (:host github :repo "maurelio1234/projectile"
-                   :branch "master"))
 (use-package paredit)
 (use-package nginx-mode)
 (use-package pdf-tools
