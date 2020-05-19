@@ -1329,8 +1329,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ;; needs secret stuff
   (add-hook 'after-init-hook 'me/deft/after-init t))
 
-(use-package yoshi-theme)
-
 (use-package guru-mode
   :diminish (guru-mode . "")
   :config (guru-global-mode -1))
@@ -1354,10 +1352,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (bind-keys  :map eshell-mode-map
               ("C-c h" . me/shell-history )))
 
-(use-package better-defaults
-  :straight (:host github :repo "technomancy/better-defaults"
-                   :branch "master"))
-
 (use-package powerline
   :straight (:host github :repo "Dewdrops/powerline"
                    :branch "master")
@@ -1372,11 +1366,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c s" . 'emacs-surround)
   :config
   (add-to-list 'emacs-surround-alist '("`"   . ("`"  . "`"))))
-
-;; https://github.com/nickav/naysayer-theme.el.git
-(use-package naysayer-theme
-  :straight (:host github :repo "nickav/naysayer-theme.el"
-                   :branch "master"))
 
 (use-package vue-mode
   ;; https://github.com/AdamNiederer/vue-mode/issues/74
@@ -1451,8 +1440,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     "Js mode initialization code."
     (setq js-indent-level 2))
   :hook (js-mode . me/setup-js))
-
-(use-package disk-usage)
 
 (use-package shr-color
   :straight nil
@@ -1572,8 +1559,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Refresh buffer name from class."
   (exwm-workspace-rename-buffer (concat exwm-class-name))) ;  " - " exwm-title
 
-(use-package wgrep)
-
 (use-package ivy-posframe
   :config
   (ivy-posframe-mode -1)
@@ -1612,10 +1597,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     "Call counsel-M-x without showing ^ as initial-input."
     (interactive)
     (counsel-M-x "")))
-
-(use-package doom-themes)
-
-(use-package no-littering :config (require 'no-littering))
 
 (use-package projectile
   :straight (:host github :repo "maurelio1234/projectile"
