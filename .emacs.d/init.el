@@ -58,6 +58,22 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(defun me/db (server user password db)
+  "Connect to db."
+  (interactive)
+  (let
+      ((buffer-name (format "*mssql %s@%s@%s*" user db server))
+       (command (format
+                 "reset && mssql-cli -U %s -P %s -d %s -S %s && exit"
+                 user
+                 password
+                 db
+                 server)))
+    (vterm-other-window buffer-name)
+    (with-current-buffer buffer-name
+      (vterm-send-string command)
+      (vterm-send-return))))
+
 (defun me/dockerfile-mode-hook ()
   "Hook for dockerfile mode, fixes indent."
   ;; https://github.com/sp3ctum/spacemacs/commit/99e9875f8
