@@ -171,6 +171,8 @@
   (let* ((branch-name    (magit-get-current-branch))
          (merge-commit?  (save-excursion
                            (search-forward "Merge branch" nil t)))
+         (revert-commit?  (save-excursion
+                            (search-forward "Revert " nil t)))
          (amend-commit?  (save-excursion
                            (and
                             (prog2
@@ -180,15 +182,21 @@
          (master-branch? (equal branch-name "master"))
          (staged-files   (magit-staged-files))
          (staged-file    (car staged-files))
+         (staged-filename (f-filename staged-file))
+         (staged-dirname  (f-filename (f-parent staged-file)))
+         (category-name   (if (string-equal "values.yaml" staged-filename)
+                              staged-dirname
+                            staged-filename))
          (category       (if (= 1 (length staged-files))
-                             (concat (f-filename staged-file) ": ")
+                             (concat category-name ": ")
                            ""))
          (branch-prefix  (if
                              (or merge-commit?
+                                 revert-commit?
                                  amend-commit?
                                  master-branch?)
                              ""
-                             (concat branch-name ": "))))
+                           (concat branch-name ": "))))
     (insert branch-prefix category)))
 
 (defun me/eww-after-render-hook ()
