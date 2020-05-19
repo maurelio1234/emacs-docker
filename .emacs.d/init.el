@@ -1780,7 +1780,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :defer t
   :straight (:host github :repo "HParker/yaml-mode"
                    :branch "master")
-  :mode ("\\.yml\\'" . yaml-mode))
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.tpl\\'" . yaml-mode)))
 
 (message "init.el successfully loaded!")
 (custom-set-faces
