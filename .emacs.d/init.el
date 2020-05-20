@@ -164,13 +164,13 @@
                              (concat category-name ": ")
                            ""))
          (branch-prefix  (if
-                             (or merge-commit?
-                                 revert-commit?
-                                 amend-commit?
-                                 master-branch?)
+                             master-branch?
                              ""
-                           (concat branch-name ": "))))
-    (insert branch-prefix category)))
+                             (concat branch-name ": "))))
+    (unless (or merge-commit?n
+                revert-commit?
+                amend-commit?)
+      (insert branch-prefix category)))
 
 (defun me/eww-after-render-hook ()
   "Things to do after rendereing a eww page."
