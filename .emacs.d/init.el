@@ -1094,6 +1094,14 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (setq kubernetes-poll-frequency (* 60 60)))
 
+(use-package explain-pause-mode
+  :straight (:host github :repo "lastquestion/explain-pause-mode"
+                   :branch "master")
+  :custom
+  (explain-pause-blocking-too-long-ms 1000)
+  :config
+  (explain-pause-mode 1))
+
 (use-package deft
   :bind
   ("M-s-d" . 'deft)

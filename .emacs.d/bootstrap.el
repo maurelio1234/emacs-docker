@@ -143,5 +143,8 @@
 (use-package dockerfile-mode)
 (use-package slack)
 
+(use-package explain-pause-mode
+  :straight (:host github :repo "lastquestion/explain-pause-mode"
+                   :branch "master"))
 (provide 'bootstrap)
 ;;; bootstrap.el ends here
