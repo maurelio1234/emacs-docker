@@ -193,11 +193,9 @@ COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 RUN pip3 install --user pycrypto
 
 # Bootstrap emacs packages
-# || true so I can fix things even if the build breaks
 RUN BOOTSTRAPING=true \
     emacs -batch \
-    --eval "(require 'bootstrap \"/home/$USER/.emacs.d/bootstrap.el\")" \
-    || true
+    --eval "(require 'bootstrap \"/home/$USER/.emacs.d/bootstrap.el\")"
 
 # Now copy the files that change all the time
 # TODO find a way to read user name from variable
