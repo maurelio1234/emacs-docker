@@ -52,6 +52,38 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(define-derived-mode me/slack-alerts-mode special-mode "Slack Alerts"
+  "Alerts from Slack")
+
+(defun me/switch-to-alerts-buffer ()
+  "Switch to alerts buffer."
+  (interactive)
+  (switch-to-buffer "* Slack Alerts *"))
+
+(defun me/init-alerts-buffer ()
+  "Create and initialize the slack alerts buffer."
+  (with-current-buffer (get-buffer-create "* Slack Alerts *")
+    (me/slack-alerts-mode)))
+
+(defun me/slack-message-custom-nofifier (message room team)
+  "Better handling of slack MESSAGEs TEAM's ROOM."
+  (let ((team-name (oref team name))
+        (room-name (slack-room-name room team))
+        (text (with-temp-buffer
+                (goto-char (point-min))
+                (insert (slack-message-to-alert message team))
+                (slack-buffer-buttonize-link)
+                (buffer-substring-no-properties (point-min)
+                                                (point-max))))
+        (user-name (slack-message-sender-name message team))
+        (timestamp (format-time-string
+                    "%H:%M"
+                    (slack-message-time-stamp message))))
+    (with-current-buffer (get-buffer-create "* Slack Alerts *")
+      (goto-char (point-max))
+      (insert (format "\nTeam: %s\nRoom: %s\nTimestamp: %s\nUser: %s\n\n%s\n\n"
+                      team-name room-name timestamp user-name text)))))
+
 (defun me/db (server user password db)
   "Connect to DB in SERVER using USER and PASSWORD."
   (interactive)
@@ -1442,6 +1474,20 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package jq-mode
   :bind
   ("C-c C-j" . 'jq-interactively))
+
+(use-package slack
+  :straight (:host github :repo "maurelio1234/emacs-slack"
+                   :branch "master")
+  :custom
+  (slack-buffer-emojify t)
+  (slack-prefer-current-team t)
+  (slack-message-custom-notifier 'me/slack-message-custom-nofifier)
+  :bind
+  ("C-c S r" . 'slack-select-rooms)
+  ("C-c S a" . 'me/switch-to-alerts-buffer)
+  :config
+  (setq slack-modeline t)
+  (me/init-alerts-buffer))
 
 (use-package helpful
   :bind
