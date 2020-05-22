@@ -144,11 +144,10 @@
 (use-package slack
   :straight (:host github :repo "maurelio1234/emacs-slack"
                    :branch "master")
+  :custom (emojify-download-emojis-p t)
   :config
   (when me/bootstraping-p
-    (let
-        ((emojify-download-emojis-p t))
-      (emojify-download-emoji-maybe))))
+    (emojify-ensure-images)))
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
                    :branch "master"))
