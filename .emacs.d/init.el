@@ -253,13 +253,6 @@ To be used on a minibuffer."
   (interactive)
   (insert (buffer-name (stackoverflow/current-buffer-not-mini))))
 
-(defun me/node-repl ()
-  "Node js repl."
-  (interactive)
-  (setenv "NODE_NO_READLINE" "1") ;avoid fancy terminal codes
-  (pop-to-buffer (make-comint "node-repl" "node" nil "--interactive")))
-
-;; TODO port it to docker
 (defun me/fix-caps ()
   "Fix caps lock key."
   (interactive)
@@ -724,7 +717,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (magit-shell-command-topdir (concat (me/nunit-cmd 3 "TestMe" (me/nunit-find-test-dll)))))
 
-
 (defun me/fix-csharp-mode ()
   "Fixes some variables in cc-mode that break csharp mode."
   (interactive)
@@ -733,10 +725,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq-local c-block-stmt-hangon-key "")
   (setq-local c-block-stmt-2-key "")
   (setq-local c-block-stmt-1-key "")
-  (setq-local c-block-stmt-1-2-key "")
-  ;; (setq c-syntactic-ws-start "") ; for some reason this is not needed anymore
-  )
-
+  (setq-local c-block-stmt-1-2-key ""))
 
 (defun me/nunit-add-category (pattern)
   "Add TestMe category before the previous appearance of PATTERN."
@@ -755,6 +744,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (me/nunit-add-category "[TestFixture"))
 
+;;; CC-CEDIT Popup Dictionary
 (defun me/cedict-entries (chinese)
   "Return entries that match the word CHINESE."
   (unless cc-cedict-cache
@@ -764,7 +754,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                        (string= chinese (cc-cedict-entry-simplified entry))))
    cc-cedict-cache))
 
-;;; CC-CEDIT Popup Dictionary
 (defvar me/cc-cedict-cache
   nil
   "Cache dictionary ZH->Pinyin/English.")
@@ -905,11 +894,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("M-^" . 'delete-indentation)
   ("C-^" . 'join-line)
   ("M-s-à" . 'delete-window)
-  ("C-x é" . 'split-window)        ; comme C-x 2 mais on se passe de MAJ
+  ("C-x é" . 'split-window)               ; comme C-x 2 mais on se passe de MAJ
   ("C-x \"" . 'split-window-horizontally) ;C-x 3
-  ("C-x &" . 'delete-other-windows)             ;C-x 1
+  ("C-x &" . 'delete-other-windows)       ;C-x 1
   ("C-x à" . 'delete-window)              ;C-x 0
-  ;; ("C-c f w" . 'me/search-word)
   ("M-s-w" . 'me/search-word)
   ("M-s-l" . 'me/search-word-in-file)
   ("M-s-f" . 'me/firefox)
@@ -944,11 +932,48 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                        "^build_.*step.*container.*txt"
                        (buffer-name)))
                    (circleci-build-mode 1))))
+  :custom
+  (savehist-save-minibuffer-history 1)
+  (calendar-date-style 'european)
+  (calendar-mark-holidays-flag t)
+  (savehist-additional-variables
+   '(kill-ring
+     search-ring
+     regexp-search-ring
+     last-kbd-macro
+     kmacro-ring
+     shell-command-history
+     eww-history
+     Info-history-list
+     register-alist
+     eshell-history-ring))
+  (battery-mode-line-format " %b %t %rW")
+  (echo-keystrokes 0.1)
+  (python-shell-interpreter "python3")
+  (register-preview-delay 0.2)
+  (compilation-scroll-output t)
+  (display-time-day-and-date nil)
+  (display-time-24hr-format t)
+  (vc-follow-symlinks t)
+  (make-backup-files nil)
+  (ring-bell-function 'ignore)
+  (revert-without-query (quote (".*")))
+  (set-mark-command-repeat-pop t)
+  (history-delete-duplicates t)
+  (use-dialog-box nil)
+  (async-shell-command-buffer 'rename-buffer)
+  (shell-command-prompt-show-cwd t)
+  (shell-command-dont-erase-buffer 'beg-last-out)
+  (vterm-shell "/bin/bash")
+  :hook
+  (prog-mode . me/prog-mode-hook)
+  (after-init . me/frame-fullscreen)
+  (emacs-startup . me/emacs-startup-hook)
+  (shell-mode . me/shell-hook)
   :config
   ;; Settings
   ;; From https://wikemacs.org/wiki/French
-  (setq calendar-date-style 'european
-        calendar-holidays '((holiday-fixed 1 1 "Jour de l'an")
+  (setq calendar-holidays '((holiday-fixed 1 1 "Jour de l'an")
                             (holiday-fixed 1 6 "Épiphanie")
                             (holiday-fixed 2 2 "Chandeleur")
                             (holiday-fixed 2 14 "Saint Valentin")
@@ -980,43 +1005,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                                   (car (car (holiday-float 6 0 1 nil)))
                                 ;; -> Dernier dimanche de mai sinon
                                 (car (car (holiday-float 5 0 -1 nil))))
-                             "Fête des mères"))
-        calendar-mark-holidays-flag t)
-  (setq savehist-save-minibuffer-history 1)
-  (setq savehist-additional-variables
-        '(kill-ring
-          search-ring
-          regexp-search-ring
-          last-kbd-macro
-          kmacro-ring
-          shell-command-history
-          eww-history
-          Info-history-list
-          register-alist
-          eshell-history-ring))
-  (setq battery-mode-line-format " %b %t %rW")
-  (setq echo-keystrokes 0.1)
-  (setq python-shell-interpreter "python3")
-  (setq register-preview-delay 0.2)
-  (setq compilation-scroll-output t)
+                             "Fête des mères")))
+
+
   (setq-default indicate-empty-lines t)
-  (setq display-time-day-and-date nil)
-  (setq display-time-24hr-format t)
-
-  (setq vc-follow-symlinks t)
-  (setq make-backup-files nil)
-  (setq ring-bell-function 'ignore)
-  (setq revert-without-query (quote (".*")))
-
-  (setq set-mark-command-repeat-pop t)
-  (setq history-delete-duplicates t)
-  (setq use-dialog-box nil)
   (defalias 'yes-or-no-p 'y-or-n-p)
-
-  (setq async-shell-command-buffer 'rename-buffer)
-  (setq shell-command-prompt-show-cwd t)
-  (setq shell-command-dont-erase-buffer 'beg-last-out)
-  (setq vterm-shell "/bin/bash")
 
   (add-to-list 'default-frame-alist '(font . "JetBrains Mono" )) ; Noto Mono
   (set-face-attribute 'default t :font "JetBrains Mono")
@@ -1050,13 +1043,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (tab-bar-mode -1)
   (global-so-long-mode 1)
 
-  ;; Hooks
-  (add-hook 'prog-mode-hook 'me/prog-mode-hook)
-  (add-hook 'after-init-hook 'me/frame-fullscreen)
-  (add-hook 'emacs-startup-hook 'me/emacs-startup-hook)
-  (add-hook 'shell-mode-hook 'me/shell-hook)
-
-  ;; Enabled advanced commands
+  ;; Enable advanced commands
   (put 'narrow-to-region 'disabled nil))
 
 (use-package cc-cedict
@@ -1080,10 +1067,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :bind
   ("C-c a t" . 'org-todo-list)
   :hook ((org-mode . me/setup-org))
+  :custom
+  (org-todo-keywords '((sequence "TODO" "DOING" "|" "CANCELLED" "DONE")))
+  (org-startup-with-inline-images t)
+  (org-log-done 'time)
+  (org-catch-invisible-edits 'error)
+  (org-default-notes-file (concat (concat me/github "/perso/notes.org")))
   :config
-  (setq org-todo-keywords '((sequence "TODO" "DOING" "|" "CANCELLED" "DONE"))
-        org-startup-with-inline-images t
-        org-log-done 'time)
   (require 'jq-mode)
   (require 'ob-http)
   (org-babel-do-load-languages
@@ -1101,20 +1091,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (require 'org-indent)
   (require 'htmlize)
   (require 'ox-reveal)
-  (setq org-catch-invisible-edits 'error)
-  (setq org-default-notes-file (concat (concat me/github "/perso/notes.org")))
   (define-key global-map "\C-cc" 'org-capture))
 
 ;; Should be loaded before every package that uses diminish
 (use-package diminish :config (diminish 'eldoc-mode))
-
-(use-package speed-type
-  :config
-  (require 'disable-mouse)
-  (defun me/speed-type ()
-    (interactive)
-    (speed-type-text)
-    (disable-mouse-mode 1)))
 
 (use-package undo-tree
   :diminish ""
@@ -1123,8 +1103,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package kubernetes
   :commands (kubernetes-overview)
-  :config
-  (setq kubernetes-poll-frequency (* 60 60)))
+  :custom
+  (kubernetes-poll-frequency (* 60 60)))
 
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
@@ -1141,8 +1121,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :init
   (defun me/deft/after-init ()
     (setq deft-directory (concat me/github "/perso/deft")))
+  :custom
+  (deft-extensions '("org" "txt"))
   :config
-  (setq deft-extensions '("org" "txt"))
   (setq deft-default-extension "org")
   (setq deft-use-filter-string-for-filename t)
   ;; needs secret stuff
@@ -1209,11 +1190,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :hook (
          (eww-mode . (lambda () (visual-line-mode 1)))
          (eww-after-render . me/eww-after-render-hook))
+  :custom
+  (eww-history-limit nil)
+  (browse-url-browser-function 'eww-browse-url)
   :config
   (setq me/eww-saved-history eww-history)
   (setq me/eww-saved-history-position eww-history-position)
-  (setq eww-history-limit nil)
-  (setq browse-url-browser-function 'eww-browse-url)
   (add-to-list 'savehist-additional-variables
                'eshell-history-ring))
 
@@ -1228,8 +1210,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (key-chord-define-global "lk" 'me/just-occur)
   (key-chord-define-global "è_" 'undo-tree-undo)
   (key-chord-define-global "cf" 'counsel-projectile-find-file)
-  ;; (key-chord-define-global "cc" "\C-c\C-c")
-  ;; (key-chord-define-global "ck" "\C-c\C-k")
   ;; C-x <something> translates to x<something>
   (key-chord-define-global "o*" 'me/switch-to-last-buffer)
   (key-chord-define-global "xb" 'ivy-switch-buffer)
@@ -1262,8 +1242,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (use-package shr-color
   :straight nil
-  :config
-  (setq shr-color-visible-luminance-min 70))
+  :custom
+  (shr-color-visible-luminance-min 70))
 
 (use-package tide
   :bind (:map tide-mode-map
@@ -1342,10 +1322,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :bind
   ("C-c p C-R" . 'projectile-discover-projects-in-search-path)
   (:map projectile-mode-map ("C-c p" . 'projectile-command-map))
+  :custom
+  (projectile-project-search-path '("~/github/"
+                                    "~/bitbucket/"))
   :config
   (projectile-mode +1)
-  (setq projectile-project-search-path '("~/github/"
-                                         "~/bitbucket/"))
   (projectile-add-known-project "~/exercism"))
 
 (use-package paredit
@@ -1356,8 +1337,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package nginx-mode :mode "\\nginx.*.confg'")
 
 (use-package elpy
-  :init
-  (setq elpy-rpc-python-command "python3")
+  :custom
+  (elpy-rpc-python-command "python3")
   :defer
   :config
   (use-package flycheck
@@ -1433,6 +1414,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :bind
   ("C-c w m" . 'which-key-show-major-mode)
   ("C-c w t" . 'which-key-show-top-level)
+  :custom
+  (which-key-idle-delay 0.1)
+  (which-key-frame-max-height 50)
+  (which-key-is-verbose t)
+  (which-key-side-window-max-height 0.4)
+  (which-key-sort-order 'which-key-description-order)
   :config
   (which-key-add-key-based-replacements "C-c w" "Windows/WhichKey")
   (which-key-add-key-based-replacements "C-c v" "Vim")
@@ -1441,22 +1428,16 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-add-key-based-replacements "C-c b" "Build")
   (which-key-add-key-based-replacements "C-c m" "Multiple cursors")
   (which-key-add-key-based-replacements "C-c y" "Yasnippets")
-  (which-key-add-key-based-replacements "C-c 5" "Frames")
-  (setq which-key-idle-delay 0.1
-        which-key-frame-max-height 50
-        which-key-is-verbose t
-        which-key-side-window-max-height 0.4
-        which-key-sort-order 'which-key-description-order))
+  (which-key-add-key-based-replacements "C-c 5" "Frames"))
 
 (use-package company
   :defer nil
   :diminish ""
-  :init
-  (setq company-dabbrev-downcase nil)
+  :custom
+  (company-dabbrev-downcase nil)
+  (company-idle-delay 0.1)
   :config
-
   (global-company-mode 1)
-  (setq company-idle-delay 0.1)
   (use-package company-jedi
     :mode
     ("\\.py\\'" . python-mode)
