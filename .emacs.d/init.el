@@ -684,18 +684,26 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/csharp-build-csproj ()
   "Build curent csproj."
   (interactive)
-  (compile
-   (concat
-    "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
-    (me/csharp-find-csproj))))
+  (if current-prefix-arg
+      (async-shell-command (concat
+                            "dotnet build "
+                            (me/csharp-find-csproj)))
+    (compile
+     (concat
+      "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
+      (me/csharp-find-csproj)))))
 
 (defun me/csharp-build-sln ()
   "Build current sln."
   (interactive)
-  (compile
-   (concat
-    "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
-    (me/csharp-find-sln))))
+  (if current-prefix-arg
+      (async-shell-command (concat
+                            "dotnet build "
+                            (me/csharp-find-sln)))
+    (compile
+     (concat
+      "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
+      (me/csharp-find-sln)))))
 
 (defun me/nunit2-run-tests-me ()
   "Run TestMe NUnit2."
