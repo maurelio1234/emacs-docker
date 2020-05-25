@@ -1115,6 +1115,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (kubernetes-poll-frequency (* 60 60)))
 
 (use-package explain-pause-mode
+  :diminish ""
   :straight (:host github :repo "lastquestion/explain-pause-mode"
                    :branch "master")
   :custom
