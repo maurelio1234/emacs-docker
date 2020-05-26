@@ -13,9 +13,9 @@
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -25,8 +25,8 @@
 
 (setq package-enable-at-startup nil)
 (setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                         ("gnu"   . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
+			 ("gnu"   . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "http://melpa.org/packages/")))
 
 (defvar
   me/bootstraping-p
@@ -37,6 +37,7 @@
 (require 'straight)
 (require 'use-package)
 (setq use-package-always-ensure nil)
+
 (setq straight-use-package-by-default t)
 
 (straight-use-package '(org :type built-in))
@@ -49,19 +50,19 @@
 (use-package disable-mouse)
 (use-package dash-docs
   :straight (:host github :repo "dash-docs-el/dash-docs"
-                   :branch "master"))
+		   :branch "master"))
 (use-package counsel-dash)
 (use-package projectile
   :straight (:host github :repo "maurelio1234/projectile"
-                   :branch "master"))
+		   :branch "master"))
 (use-package counsel-projectile)
 (use-package omnisharp
   :config
   (setq omnisharp-server-executable-path
-        (concat
-         "/home/"
-         (user-login-name)
-         "/.emacs.d/.cache/omnisharp/server/v1.34.5/run"))
+	(concat
+	 "/home/"
+	 (user-login-name)
+	 "/.emacs.d/.cache/omnisharp/server/v1.34.5/run"))
   (omnisharp--install-server nil t))
 (use-package company-jedi)
 (use-package helm-company)
@@ -79,16 +80,13 @@
 (use-package eshell)
 (use-package better-defaults
   :straight (:host github :repo "technomancy/better-defaults"
-                   :branch "master"))
-(use-package powerline
-  :straight (:host github :repo "Dewdrops/powerline"
-                   :branch "master"))
+		   :branch "master"))
 (use-package emacs-surround
   :straight (:host github :repo "ganmacs/emacs-surround"
-                   :branch "master"))
+		   :branch "master"))
 (use-package naysayer-theme
   :straight (:host github :repo "nickav/naysayer-theme.el"
-                   :branch "master"))
+		   :branch "master"))
 (use-package vue-mode)
 (use-package key-chord)
 (use-package aggressive-indent)
@@ -105,10 +103,10 @@
   :config
   (when me/bootstraping-p
     (let
-        ;; yes that's cheating, but otherwise
-        ;; the installer code will get confused when bootstraping
-        ;; happens in batch mode
-        ((window-system 'x))
+	;; yes that's cheating, but otherwise
+	;; the installer code will get confused when bootstraping
+	;; happens in batch mode
+	((window-system 'x))
       (all-the-icons-install-fonts t))))
 
 (use-package counsel)
@@ -137,19 +135,20 @@
 (use-package markdown-mode)
 (use-package yaml-mode
   :straight (:host github :repo "HParker/yaml-mode"
-                   :branch "master"))
+		   :branch "master"))
 (use-package docker-tramp)
 (use-package docker)
 (use-package dockerfile-mode)
+(use-package bug-hunter)
 (use-package slack
   :straight (:host github :repo "maurelio1234/emacs-slack"
-                   :branch "master")
+		   :branch "master")
   :custom (emojify-download-emojis-p t)
   :config
   (when me/bootstraping-p
     (emojify-ensure-images)))
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
-                   :branch "master"))
+		   :branch "master"))
 (provide 'bootstrap)
 ;;; bootstrap.el ends here
