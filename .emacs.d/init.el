@@ -80,9 +80,11 @@
                     "%H:%M"
                     (slack-message-time-stamp message))))
     (with-current-buffer (get-buffer-create "* Slack Alerts *")
+      (read-only-mode -1)
       (goto-char (point-max))
       (insert (format "\nTeam: %s\nRoom: %s\nTimestamp: %s\nUser: %s\n\n%s\n\n"
-                      team-name room-name timestamp user-name text)))))
+                      team-name room-name timestamp user-name text))
+      (read-only-mode 1))))
 
 (defun me/db (server user password db)
   "Connect to DB in SERVER using USER and PASSWORD."
