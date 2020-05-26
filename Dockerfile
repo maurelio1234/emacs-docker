@@ -188,6 +188,11 @@ RUN mkdir -p ~/.local/share/fonts && \
 # Python Modules for teaching
 RUN pip3 install --user pycrypto
 
+# Browsh support
+RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
+RUN sudo apt install ./browsh_1.6.4_linux_amd64.deb
+RUN rm ./browsh_1.6.4_linux_amd64.deb
+
 # Copy the files that (almost) never change
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/

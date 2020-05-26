@@ -52,9 +52,21 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+;;; Browsh support
+(defun me/browsh-init ()
+  "Start the Browsh Process."
+  (async-shell-command "browsh --http-server-mode"))
+
+(defun me/browsh (url)
+  "Browse for a URL."
+  (interactive "sURL: ")
+  "Start the Browsh Process."
+  (eww (concat "http://localhost:4333/" url)))
+
 (define-derived-mode me/slack-alerts-mode special-mode "Slack Alerts"
   "Alerts from Slack")
 
+;;; Slack alerts major mode
 (defun me/switch-to-alerts-buffer ()
   "Switch to alerts buffer."
   (interactive)
@@ -977,6 +989,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :hook
   (prog-mode . me/prog-mode-hook)
   (after-init . me/frame-fullscreen)
+  (after-init . me/browsh-init)
   (emacs-startup . me/emacs-startup-hook)
   (shell-mode . me/shell-hook)
   :config
