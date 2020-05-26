@@ -538,7 +538,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (subword-mode 1)
   (electric-pair-local-mode 1)
-  (whitespace-mode 1)
+  ;; (when (display-graphic-p)
+  ;;   (whitespace-mode 1))
   (setq-local show-trailing-whitespace t)
   (setq-local show-leading-whitespace t)
   (setq-local indicate-empty-lines t)
@@ -1024,6 +1025,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
   (setenv "PATH"
           (concat "/home/" (user-login-name) "/bin" ":" (getenv "PATH")))
+
   (setenv "WORK" "~/bitbucket/work")
 
   (setenv
@@ -1038,7 +1040,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
   ;; Modes
   (display-time-mode 1)
-  (display-battery-mode 1)
+  (unless me/in-docker-p
+    (display-battery-mode 1))
   (tooltip-mode    -1)
   (desktop-save-mode -1)
   (delete-selection-mode 1)
@@ -1048,7 +1051,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (savehist-mode t)
   (electric-pair-mode -1)
   (global-auto-revert-mode -1)
-  (global-hl-line-mode 1)
+  (when (display-graphic-p)
+    (global-hl-line-mode 1))
+
   (global-whitespace-mode -1)
 
   ;; Its off by default, it works, it's just not visible, so it's a win-win
