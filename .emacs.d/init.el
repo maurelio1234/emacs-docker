@@ -1028,7 +1028,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
   (setenv
    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE"
-   "true") ; so that dotnet stops printing obnoxious messages
+   "true")                                        ; so that dotnet stops printing obnoxious messages
+
+  (setenv
+   "DOTNET_CLI_TELEMETRY_OPTOUT"
+   "true")
 
   (setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
 
