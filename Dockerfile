@@ -1,4 +1,4 @@
-FROM silex/emacs:27.0-dev
+FROM silex/emacs:master-dev
 
 # Bring back man pages
 # https://github.com/tianon/docker-brew-ubuntu-core/issues/122#issuecomment-380529430
@@ -153,10 +153,10 @@ RUN apt-get update && apt-get install azure-cli
 ARG USER=marcos
 RUN addgroup $USER
 RUN adduser --disabled-password \
-	--shell /bin/bash \
-	--ingroup sudo \
-	--uid 1000 \
-	$USER
+        --shell /bin/bash \
+        --ingroup sudo \
+        --uid 1000 \
+        $USER
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN addgroup --gid 130 docker
 RUN usermod -aG docker $USER
@@ -173,17 +173,17 @@ RUN git config --global user.name "Marcos Almeida" && \
 RUN cd /home/$USER/ && \
     mkdir -p bin && \
     cd bin && \
-	wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
-	tar -xf exercism-3.0.13-linux-x86_64.tar.gz
+        wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
+        tar -xf exercism-3.0.13-linux-x86_64.tar.gz
 
 
 # Add JetBrains and Noto CJK fonts
 RUN mkdir -p ~/.local/share/fonts && \
-	wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
-	unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
-	wget "https://github.com/googlei18n/noto-cjk/blob/master/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
-	mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
-	fc-cache -f -v
+        wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
+        unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
+        wget "https://github.com/googlei18n/noto-cjk/blob/master/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
+        mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
+        fc-cache -f -v
 
 # Python Modules for teaching
 RUN pip3 install --user pycrypto
