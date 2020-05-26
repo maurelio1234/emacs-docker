@@ -270,11 +270,12 @@ Useful when switching back and forth between two buffers."
   "Set frame to fullscreen.
 Optionlly, FRAME is the frame to turn to fullscreen.
 This code is based on the code of `toogle-frame-fullscreen'"
-  (let* ((fullscreen (frame-parameter frame 'fullscreen)))
-    (modify-frame-parameters frame
-                             `((fullscreen . fullboth)
-                               (fullscreen-restore . ,fullscreen)))
-    (when (featurep 'cocoa) (sleep-for 0.5))))
+  (when (display-graphic-p)
+    (let* ((fullscreen (frame-parameter frame 'fullscreen)))
+      (modify-frame-parameters frame
+                               `((fullscreen . fullboth)
+                                 (fullscreen-restore . ,fullscreen)))
+      (when (featurep 'cocoa) (sleep-for 0.5)))))
 
 (defun stackoverflow/current-buffer-not-mini ()
   "Return 'current-buffer' if current buffer is not the *mini-buffer* else return buffer before minibuf is activated."
