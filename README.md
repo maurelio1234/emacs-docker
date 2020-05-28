@@ -2,17 +2,17 @@
 # To build locally
 
 ``` shell
-./run.sh build emacs
+./run.sh build IMAGE
 ```
 
 # Console
 
 ``` shell
-./run.sh text [emacs]
+./run.sh text [IMAGE]
 ```
 
 # GUI
 
 ``` shell
-./run.sh gui [emacs]
+./run.sh gui [IMAGE]
 ```
