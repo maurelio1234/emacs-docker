@@ -82,14 +82,14 @@ RUN set -ex \
     && (docker version || true)
 
 # Install C# Dev Tools
-RUN apt install -y \
+RUN apt-get install -y \
     dirmngr gnupg apt-transport-https ca-certificates && \
     apt-key adv \
     --keyserver hkp://keyserver.ubuntu.com:80 \
     --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && \
     sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" > /etc/apt/sources.list.d/mono-official-stable.list' && \
-    sudo apt update && \
-    apt install -y mono-complete nuget
+    sudo apt-get update && \
+    apt-get install -y mono-complete nuget
 
 # Dotnet Core
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
@@ -129,7 +129,7 @@ RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
     && sudo cert-sync ~/cacert.pem
 
 # Man pages
-RUN apt install -y man manpages manpages-posix manpages-dev
+RUN apt-get install -y man manpages manpages-posix manpages-dev
 
 # Helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -190,7 +190,7 @@ RUN pip3 install --user pycrypto
 
 # Browsh support
 RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
-RUN sudo apt install ./browsh_1.6.4_linux_amd64.deb
+RUN sudo apt-get install ./browsh_1.6.4_linux_amd64.deb
 RUN rm ./browsh_1.6.4_linux_amd64.deb
 
 # Copy the files that (almost) never change
