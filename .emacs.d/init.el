@@ -199,6 +199,10 @@
                                 (search-forward branch-name nil t))
                             (= (1+ (length branch-name)) (point)))))
          (master-branch? (equal branch-name "master"))
+         (issue-branch? (equal
+                         (let ((case-fold-search nil))
+                           (string-match-p "[A-Z]+-[0-9]+" branch-name))
+                         0))
          (staged-files   (magit-staged-files))
          (staged-file    (car staged-files))
          (staged-filename (f-filename staged-file))
@@ -210,13 +214,13 @@
                              (concat category-name ": ")
                            ""))
          (branch-prefix  (if
-                             master-branch?
+                             (or master-branch? (not issue-branch?))
                              ""
-                           (concat branch-name ": "))))
-    (unless (or merge-commit?
-                revert-commit?
-                amend-commit?)
-      (insert branch-prefix category))))
+                           (concat branch-name ": ")))
+         (unless (or merge-commit?
+                     revert-commit?
+                     amend-commit?)
+           (insert branch-prefix category)))))
 
 (defun me/eww-after-render-hook ()
   "Things to do after rendereing a eww page."
