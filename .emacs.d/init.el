@@ -1493,7 +1493,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (slack-message-custom-notifier 'me/slack-message-custom-nofifier)
   :bind
   ("C-c S r" . 'slack-select-rooms)
-  ("C-c S a" . 'me/switch-to-alerts-buffer)
+  ("C-c S m l" . 'me/switch-to-alerts-buffer)
+  ("C-c S m r" . 'slack-message-add-reaction)
+  ("C-c S m j" . 'slack-insert-emoji)
+  ("C-c S m m" . 'slack-message-embed-mention)
   :config
   (setq slack-modeline t)
   (me/init-alerts-buffer))
