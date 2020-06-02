@@ -148,6 +148,9 @@ RUN AZ_REPO=$(lsb_release -cs) && \
     sudo tee /etc/apt/sources.list.d/azure-cli.list
 RUN apt-get update && apt-get install azure-cli
 
+# CircleCI CLI
+RUN curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | bash
+
 # Define main user
 
 ARG USER=marcos
