@@ -964,6 +964,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                    (circleci-build-mode 1))))
   :custom
   (savehist-save-minibuffer-history 1)
+  (savehist-file "/home/marcos/github/perso/savehist.el")
   (calendar-date-style 'european)
   (calendar-mark-holidays-flag t)
   (savehist-additional-variables
@@ -1225,12 +1226,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          (eww-after-render . me/eww-after-render-hook))
   :custom
   (eww-history-limit nil)
-  (browse-url-browser-function 'eww-browse-url)
-  :config
-  (setq me/eww-saved-history eww-history)
-  (setq me/eww-saved-history-position eww-history-position)
-  (add-to-list 'savehist-additional-variables
-               'eshell-history-ring))
+  (browse-url-browser-function 'eww-browse-url))
 
 (use-package key-chord
   :config
