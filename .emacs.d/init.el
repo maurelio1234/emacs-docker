@@ -1321,7 +1321,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (when (featurep 'magit)
     (setq magit-completing-read-function 'ivy-completing-read))
   (when (featurep 'projectile)
-    (setq projectile-completion-system 'ivy)))
+    (setq projectile-completion-system 'ivy))
+  (ivy-mode 1))
 
 (use-package counsel
   :bind
