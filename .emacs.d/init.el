@@ -977,7 +977,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
      Info-history-list
      register-alist
      eshell-history-ring))
-  (battery-mode-line-format " %b %t %rW")
+  (battery-mode-line-format " %b %rr %p%% %t %rW")
 
   (echo-keystrokes 0.1)
   (python-shell-interpreter "python3")
