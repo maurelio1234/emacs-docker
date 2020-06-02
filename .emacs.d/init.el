@@ -977,9 +977,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
      Info-history-list
      register-alist
      eshell-history-ring))
-
-  (unless me/in-docker-p
-    (battery-mode-line-format " %b %t %rW"))
+  (battery-mode-line-format " %b %t %rW")
 
   (echo-keystrokes 0.1)
   (python-shell-interpreter "python3")
@@ -1065,8 +1063,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
   ;; Modes
   (display-time-mode 1)
-  (unless me/in-docker-p
-    (display-battery-mode 1))
+  (display-battery-mode 1)
   (tooltip-mode    -1)
   (desktop-save-mode -1)
   (delete-selection-mode 1)
