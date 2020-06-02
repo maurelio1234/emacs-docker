@@ -732,12 +732,20 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/nunit3-run-tests-all ()
   "Run all NUnit3."
   (interactive)
-  (magit-shell-command-topdir (concat (me/nunit-cmd 3 nil (me/nunit-find-test-dll)))))
+  (if current-prefix-arg
+      (async-shell-command (concat
+                            "dotnet test --filter \"TestCategory!=Integration\" "
+                            (me/csharp-find-sln)))
+    (magit-shell-command-topdir (concat (me/nunit-cmd 3 nil (me/nunit-find-test-dll))))))
 
 (defun me/nunit3-run-tests-me ()
   "Run TestMe NUnit3."
   (interactive)
-  (magit-shell-command-topdir (concat (me/nunit-cmd 3 "TestMe" (me/nunit-find-test-dll)))))
+  (if current-prefix-arg
+      (async-shell-command (concat
+                            "dotnet test --filter \"TestCategory=TestMe\" "
+                            (me/csharp-find-sln)))
+    (magit-shell-command-topdir (concat (me/nunit-cmd 3 "TestMe" (me/nunit-find-test-dll))))))
 
 (defun me/fix-csharp-mode ()
   "Fixes some variables in cc-mode that break csharp mode."
