@@ -52,6 +52,17 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(defun me/text-mode-hook ()
+  "Hook to run on text-mode."
+  (interactive)
+  (when
+      (equal
+       0
+       (string-match
+        "^build_.*step.*container.*txt"
+        (buffer-name)))
+    (circleci-build-mode 1)))
+
 ;;; Browsh support
 (defun me/browsh-init ()
   "Start the Browsh Process."
@@ -893,13 +904,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                   ;; Set dired-x buffer-local variables here.  For example:
                   ;; (dired-omit-mode 1)
                   ))
-  (text-mode . (lambda ()
-                 (when
-                     (zerop
-                      (string-match
-                       "^build_.*step.*container.*txt"
-                       (buffer-name)))
-                   (circleci-build-mode 1))))
+  (text-mode . me/text-mode-hook)
   :custom
   (savehist-save-minibuffer-history 1)
   (savehist-file "/home/marcos/github/perso/savehist.el")
