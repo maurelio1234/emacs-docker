@@ -258,13 +258,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (move-beginning-of-line nil)
   (open-line 1))
 
-(defun me/projectile-project-dashboard ()
-  "Dashboard for projectile project."
-  (interactive)
-  (if (me/git-repository-p)
-      (me/magit-status-full-screen)
-    (projectile-dired)))
-
 (defun me/magit-status-full-screen ()
   "Full screen magit status."
   (interactive)
@@ -272,11 +265,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (magit-status)
   (delete-other-windows)
   (message ""))
-
-(defun me/git-repository-p ()
-  "Is current directory a git repository?"
-  (interactive)
-  (file-exists-p (concat default-directory ".git")))
 
 ;; From Emacswiki: https://www.emacswiki.org/emacs/PasswordGenerator
 (defun wiki/make-password ()
@@ -1287,8 +1275,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :straight (:host github :repo "maurelio1234/projectile"
                    :branch "master")
   :diminish (projectile-mode . "")
-  :init
-  (setq projectile-switch-project-action #'me/projectile-project-dashboard)
   :bind
   ("C-c p C-R" . 'projectile-discover-projects-in-search-path)
   (:map projectile-mode-map ("C-c p" . 'projectile-command-map))
