@@ -354,26 +354,23 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Dark mode theme."
   (interactive)
   (custom-set-variables
-   '(custom-enabled-themes (quote (doom-outrun-electric))))
+   '(custom-enabled-themes (quote (tsdh-dark))))
   (setq frame-background-mode 'dark)
-  (powerline-reset)
   (tab-bar-mode -1))
 
 (defun me/light-mode ()
   "Light mode theme."
   (interactive)
   (custom-set-variables
-   '(custom-enabled-themes (quote (doom-opera-light))))
-  (setq frame-background-mode 'light)
-  (powerline-reset))
+   '(custom-enabled-themes (quote (adwaita))))
+  (setq frame-background-mode 'light))
 
 (defun me/light-office-mode ()
   "Light mode theme when working on the office."
   (interactive)
   (custom-set-variables
    '(custom-enabled-themes (quote (leuven))))
-  (setq frame-background-mode 'light)
-  (powerline-reset))
+  (setq frame-background-mode 'light))
 
 ;;; Eshell
 (defun me/shell-history ()
