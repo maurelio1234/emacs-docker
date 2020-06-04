@@ -1012,7 +1012,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (global-so-long-mode 1)
 
   ;; Enable advanced commands
-  (put 'narrow-to-region 'disabled nil))
+  (put 'narrow-to-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil))
 
 (use-package cc-cedict
   :config
@@ -1466,5 +1468,3 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (provide 'init)
 
 ;;; init.el ends here
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
