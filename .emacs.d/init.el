@@ -128,11 +128,6 @@
         (vterm-send-return)))
     buffer-name))
 
-(defun me/dockerfile-mode-hook ()
-  "Hook for dockerfile mode, fixes indent."
-  ;; https://github.com/sp3ctum/spacemacs/commit/99e9875f8
-  (setq-local indent-line-function #'sh-indent-line))
-
 ;;; Misc
 (defun me/magit-commit-setup ()
   "Generate magit commit template."
@@ -1021,9 +1016,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq
    cc-cedict-file
    "~/Downloads/cedict_1_0_ts_utf-8_mdbg/cedict_ts.u8"))
-
-(use-package docker
-  :hook ((dockerfile-mode . me/dockerfile-mode-hook)))
 
 (use-package org
   :straight nil
