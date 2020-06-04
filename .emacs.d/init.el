@@ -889,6 +889,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (savehist-save-minibuffer-history 1)
   (savehist-file "/home/marcos/github/perso/emacs/savehist.el")
   (bookmark-default-file "/home/marcos/github/perso/emacs/bookmarks.bmk")
+  (bookmark-save-flag 1)
   (calendar-date-style 'european)
   (calendar-mark-holidays-flag t)
   (savehist-additional-variables
