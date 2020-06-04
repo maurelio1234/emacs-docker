@@ -1161,7 +1161,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (key-chord-define-global "yu" 'counsel-yank-pop)
   (key-chord-define-global "lk" 'me/just-occur)
   (key-chord-define-global "è_" 'undo-tree-undo)
-  (key-chord-define-global "cf" 'counsel-projectile-find-file)
+  (key-chord-define-global "cf" 'project-find-file)
   ;; C-x <something> translates to x<something>
   (key-chord-define-global "o*" 'me/switch-to-last-buffer)
   (key-chord-define-global "xb" 'ivy-switch-buffer)
