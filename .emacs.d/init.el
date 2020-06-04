@@ -1244,8 +1244,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
         '((t . ivy--regex-plus)))
   (when (featurep 'magit)
     (setq magit-completing-read-function 'ivy-completing-read))
-  (when (featurep 'projectile)
-    (setq projectile-completion-system 'ivy))
   (ivy-mode 1))
 
 (use-package counsel
@@ -1259,27 +1257,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :config
   (require 'dash-docs)
   (require 'counsel-dash)
-  (use-package counsel-projectile
-    :config
-    (counsel-projectile-mode 1))
   (defun me/counsel-M-x ()
     "Call counsel-M-x without showing ^ as initial-input."
     (interactive)
     (counsel-M-x "")))
-
-(use-package projectile
-  :straight (:host github :repo "maurelio1234/projectile"
-                   :branch "master")
-  :diminish (projectile-mode . "")
-  :bind
-  ("C-c p C-R" . 'projectile-discover-projects-in-search-path)
-  (:map projectile-mode-map ("C-c p" . 'projectile-command-map))
-  :custom
-  (projectile-project-search-path '("~/github/"
-                                    "~/bitbucket/"))
-  :config
-  (projectile-mode +1)
-  (projectile-add-known-project "~/exercism"))
 
 (use-package paredit
   :diminish " 🄿"

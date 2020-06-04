@@ -52,10 +52,6 @@
   :straight (:host github :repo "dash-docs-el/dash-docs"
                    :branch "master"))
 (use-package counsel-dash)
-(use-package projectile
-  :straight (:host github :repo "maurelio1234/projectile"
-                   :branch "master"))
-(use-package counsel-projectile)
 (use-package omnisharp
   :config
   (setq omnisharp-server-executable-path
