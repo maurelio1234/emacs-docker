@@ -75,7 +75,6 @@
 (use-package undo-tree)
 (use-package kubernetes)
 (use-package deft)
-(use-package yoshi-theme)
 (use-package guru-mode)
 (use-package eshell)
 (use-package better-defaults
@@ -83,9 +82,6 @@
                    :branch "master"))
 (use-package emacs-surround
   :straight (:host github :repo "ganmacs/emacs-surround"
-                   :branch "master"))
-(use-package naysayer-theme
-  :straight (:host github :repo "nickav/naysayer-theme.el"
                    :branch "master"))
 (use-package vue-mode)
 (use-package key-chord)
@@ -113,7 +109,6 @@
       (all-the-icons-install-fonts t))))
 
 (use-package counsel)
-(use-package doom-themes)
 (use-package no-littering)
 (use-package paredit)
 (use-package nginx-mode)
