@@ -1380,6 +1380,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-sort-order 'which-key-description-order)
   :config
   (which-key-add-key-based-replacements "C-c w" "Windows/WhichKey")
+  (which-key-add-key-based-replacements "C-c S" "Slack")
+  (which-key-add-key-based-replacements "C-c S m" "Messages")
   (which-key-add-key-based-replacements "C-c v" "Vim")
   (which-key-add-key-based-replacements "C-c E" "Emacs")
   (which-key-add-key-based-replacements "C-c j" "Avy jump")
@@ -1425,6 +1427,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c S r" . 'slack-select-rooms)
   ("C-c S m l" . 'me/switch-to-alerts-buffer)
   ("C-c S m r" . 'slack-message-add-reaction)
+  ("C-c S m e" . 'slack-message-edit)
   ("C-c S m j" . 'slack-insert-emoji)
   ("C-c S m m" . 'slack-message-embed-mention)
   :config
