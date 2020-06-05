@@ -68,8 +68,8 @@ RUN mkdir -p ~/Downloads/cedict_1_0_ts_utf-8_mdbg && \
         wget https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.zip && \
         unzip cedict_1_0_ts_utf-8_mdbg.zip
 
-        # Install Docker
-        RUN set -ex \
+# Install Docker
+RUN set -ex \
         && export DOCKER_VERSION=$(curl --silent --fail --retry 3 https://download.docker.com/linux/static/stable/x86_64/ | grep -o -e 'docker-[.0-9]*-ce\.tgz' | sort -r | head -n 1) \
         && DOCKER_URL="https://download.docker.com/linux/static/stable/x86_64/${DOCKER_VERSION}" \
         && echo Docker URL: $DOCKER_URL \
@@ -81,8 +81,8 @@ RUN mkdir -p ~/Downloads/cedict_1_0_ts_utf-8_mdbg && \
         && which docker \
         && (docker version || true)
 
-        # Install C# Dev Tools
-        RUN apt-get install -y \
+# Install C# Dev Tools
+RUN apt-get install -y \
         dirmngr gnupg apt-transport-https ca-certificates && \
         apt-key adv \
         --keyserver hkp://keyserver.ubuntu.com:80 \
@@ -137,81 +137,81 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
         sudo mv ./kubectl /usr/local/bin/kubectl
 
 # Azure CLI
-RUN apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+RUN apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
         gpg --dearmor | \
         sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
 RUN AZ_REPO=$(lsb_release -cs) && \
         echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
         sudo tee /etc/apt/sources.list.d/azure-cli.list
-        RUN apt-get update && apt-get install azure-cli
+RUN apt-get update && apt-get install azure-cli -y
 
-        # CircleCI CLI
-        RUN curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | bash
+# CircleCI CLI
+RUN curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/master/install.sh | bash
 
-        # Define main user
+# Define main user
 
         ARG USER=marcos
-        RUN addgroup $USER
-        RUN adduser --disabled-password \
+RUN addgroup $USER
+RUN adduser --disabled-password \
         --shell /bin/bash \
         --ingroup sudo \
         --uid 1000 \
         $USER
-        RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-        RUN addgroup --gid 130 docker
-        RUN usermod -aG docker $USER
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN addgroup --gid 130 docker
+RUN usermod -aG docker $USER
 
-        USER $USER
-        WORKDIR /home/marcos
+USER $USER
+WORKDIR /home/marcos
 
-        # Configure git
-        RUN git config --global user.name "Marcos Almeida" && \
+# Configure git
+RUN git config --global user.name "Marcos Almeida" && \
         git config --global user.email marcos.almeida@xcomponent.com && \
         git config --global core.autocrlf input
 
-        # Configure Exercism
-        RUN cd /home/$USER/ && \
+# Configure Exercism
+RUN cd /home/$USER/ && \
         mkdir -p bin && \
         cd bin && \
         wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
         tar -xf exercism-3.0.13-linux-x86_64.tar.gz
 
 
-        # Add JetBrains and Noto CJK fonts
-        RUN mkdir -p ~/.local/share/fonts && \
+# Add JetBrains and Noto CJK fonts
+RUN mkdir -p ~/.local/share/fonts && \
         wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
         unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
         wget "https://github.com/googlei18n/noto-cjk/blob/master/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
         mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
         fc-cache -f -v
 
-        # Python Modules for teaching
-        RUN pip3 install --user pycrypto
+# Python Modules for teaching
+RUN pip3 install --user pycrypto
 
-        # Browsh support
-        RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
-        RUN sudo apt-get install ./browsh_1.6.4_linux_amd64.deb
-        RUN rm ./browsh_1.6.4_linux_amd64.deb
+# Browsh support
+RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
+RUN sudo apt-get install -y ./browsh_1.6.4_linux_amd64.deb
+RUN rm ./browsh_1.6.4_linux_amd64.deb
 
-        # Install Chrome
-        RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+# Install Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
         sudo apt-get install ./google-chrome-stable_current_amd64.deb -y && \
         rm ./google-chrome-stable_current_amd64.deb
 
-        # Copy the files that (almost) never change
-        # TODO find a way to read user name from variable
-        COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
+# Copy the files that (almost) never change
+# TODO find a way to read user name from variable
+COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 
-        # Bootstrap emacs packages
-        RUN BOOTSTRAPING=true \
+# Bootstrap emacs packages
+RUN BOOTSTRAPING=true \
         emacs -batch \
         --eval "(require 'bootstrap \"/home/$USER/.emacs.d/bootstrap.el\")"
 
-        # Now copy the files that change all the time
-        # TODO find a way to read user name from variable
-        COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
+# Now copy the files that change all the time
+# TODO find a way to read user name from variable
+COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
 
-        # Avoid errors like
-        #        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
-        ENV NO_AT_BRIDGE=1
+# Avoid errors like
+#        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
+ENV NO_AT_BRIDGE=1
