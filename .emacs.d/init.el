@@ -1078,7 +1078,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (explain-pause-blocking-too-long-ms 1000)
   :config
   (explain-pause-mode 1))
-
+(use-package wc-mode
+  :hook ((org-mode . wc-mode)))
 (use-package deft
   :bind
   ("M-s-d" . 'deft)

@@ -117,6 +117,7 @@
 (use-package terraform-mode)
 (use-package magit)
 (use-package pretty-mode)
+(use-package wc-mode)
 (use-package csharp-mode)
 (use-package typescript-mode)
 (use-package restclient)
