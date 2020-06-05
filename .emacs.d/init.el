@@ -431,7 +431,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          (subword-mode-enabled subword-mode))
     (subword-mode -1)
     (cond
-     (helm-mode (helm-grep-do-git-grep t))
      (ivy-mode (counsel-git-grep initial-text))
      (t (vc-git-grep initial-text)))
     (subword-mode (if subword-mode-enabled 1 -1))))
@@ -449,7 +448,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          (subword-mode-enabled subword-mode))
     (subword-mode -1)
     (cond
-     (helm-mode (helm-occur))
      (ivy-mode (counsel-grep-or-swiper initial-text))
      (t (occur initial-text)))
     (subword-mode (if subword-mode-enabled 1 -1))))
@@ -458,7 +456,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Activate occur in current file."
   (interactive)
   (cond
-   (helm-mode (helm-occur))
    (ivy-mode (counsel-grep-or-swiper))
    (t (occur))))
 
@@ -1078,8 +1075,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (explain-pause-slow-too-long-ms 1000)
   :config
   (explain-pause-mode 1))
+
 (use-package wc-mode
   :hook ((org-mode . wc-mode)))
+
 (use-package deft
   :bind
   ("M-s-d" . 'deft)
@@ -1380,10 +1379,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     ("\\.py\\'" . python-mode)
     :config
     (add-to-list 'company-backends 'company-omnisharp))
-  (use-package helm-company
-    :after (helm)
-    :bind (:map company-mode-map ("C-:" . 'helm-company)
-                :map company-active-map ("C-:" . 'helm-company)))
   (use-package company-box
     :diminish ""
     :disabled t
