@@ -1140,11 +1140,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package eww
   :init
   (require 'youdao-dictionary)
-  :bind (:map eww-mode-map
-              ("C-c f" . 'me/eww/open-page-firefox)
-              ("C-c y" . 'youdao-dictionary-search-at-point-tooltip)
-              ("<f12>" . 'me/cc-cedict-selection)
-              ("C-<f12>" . 'me/cc-cedict-selection-hide))
+  :bind
+  ("C-c e" . 'eww)
+  (:map eww-mode-map
+        ("C-c f" . 'me/eww/open-page-firefox)
+        ("C-c y" . 'youdao-dictionary-search-at-point-tooltip)
+        ("<f12>" . 'me/cc-cedict-selection)
+        ("C-<f12>" . 'me/cc-cedict-selection-hide))
   :hook (
          (eww-mode . (lambda () (visual-line-mode 1)))
          (eww-after-render . me/eww-after-render-hook))
