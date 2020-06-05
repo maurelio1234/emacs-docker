@@ -64,6 +64,14 @@
     (circleci-build-mode 1)))
 
 ;;; Browsh support
+(defun me/browsh-copy-page-url ()
+  "Copy the URL of the current page into the kill ring removing browsh prefix."
+  (interactive)
+  (let* ((url (eww-copy-page-url))
+         (browsh-url "http://localhost:4333/"))
+    (when (s-starts-with-p browsh-url url)
+      (kill-new (substring url (length browsh-url))))))
+
 (defun me/browsh-init ()
   "Start the Browsh Process."
   (async-shell-command "browsh --http-server-mode"))
@@ -1141,8 +1149,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :init
   (require 'youdao-dictionary)
   :bind
-  ("C-c e" . 'eww)
+  ("C-c e" . 'me/browsh)
   (:map eww-mode-map
+        ("G" . 'me/browsh)
+        ("w" . 'me/browsh-copy-page-url)
         ("C-c f" . 'me/eww/open-page-firefox)
         ("C-c y" . 'youdao-dictionary-search-at-point-tooltip)
         ("<f12>" . 'me/cc-cedict-selection)
