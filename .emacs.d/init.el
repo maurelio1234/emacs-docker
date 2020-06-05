@@ -1075,7 +1075,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :straight (:host github :repo "lastquestion/explain-pause-mode"
                    :branch "master")
   :custom
-  (explain-pause-blocking-too-long-ms 1000)
+  (explain-pause-slow-too-long-ms 1000)
   :config
   (explain-pause-mode 1))
 (use-package wc-mode
