@@ -194,6 +194,9 @@ RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.
 RUN sudo apt-get install -y ./browsh_1.6.4_linux_amd64.deb
 RUN rm ./browsh_1.6.4_linux_amd64.deb
 
+# Install Firefox too (needed for browsh)
+RUN sudo apt-get install -y firefox
+
 # Install Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
         sudo apt-get install ./google-chrome-stable_current_amd64.deb -y && \
