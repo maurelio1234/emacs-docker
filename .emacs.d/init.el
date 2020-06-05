@@ -1293,8 +1293,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c g" . 'me/magit-status-full-screen)
   (:map magit-process-mode-map ("C-c f" . 'browse-url-firefox)))
 
-(when
-    (and (display-graphic-p) (not me/in-docker-p))
+(when (display-graphic-p)
   (use-package pretty-mode
     :config (global-pretty-mode t)))
 
