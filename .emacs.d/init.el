@@ -489,6 +489,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (interactive)
   (subword-mode 1)
   (electric-pair-local-mode 1)
+  (display-fill-column-indicator-mode 1)
   ;; (when (display-graphic-p)
   ;;   (whitespace-mode 1))
   (setq-local show-trailing-whitespace t)
