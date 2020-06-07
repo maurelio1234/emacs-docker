@@ -10,6 +10,8 @@ volumes=" -v /home/$USER/.ssh:/home/$USER/.ssh \
           -v /mnt/data/github/emacs-docker/.emacs.d/init-test.el:/home/$USER/.emacs.d/init-test.el \
           -v /mnt/data/github/emacs-docker/.emacs.d/bootstrap.el:/home/$USER/.emacs.d/bootstrap.el \
           -v /mnt/data/exercism:/home/$USER/exercism \
+          -v /etc/localtime:/etc/localtime \
+          -v /etc/timezone:/etc/timezone \
           -v /var/run/docker.sock:/var/run/docker.sock"
 common_parametes=" --rm \
                    --net=host \
