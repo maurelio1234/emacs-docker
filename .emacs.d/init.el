@@ -77,10 +77,11 @@
   (async-shell-command "browsh --http-server-mode"))
 
 (defun me/browsh (url)
-  "Browse for a URL."
-  (interactive "sURL: ")
   "Start the Browsh Process."
-  (eww (concat "http://localhost:4333/" url)))
+  (interactive "sURL: ")
+  (eww (concat
+        (when current-prefix-arg
+          "http://localhost:4333/") url)))
 
 (define-derived-mode me/slack-alerts-mode special-mode "Slack Alerts"
   "Alerts from Slack")
