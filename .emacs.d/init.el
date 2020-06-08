@@ -848,6 +848,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c E l" . 'me/light-mode)
   ("C-c E o" . 'me/light-office-mode)
   ("C-c R" . 'me/revert-buffer-noconfirm)
+  ("C-c p p" . 'bookmark-jump)
   ("C-c r" . 'rename-buffer)
   ("C-c S a" . 'me/SaveConfigs)
   ("C-c o" . 'me/switch-to-last-buffer)
@@ -1414,6 +1415,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c S m e" . 'slack-message-edit)
   ("C-c S m j" . 'slack-insert-emoji)
   ("C-c S m m" . 'slack-message-embed-mention)
+  ("C-c S m t" . 'slack-thread-show-or-create)
   :config
   (setq slack-modeline t)
   (me/init-alerts-buffer))
