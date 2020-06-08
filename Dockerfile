@@ -202,6 +202,9 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
         sudo apt-get install ./google-chrome-stable_current_amd64.deb -y && \
         rm ./google-chrome-stable_current_amd64.deb
 
+# JQ, very useful
+RUN sudo apt-get install -y jq netcat coreutils
+
 # Copy the files that (almost) never change
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
@@ -218,3 +221,4 @@ COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
 # Avoid errors like
 #        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
 ENV NO_AT_BRIDGE=1
+
