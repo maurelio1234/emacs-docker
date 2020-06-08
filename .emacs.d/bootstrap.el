@@ -141,6 +141,7 @@
   :custom (emojify-download-emojis-p t)
   :config
   (when me/bootstraping-p
+    (require 'emojify)
     (emojify-ensure-images)))
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
