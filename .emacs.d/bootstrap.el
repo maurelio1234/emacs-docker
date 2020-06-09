@@ -6,6 +6,18 @@
 ;;;; Initialization
 (require 'package)
 
+;; Define this variable REALLY as soon as possible
+(defvar
+  me/bootstraping-p
+  (string-equal "true" (getenv "BOOTSTRAPING"))
+  "Are we bootstraping?")
+
+;; We do no keep the state of the docker container
+;; so, once it's build, no need to rebuild my packages...
+;; my tz handling seems to require this
+(unless me/bootstraping-p
+  (setq straight-check-for-modifications '(find-when-checking)))
+
 ;; Straight bootstrapper
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -28,13 +40,10 @@
                          ("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")))
 
-(defvar
-  me/bootstraping-p
-  (string-equal "true" (getenv "BOOTSTRAPING"))
-  "Are we bootstraping?")
 
 (straight-use-package 'use-package)
 (require 'straight)
+
 (require 'use-package)
 (setq use-package-always-ensure nil)
 
