@@ -52,6 +52,18 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(defun me/ansi-translate-current-buffer ()
+  "Translate ANSI codes in current buffer."
+  (interactive)
+  (let ((min (if (region-active-p)
+                 (region-beginning)
+               (point-min)))
+        (max (if (region-active-p)
+                 (region-end)
+               (point-max)))
+        (inhibit-read-only t))
+    (ansi-color-apply-on-region min max)))
+
 (defun me/text-mode-hook ()
   "Hook to run on text-mode."
   (interactive)
