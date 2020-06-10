@@ -1046,6 +1046,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :init
   (defun me/setup-org ()
     "Customizations to be activated on Org mode."
+    (display-fill-column-indicator-mode 1)
     (visual-line-mode t)
     (org-indent-mode 1))
   :bind
