@@ -1075,8 +1075,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
      (emacs-lisp . t)))
   (require 'org-indent)
   (require 'htmlize)
-  (require 'ox-reveal)
-  (define-key global-map "\C-cc" 'org-capture))
+  (require 'ox-reveal))
 
 ;; Should be loaded before every package that uses diminish
 (use-package diminish :config (diminish 'eldoc-mode))
