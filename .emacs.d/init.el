@@ -52,6 +52,12 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(defun me/async-shell-command ()
+  (interactive)
+  (async-shell-command (completing-read
+                        "Command: "
+                        shell-command-history)))
+
 (defun me/ansi-translate-current-buffer ()
   "Translate ANSI codes in current buffer."
   (interactive)
@@ -855,6 +861,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package emacs
   :diminish (subword-mode . " sW")
   :bind
+  ("M-s-&" . 'me/async-shell-command)
   ("C-z" . nil) ; disables C-z
   ("C-c 5 b" . 'select-frame-by-name)
   ("C-c D" . 'cd)
