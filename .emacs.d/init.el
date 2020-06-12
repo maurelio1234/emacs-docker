@@ -442,6 +442,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/search-word ()
   "Search current word in current project's files."
   (interactive)
+  (xref-push-marker-stack)
   (let* ((initial-text (if (use-region-p)
                            (progn
                              (deactivate-mark)
@@ -459,6 +460,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/search-word-in-file ()
   "Search current word in current file."
   (interactive)
+  (xref-push-marker-stack)
   (let* ((initial-text (if (use-region-p)
                            (progn
                              (deactivate-mark)
@@ -476,6 +478,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/just-occur ()
   "Activate occur in current file."
   (interactive)
+  (xref-push-marker-stack)
   (cond
    (ivy-mode (counsel-grep-or-swiper))
    (t (occur))))
