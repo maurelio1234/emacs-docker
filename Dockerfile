@@ -20,6 +20,7 @@ RUN apt-get update && \
         wget \
         libtool-bin \
         unzip \
+        zip \
         locales \
         curl \
         apt-utils \
@@ -54,6 +55,8 @@ RUN apt-get update && \
         g++-multilib \
         rabbitmq-server \
         python3-pip \
+        net-tools \
+        socat \
         && \
         wget -qO- "$CMAKE" | tar --strip-components=1 -xz -C /usr/local
 
@@ -221,4 +224,3 @@ COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
 # Avoid errors like
 #        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
 ENV NO_AT_BRIDGE=1
-
