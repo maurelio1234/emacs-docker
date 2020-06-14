@@ -155,5 +155,6 @@
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
                    :branch "master"))
+(use-package evil)
 (provide 'bootstrap)
 ;;; bootstrap.el ends here
