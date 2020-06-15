@@ -54,9 +54,10 @@
 ;;;; My functions
 (defun me/async-shell-command ()
   (interactive)
-  (async-shell-command (completing-read
-                        "Command: "
-                        shell-command-history)))
+  (kill-new (completing-read
+             "Command: "
+             shell-command-history))
+  (call-interactively 'async-shell-command))
 
 (defun me/ansi-translate-current-buffer ()
   "Translate ANSI codes in current buffer."
