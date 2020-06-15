@@ -1476,6 +1476,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :mode (("\\.yml\\'" . yaml-mode)
          ("\\.tpl\\'" . yaml-mode)))
 
+(use-package evil
+  :custom
+  (evil-want-C-u-scroll t))
+
+
 (message "init.el successfully loaded!")
 
 (provide 'init)
