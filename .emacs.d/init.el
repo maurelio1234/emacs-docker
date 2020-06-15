@@ -75,13 +75,13 @@
   "Hook to run on text-mode."
   (interactive)
   (turn-on-evil-mode 1)
-  (iniwhen
-   (equal
-    0
-    (string-match
-     "^build_.*step.*container.*txt"
-     (buffer-name)))
-   (circleci-build-mode 1)))
+  (when
+      (equal
+       0
+       (string-match
+        "^build_.*step.*container.*txt"
+        (buffer-name)))
+    (circleci-build-mode 1)))
 
 ;;; Browsh support
 (defun me/browsh-copy-page-url ()
