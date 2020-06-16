@@ -173,7 +173,7 @@
          (master-branch? (equal branch-name "master"))
          (issue-branch? (equal
                          (let ((case-fold-search nil))
-                           (string-match-p "[A-Z]+-[0-9]+" branch-name))
+                           (string-match-p "[A-Z0-9]+-[0-9]+" branch-name))
                          0))
          (staged-files   (magit-staged-files))
          (staged-file    (car staged-files))
