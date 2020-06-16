@@ -74,7 +74,6 @@
 (defun me/text-mode-hook ()
   "Hook to run on text-mode."
   (interactive)
-  (turn-on-evil-mode 1)
   (when
       (equal
        0
@@ -1477,9 +1476,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          ("\\.tpl\\'" . yaml-mode)))
 
 (use-package evil
+  :bind ("<f12>" . 'evil-mode)
   :custom
-  (evil-want-C-u-scroll t))
-
+  ;; use C-b to scroll instead
+  (evil-want-C-u-scroll nil))
 
 (message "init.el successfully loaded!")
 
