@@ -617,7 +617,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Generate the NUnit command depending on the selected DLL, runner VERSION and CATEGORY filter."
   (let* ((exe (if (eq version 2)
                   "./tools/NUnit.Runners.2.6.4/tools/nunit-console.exe"
-                "./tools/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe"))
+                "./tools/NUnit.ConsoleRunner.3.11.1/tools/nunit3-console.exe"))
          (cat (if category
                   (if (eq version 2)
                       (concat "--include:" category)
