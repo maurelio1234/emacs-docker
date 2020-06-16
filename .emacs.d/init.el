@@ -1476,7 +1476,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
          ("\\.tpl\\'" . yaml-mode)))
 
 (use-package evil
-  :bind ("<f12>" . 'evil-mode)
+  :bind ("<f12>" . 'evil-local-mode)
   :custom
   ;; use C-b to scroll instead
   (evil-want-C-u-scroll nil))
