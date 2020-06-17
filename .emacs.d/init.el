@@ -1108,7 +1108,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :custom
   (explain-pause-slow-too-long-ms 1000)
   :config
-  (explain-pause-mode 1))
+  (explain-pause-mode -1)) ;; only activate when you need something
 
 (use-package wc-mode
   :hook ((org-mode . wc-mode)))
