@@ -180,6 +180,9 @@ RUN cd /home/$USER/ && \
         wget https://github.com/exercism/cli/releases/download/v3.0.13/exercism-3.0.13-linux-x86_64.tar.gz && \
         tar -xf exercism-3.0.13-linux-x86_64.tar.gz
 
+# Install terraform cli
+RUN wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip && \
+        unzip terraform_0.12.26_linux_amd64.zip -d /home/$USER/bin/
 
 # Add JetBrains and Noto CJK fonts
 RUN mkdir -p ~/.local/share/fonts && \
