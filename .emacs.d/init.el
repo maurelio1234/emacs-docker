@@ -1069,6 +1069,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (org-log-done 'time)
   (org-catch-invisible-edits 'error)
   (org-default-notes-file (concat (concat me/github "/perso/notes.org")))
+  (org-confirm-babel-evaluate nil)
   :config
   (require 'jq-mode)
   (require 'ob-http)
