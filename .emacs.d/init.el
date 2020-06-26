@@ -52,6 +52,15 @@
   "Are we on a docker container?")
 
 ;;;; My functions
+(defun me/vterm-shell-command (path command buffer-name)
+  "Run vterm with COMMAND on a given PATH and BUFFER-NAME."
+  (cd path)
+  (vterm buffer-name)
+  (with-current-buffer buffer-name
+    (vterm-send-string (concat "reset && " command))
+    (vterm-send-return)))
+
+
 (defun me/async-shell-command ()
   (interactive)
   (kill-new (completing-read
