@@ -190,7 +190,8 @@ RUN mkdir -p ~/.local/share/fonts && \
         unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
         wget "https://github.com/googlei18n/noto-cjk/blob/master/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
         mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
-        fc-cache -f -v
+        fc-cache -f -v && \
+        rm JetBrainsMono-1.0.3.zip
 
 # Python Modules for teaching
 RUN pip3 install --user pycrypto
