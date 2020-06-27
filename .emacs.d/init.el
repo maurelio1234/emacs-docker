@@ -298,65 +298,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (delete-other-windows)
   (message ""))
 
-;; From Emacswiki: https://www.emacswiki.org/emacs/PasswordGenerator
-(defun wiki/make-password ()
-  "Return a password."
+(defun me/make-password ()
+  "Generate password using OpenSSL."
   (interactive)
-  (let ((length 10)
-        (upper t)
-        (lower t)
-        (number t)
-        (symbol t)
-        (ambiguous nil))
-    (let ((char-list (wiki/make-password-char-list upper
-                                                   lower
-                                                   number
-                                                   symbol
-                                                   ambiguous))
-          position
-          password)
-      (random t)
-      (loop for i from 1 to length
-            do (setq position (random (length char-list))
-                     password (concat
-                               password
-                               (string (nth position char-list)))))
-      (kill-new password)
-      (message "New password generated and added to kill ring!"))))
-
-(defun wiki/make-password-char-list (upper lower number symbol ambiguous)
-  "Make password according to criteria (UPPER, LOWER, NUMBER, SYMBOL or AMBIGUOUS."
-  (let* ((upper-chars-ambiguous '(?I ?O ?G))
-         (upper-chars (loop for i from ?A to ?Z unless
-                            (member i upper-chars-ambiguous)
-                            collect i))
-         (lower-chars-ambiguous '(?l ?o))
-         (lower-chars (loop for i from ?a to ?z unless
-                            (member i lower-chars-ambiguous)
-                            collect i))
-         (number-chars-ambiguous '(?0 ?1 ?6))
-         (number-chars (loop for i from ?0 to ?9 unless
-                             (member i number-chars-ambiguous)
-                             collect i))
-         (symbol-chars '(?! ?@ ?# ?$ ?% ?& ?* ?\( ?\) ?+ ?= ?/
-                            ?{ ?} ?\[ ?\] ?: ?\; ?< ?>))
-         (symbol-chars-ambiguous '(?_ ?- ?| ?, ?. ?` ?' ?~ ?^ ?\"))
-         char-list)
-    (if upper
-        (setq char-list (append char-list upper-chars)))
-    (if lower
-        (setq char-list (append char-list lower-chars)))
-    (if number
-        (setq char-list (append char-list number-chars)))
-    (if symbol
-        (setq char-list (append char-list symbol-chars)))
-    (if ambiguous
-        (setq char-list (append char-list
-                                upper-chars-ambiguous
-                                lower-chars-ambiguous
-                                number-chars-ambiguous
-                                symbol-chars-ambiguous)))
-    char-list))
+  (let ((password (shell-command-to-string "openssl rand -base64 16")))
+    (kill-new password)
+    (message "New password generated and added to kill ring!")))
 
 ;;; Goodies
 (defun me/Emacsd()
