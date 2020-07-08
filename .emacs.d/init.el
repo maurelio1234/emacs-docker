@@ -185,6 +185,7 @@
                            (string-match-p "[A-Z0-9]+-[0-9]+" branch-name))
                          0))
          (staged-files   (magit-staged-files))
+         (staged-files-common-prefix (s-chop-suffixes '("src/" "/") (cl-reduce 's-shared-start staged-files)))
          (staged-file    (car staged-files))
          (staged-filename (f-filename staged-file))
          (staged-dirname  (f-filename (f-parent staged-file)))
@@ -193,14 +194,14 @@
                             staged-filename))
          (category       (if (= 1 (length staged-files))
                              (concat category-name ": ")
-                           ""))
+                           (concat staged-files-common-prefix ": ")))
          (branch-prefix  (if
                              (or master-branch? (not issue-branch?))
                              ""
                            (concat branch-name ": "))))
     (unless (or merge-commit?
-                revert-commit?
-                amend-commit?)
+               revert-commit?
+               amend-commit?)
       (insert branch-prefix category))))
 
 (defun me/eww-after-render-hook ()
