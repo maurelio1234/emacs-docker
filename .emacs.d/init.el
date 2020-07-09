@@ -1027,6 +1027,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (org-catch-invisible-edits 'error)
   (org-default-notes-file (concat (concat me/github "/perso/notes.org")))
   (org-confirm-babel-evaluate nil)
+  (org-reveal-reveal-js-version 4)
+  (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
   :config
   (require 'jq-mode)
   (require 'ob-http)
