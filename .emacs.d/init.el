@@ -880,6 +880,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (bookmark-save-flag 1)
   (calendar-date-style 'european)
   (calendar-mark-holidays-flag t)
+  (create-lockfiles nil)
   (savehist-additional-variables
    '(kill-ring
      search-ring
