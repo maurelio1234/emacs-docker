@@ -184,6 +184,9 @@
                          (let ((case-fold-search nil))
                            (string-match-p "[A-Z0-9]+-[0-9]+" branch-name))
                          0))
+         (issue-code (let ((branch-name    (magit-get-current-branch)))
+                       (string-match "[A-Z0-9]+-[0-9]+" branch-name)
+                       (match-string 0 branch-name)))
          (staged-files   (magit-staged-files))
          (staged-files-common-prefix (s-chop-suffixes '("src/" "/") (cl-reduce 's-shared-start staged-files)))
          (staged-file    (car staged-files))
@@ -198,7 +201,7 @@
          (branch-prefix  (if
                              (or master-branch? (not issue-branch?))
                              ""
-                           (concat branch-name ": "))))
+                           (concat (if issue-branch? issue-code branch-name) ": "))))
     (unless (or merge-commit?
                revert-commit?
                amend-commit?)
