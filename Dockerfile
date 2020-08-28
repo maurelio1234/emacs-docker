@@ -124,6 +124,9 @@ RUN apt-get -q update && \
 RUN npm install -g gulp-cli
 RUN npm install npm@$NPM_VERSION -g
 
+# Install Java tools
+RUN apt-get install maven -y
+
 # Add SSL certificates
 RUN cert-sync /etc/ssl/certs/ca-certificates.crt \
         && curl https://curl.haxx.se/ca/cacert.pem > ~/cacert.pem \
@@ -134,6 +137,7 @@ RUN apt-get install -y man manpages manpages-posix manpages-dev
 
 # Helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
 # Kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
         chmod +x ./kubectl && \
