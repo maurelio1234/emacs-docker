@@ -84,6 +84,10 @@ RUN set -ex \
         && which docker \
         && (docker version || true)
 
+# Install Docker compose
+RUN sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+        && sudo chmod +x /usr/local/bin/docker-compose
+
 # Install C# Dev Tools
 RUN apt-get install -y \
         dirmngr gnupg apt-transport-https ca-certificates && \
