@@ -917,7 +917,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (vterm-shell "/bin/bash")
   :hook
   (prog-mode . me/prog-mode-hook)
-  (after-init . me/frame-fullscreen)
+  ;; (after-init . me/frame-fullscreen)
   (after-init . me/browsh-init)
   (emacs-startup . me/emacs-startup-hook)
   (shell-mode . me/shell-hook)
@@ -981,9 +981,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setenv "GIT_PAGER" "cat") ; so that I can use git without paging..
 
   ;; Modes
+  (tooltip-mode  1)
+  (menu-bar-mode 1)
+  (tool-bar-mode 1)
+  (tab-bar-mode 1)
   (display-time-mode 1)
   (display-battery-mode 1)
-  (tooltip-mode    -1)
   (desktop-save-mode -1)
   (delete-selection-mode 1)
   (size-indication-mode)
