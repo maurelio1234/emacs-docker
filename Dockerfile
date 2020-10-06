@@ -192,6 +192,11 @@ RUN cd /home/$USER/ && \
 RUN wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip && \
         unzip terraform_0.12.26_linux_amd64.zip -d /home/$USER/bin/
 
+# AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+        unzip awscliv2.zip && \
+        sudo ./aws/install -i /home/$USER/bin/
+
 # Add JetBrains and Noto CJK fonts
 RUN mkdir -p ~/.local/share/fonts && \
         wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
