@@ -483,6 +483,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (setq-local show-trailing-whitespace t)
   (setq-local show-leading-whitespace t)
   (setq-local indicate-empty-lines t)
+  (when (eq major-mode 'java-mode)
+    (turn-off-pretty-mode))
   (when (or
          (s-ends-with-p ".cake" (buffer-file-name))
          (s-ends-with-p "/data.json" (buffer-file-name))
