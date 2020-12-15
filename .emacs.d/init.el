@@ -55,7 +55,7 @@
 (defun me/start-language-server ()
   "Start the appropriate language server on the closest solution/project."
   (interactive)
-  (omnisharp--do-server-start (expand-file-name (me/csharp-find-sln))))
+  (omnisharp--do-server-start (file-name-directory (expand-file-name (me/csharp-find-sln)))))
 
 (defun me/vterm-shell-command (path command buffer-name)
   "Run vterm with COMMAND on a given PATH and BUFFER-NAME."
