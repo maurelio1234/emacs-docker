@@ -628,7 +628,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
       (async-shell-command (concat
                             "dotnet build "
                             (me/csharp-find-csproj)))
-    (compile
+    (async-shell-command
      (concat
       "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
       (me/csharp-find-csproj)))))
@@ -640,7 +640,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
       (async-shell-command (concat
                             "dotnet build "
                             (me/csharp-find-sln)))
-    (compile
+    (async-shell-command
      (concat
       "msbuild /p:buildmode=debug /p:PreBuildEvent= /p:PostBuildEvent= "
       (me/csharp-find-sln)))))
@@ -1321,7 +1321,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
         ("C-c t m" . 'me/nunit3-run-tests-me)
         ("C-c t a" . 'me/nunit3-run-tests-all)
         ("C-c b p" . 'me/csharp-build-csproj)
-        ("C-c b s" . 'me/csharp-build-sln))
+        ("C-c b s" . 'me/csharp-build-sln)
+        ("C-c s s" . 'me/start-language-server)
+        ("C-c s a" . 'omnisharp-run-code-action-refactoring)
+        ("C-c s r" . 'omnisharp-rename))
   :hook
   (csharp-mode . me/fix-csharp-mode)
   :config
