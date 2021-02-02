@@ -1324,6 +1324,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
         ("C-c b s" . 'me/csharp-build-sln)
         ("C-c s s" . 'me/start-language-server)
         ("C-c s a" . 'omnisharp-run-code-action-refactoring)
+        ("C-c s i" . 'omnisharp-find-implementations)
         ("C-c s f f" . 'omnisharp-code-format-entire-file)
         ("C-c s f F" . 'omnisharp-code-format-region)
         ("C-c s r" . 'omnisharp-rename))
