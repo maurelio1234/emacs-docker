@@ -1339,7 +1339,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (use-package omnisharp
     :after company
     :custom
-    (omnisharp-server-executable-path "/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.1/run")
+    (omnisharp-server-executable-path "/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run")
     :hook
     (csharp-mode . omnisharp-mode)
     ;; from https://github.com/OmniSharp/omnisharp-emacs/issues/431
