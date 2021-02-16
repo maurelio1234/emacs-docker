@@ -493,7 +493,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
           (string-suffix-p ".tsx" (buffer-file-name))
           (not (string-suffix-p "test.tsx" (buffer-file-name)))))
     (aggressive-indent-mode -1))
-  (add-hook 'before-save-hook 'whitespace-cleanup nil 'make-it-local))
+  (unless (string-suffix-p ".tsx" (buffer-file-name))
+    (add-hook 'before-save-hook 'whitespace-cleanup nil 'make-it-local)))
 
 ;;;; My minor modes
 
@@ -604,10 +605,18 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/find-something (pattern)
   "Helper function to find files ressembling a given PATTERN upwards from current path."
   (car (or (file-expand-wildcards pattern)
-           (file-expand-wildcards (concat "../" pattern))
-           (file-expand-wildcards (concat "../../" pattern))
-           (file-expand-wildcards (concat "../../../" pattern))
-           (file-expand-wildcards (concat "../../../.." pattern)))))
+          (file-expand-wildcards (concat "../" pattern))
+          (file-expand-wildcards (concat "../../" pattern))
+          (file-expand-wildcards (concat "../../../" pattern))
+          (file-expand-wildcards (concat "../../../.." pattern)))))
+
+(defun me/pretty-quick ()
+  "Prettifies current node project."
+  (interactive)
+  (let* ((root (locate-dominating-file (buffer-file-name nil) "package.json"))
+         (cmd (concat "cd " root " && npx pretty-quick")))
+    (save-window-excursion
+      (shell-command cmd))))
 
 (defun me/nunit-find-test-dll ()
   "Find the generated test DLL."
@@ -1211,6 +1220,18 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :custom
   (shr-color-visible-luminance-min 70))
 
+(defun me/tide-before-save ()
+  "Auto format for tide."
+  (interactive)
+  (unless (string-suffix-p ".tsx" (buffer-file-name))
+    (tide-format-before-save)))
+
+(defun me/tide-after-save ()
+  "Auto format for tide."
+  (interactive)
+  (if (string-suffix-p ".tsx" (buffer-file-name))
+      (me/pretty-quick)))
+
 (use-package tide
   :bind (:map tide-mode-map
               ("M-?" . 'tide-references)
@@ -1218,7 +1239,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+         (before-save . me/tide-before-save)
+         (after-save . me/tide-after-save)))
 
 (use-package web-mode
   :mode (("\\.html?" . web-mode)
