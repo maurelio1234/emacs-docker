@@ -107,7 +107,7 @@ RUN chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
 RUN chown root:root /etc/apt/sources.list.d/microsoft-prod.list
 RUN apt-get -q update && \
         apt-get install -y \
-        dotnet-sdk-3.1
+        dotnet-sdk-3.1 dotnet-sdk-5.0
 
 # Install MS SQL tools
 RUN ACCEPT_EULA=y apt-get install -y mssql-cli && \
