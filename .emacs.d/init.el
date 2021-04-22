@@ -57,6 +57,11 @@
   (interactive)
   (omnisharp--do-server-start (file-name-directory (expand-file-name (me/csharp-find-sln)))))
 
+(defun me/k9s ()
+  "Run K9s."
+  (interactive)
+  (me/vterm-shell-command "."  "docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s" "*K9S*"))
+
 (defun me/vterm-shell-command (path command buffer-name)
   "Run vterm with COMMAND on a given PATH and BUFFER-NAME."
   (cd path)
@@ -455,6 +460,16 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (cond
    (ivy-mode (counsel-grep-or-swiper))
    (t (occur))))
+
+(defun me/kill-ring-save-base64-decode ()
+  "Copy the selected text on the kill ring after decoding it from base64."
+  (interactive)
+  (when (use-region-p)
+    (let* ((selected-text (buffer-substring-no-properties
+                           (region-beginning)
+                           (region-end)))
+           (decoded-text (base64-decode-string selected-text)))
+      (kill-new decoded-text))))
 
 ;;; Hooks
 (defun me/emacs-startup-hook ()
@@ -1235,7 +1250,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package tide
   :bind (:map tide-mode-map
               ("M-?" . 'tide-references)
-              ("M-." . 'tide-jump-to-definition))
+              ("M-." . 'tide-jump-to-definition)
+              ("C-c s s" . 'tide-restart-server)
+              ("C-c s r" . 'tide-rename-symbol)
+              ("C-c s i" . 'tide-jump-to-implementation)
+              ("C-c s a" . 'tide-refactor))
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
