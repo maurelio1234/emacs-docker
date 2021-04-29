@@ -199,12 +199,12 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # Add JetBrains and Noto CJK fonts
 RUN mkdir -p ~/.local/share/fonts && \
-        wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
-        unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
-        wget "https://github.com/googlei18n/noto-cjk/blob/master/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
-        mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
-        fc-cache -f -v && \
-        rm JetBrainsMono-1.0.3.zip
+    wget https://download.jetbrains.com/fonts/JetBrainsMono-1.0.3.zip && \
+    unzip JetBrainsMono-1.0.3.zip -d ~/.local/share/fonts && \
+    wget "https://github.com/googlefonts/noto-cjk/blob/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Medium.otf?raw=true" --output-document=NotoSansCJKsc-Medium.otf && \
+    mv NotoSansCJKsc-Medium.otf ~/.local/share/fonts/ && \
+    fc-cache -f -v && \
+    rm JetBrainsMono-1.0.3.zip
 
 # Python Modules for teaching
 RUN pip3 install --user pycrypto
