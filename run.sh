@@ -18,6 +18,7 @@ common_parametes=" --rm \
                    --name emacs"
 
 if [[ "$mode" == "build" ]]; then
+    docker image pull maurelio1234/docker-emacs-native-compilation:latest
     docker build -t "$image" .
 elif [[ "$mode" == "text" ]]; then
     docker run $common_parametes \
