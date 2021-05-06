@@ -9,6 +9,7 @@ volumes=" -v /home/$USER/.ssh:/home/$USER/.ssh \
           -v /mnt/data/github/emacs-docker/.emacs.d/init.el:/home/$USER/.emacs.d/init.el \
           -v /mnt/data/github/emacs-docker/.emacs.d/init-test.el:/home/$USER/.emacs.d/init-test.el \
           -v /mnt/data/github/emacs-docker/.emacs.d/bootstrap.el:/home/$USER/.emacs.d/bootstrap.el \
+          -v /mnt/data/emacs/eln-cache:/home/$USER/.emacs.d/eln-cache \
           -v /mnt/data/exercism:/home/$USER/exercism \
           -v /etc/localtime:/etc/localtime \
           -v /etc/timezone:/etc/timezone \
@@ -16,6 +17,8 @@ volumes=" -v /home/$USER/.ssh:/home/$USER/.ssh \
 common_parametes=" --rm \
                    --net=host \
                    --name emacs"
+
+mkdir -p /mnt/data/emacs/eln-cache
 
 if [[ "$mode" == "build" ]]; then
     docker image pull maurelio1234/docker-emacs-native-compilation:latest
