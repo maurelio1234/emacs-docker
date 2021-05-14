@@ -502,6 +502,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     (turn-off-pretty-mode))
   (when (or
          (s-ends-with-p ".cake" (buffer-file-name))
+         ;; (s-ends-with-p ".cs" (buffer-file-name))
          (s-ends-with-p "/data.json" (buffer-file-name))
          (string-suffix-p ".vue" (buffer-file-name))
          (and
@@ -1154,7 +1155,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :straight (:host github :repo "ganmacs/emacs-surround"
                    :branch "master")
   :bind
-  ("C-c s" . 'emacs-surround)
+  ("C-c S" . 'emacs-surround)
   :config
   (add-to-list 'emacs-surround-alist '("`"   . ("`"  . "`"))))
 
@@ -1349,10 +1350,29 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (use-package pretty-mode
     :config (global-pretty-mode t)))
 
+(use-package eglot
+  :commands (eglot eglot-ensure)
+  :hook
+  (python-mode . eglot-ensure)
+  (csharp-mode . eglot-ensure)
+  :bind
+  ("C-c s s" . 'eglot-reconnect)
+  ("C-c s a" . 'eglot-code-actions)
+  ("C-c s i" . 'eglot-find-implementation)
+  ("C-c s f f" . 'eglot-format-buffer)
+  ("C-c s f F" . 'eglot-format)
+  ("C-c s r" . 'eglot-rename)
+  :config
+  (add-to-list 'eglot-server-programs
+               `(csharp-tree-sitter-mode . ("/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run" "-lsp"))))
+
+(use-package tree-sitter :ensure t)
+(use-package tree-sitter-langs :ensure t)
+
 (use-package csharp-mode
   :mode "\\.cake\\'"
   :bind
-  (:map csharp-mode-map
+  (:map csharp-tree-sitter-mode-map
         ("C-c t f" . 'me/nunit-add-category-testfixture)
         ("C-c t c" . 'me/nunit-add-category-testcase)
         ("C-c t 2 m" . 'me/nunit2-run-tests-me)
@@ -1363,12 +1383,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
         ("C-c t a" . 'me/nunit3-run-tests-all)
         ("C-c b p" . 'me/csharp-build-csproj)
         ("C-c b s" . 'me/csharp-build-sln)
-        ("C-c s s" . 'me/start-language-server)
-        ("C-c s a" . 'omnisharp-run-code-action-refactoring)
-        ("C-c s i" . 'omnisharp-find-implementations)
-        ("C-c s f f" . 'omnisharp-code-format-entire-file)
-        ("C-c s f F" . 'omnisharp-code-format-region)
-        ("C-c s r" . 'omnisharp-rename))
+        ;; ("C-c s s" . 'me/start-language-server)
+        ;; ("C-c s a" . 'omnisharp-run-code-action-refactoring)
+        ;; ("C-c s i" . 'omnisharp-find-implementations)
+        ;; ("C-c s f f" . 'omnisharp-code-format-entire-file)
+        ;; ("C-c s f F" . 'omnisharp-code-format-region)
+        ;; ("C-c s r" . 'omnisharp-rename)
+        )
   :hook
   (csharp-mode . me/fix-csharp-mode)
   :config
@@ -1376,8 +1397,10 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-add-key-based-replacements "C-c b" "C# Build")
   (which-key-add-key-based-replacements "C-c s" "C# Language Server")
   (which-key-add-key-based-replacements "C-c s f" "Auto Formatting")
+  (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode))
   (setq buffer-save-without-query t)
   (use-package omnisharp
+    :disabled
     :after company
     :custom
     (omnisharp-server-executable-path "/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run")
@@ -1441,8 +1464,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (use-package company-jedi
     :mode
     ("\\.py\\'" . python-mode)
-    :config
-    (add-to-list 'company-backends 'company-omnisharp))
+    ;; :config
+    ;; (add-to-list 'company-backends 'company-omnisharp)
+    )
   (use-package company-box
     :diminish ""
     :disabled t
