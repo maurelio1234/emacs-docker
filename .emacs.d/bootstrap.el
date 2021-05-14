@@ -13,13 +13,16 @@
   "Are we bootstraping?")
 
 ;; We do no keep the state of the docker container
-;; so, once it's build, no need to rebuild my packages...
+;; so, once it's built, no need to rebuild my packages...
 ;; my tz handling seems to require this
 (unless me/bootstraping-p
   (setq straight-check-for-modifications '(find-when-checking)))
 
+(message (emacs-version))
+
 ;; Straight bootstrapper
 (defvar bootstrap-version)
+(setq straight-repository-branch "develop") ; temporary fix for the nativecomp
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
