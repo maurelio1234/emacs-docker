@@ -157,7 +157,7 @@
       (read-only-mode 1))))
 
 (defun me/db (server user password db)
-  "Connect to DB in SERVER using USER and PASSWORD."
+  "Connect to SQLServer in SERVER using USER and PASSWORD."
   (interactive)
   (let
       ((buffer-name (format "*mssql %s@%s@%s*" user db server))
@@ -167,6 +167,25 @@
                  password
                  db
                  server)))
+    (if (get-buffer buffer-name)
+        (switch-to-buffer buffer-name)
+      (vterm buffer-name)
+      (with-current-buffer buffer-name
+        (vterm-send-string command)
+        (vterm-send-return)))
+    buffer-name))
+
+(defun me/redis (server port password db)
+  "Connect to REDIS in SERVER PORT using PASSWORD and DB number."
+  (interactive)
+  (let
+      ((buffer-name (format "*redis %s@%s@%s*" server port db))
+       (command (format
+                 "reset && redis-cli -c -h %s -p %d -a '%s' -n %d && exit"
+                 server
+                 port
+                 password
+                 db)))
     (if (get-buffer buffer-name)
         (switch-to-buffer buffer-name)
       (vterm buffer-name)
