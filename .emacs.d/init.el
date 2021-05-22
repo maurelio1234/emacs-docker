@@ -1187,8 +1187,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package emacs-surround
   :straight (:host github :repo "ganmacs/emacs-surround"
                    :branch "master")
-  :bind
-  ("C-c S" . 'emacs-surround)
+  ;; :bind
+  ;; ("C-c S" . 'emacs-surround)
   :config
   (add-to-list 'emacs-surround-alist '("`"   . ("`"  . "`"))))
 
@@ -1387,17 +1387,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :commands (eglot eglot-ensure)
   :hook
   (python-mode . eglot-ensure)
-  (csharp-mode . eglot-ensure)
   :bind
   ("C-c s s" . 'eglot-reconnect)
   ("C-c s a" . 'eglot-code-actions)
   ("C-c s i" . 'eglot-find-implementation)
   ("C-c s f f" . 'eglot-format-buffer)
   ("C-c s f F" . 'eglot-format)
-  ("C-c s r" . 'eglot-rename)
-  :config
-  (add-to-list 'eglot-server-programs
-               `(csharp-tree-sitter-mode . ("/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run" "-lsp"))))
+  ("C-c s r" . 'eglot-rename))
 
 (use-package tree-sitter :ensure t)
 (use-package tree-sitter-langs :ensure t)
@@ -1432,6 +1428,14 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-add-key-based-replacements "C-c s f" "Auto Formatting")
   (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode))
   (setq buffer-save-without-query t)
+  (use-package eglot
+    :hook
+    (csharp-mode . eglot-ensure)
+    (csharp-tree-sitter-mode . eglot-ensure)
+    :config
+    (add-to-list 'eglot-server-programs
+                 `(csharp-tree-sitter-mode . ("/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run" "-lsp"))))
+
   (use-package omnisharp
     :disabled
     :after company
@@ -1450,7 +1454,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package typescript-mode
   :mode ("\\.jsx\\'" "\\.tsx\\'")
   :config
-  (setq buffer-save-without-query t))
+  (setq buffer-save-without-query t)
+  (use-package eglot
+    :hook
+    (typescript-mode . eglot-ensure)
+    :config
+    (add-to-list 'eglot-server-programs
+                 `(typescript-mode . ("npx" "typescript-language-server" "--stdio")))))
 
 (use-package restclient
   :mode ("\\.rest\\'" . restclient-mode))
