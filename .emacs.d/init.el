@@ -488,7 +488,19 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                            (region-beginning)
                            (region-end)))
            (decoded-text (base64-decode-string selected-text)))
+      (when current-prefix-arg
+        (message decoded-text))
       (kill-new decoded-text))))
+
+(defun me/show-base64-decode ()
+  "Copy the selected text and display it after decoding it from base64."
+  (interactive)
+  (when (use-region-p)
+    (let* ((selected-text (buffer-substring-no-properties
+                           (region-beginning)
+                           (region-end)))
+           (decoded-text (base64-decode-string selected-text)))
+      (message decoded-text))))
 
 ;;; Hooks
 (defun me/emacs-startup-hook ()
@@ -889,6 +901,8 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c o" . 'me/switch-to-last-buffer)
   ("C-c q" . 'so-long)
   ("C-c O" . 'other-frame)
+  ("C-c O" . 'other-frame)
+  ("C-c w" . 'me/kill-ring-save-base64-decode)
   ("C-c K" . 'me/kill-async-no-process)
   ("M-s-o" . 'me/switch-to-last-buffer)
   ("M-<dead-circumflex>" . 'delete-indentation)
