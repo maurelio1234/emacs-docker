@@ -125,7 +125,7 @@ RUN apt-get -q update && \
         nodejs \
         yarn
 
-RUN npm install -g gulp-cli
+RUN npm install -g gulp-cli typescript typescript-language-server
 RUN npm install npm@$NPM_VERSION -g
 
 # Install Java tools
@@ -162,7 +162,7 @@ RUN curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/ma
 
 # Define main user
 
-        ARG USER=marcos
+ARG USER=marcos
 RUN addgroup $USER
 RUN adduser --disabled-password \
         --shell /bin/bash \
@@ -208,19 +208,15 @@ RUN mkdir -p ~/.local/share/fonts && \
 
 # Python Modules for teaching
 RUN pip3 install --user pycrypto
-
-# Browsh support
-RUN wget https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
-RUN sudo apt-get install -y ./browsh_1.6.4_linux_amd64.deb
-RUN rm ./browsh_1.6.4_linux_amd64.deb
-
-# Install Firefox too (needed for browsh)
-RUN sudo apt-get install -y firefox
+RUN sudo pip3 install python-language-server
 
 # Install Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
         sudo apt-get install ./google-chrome-stable_current_amd64.deb -y && \
         rm ./google-chrome-stable_current_amd64.deb
+
+# Install Redis
+RUN sudo apt-get install -y redis
 
 # JQ, very useful
 RUN sudo apt-get install -y jq netcat coreutils
