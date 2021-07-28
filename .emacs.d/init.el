@@ -667,7 +667,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 
 (defun me/nunit-find-test-dll ()
   "Find the generated test DLL."
-  (me/find-something "*/*/*Tests*.dll"))
+  (me/find-something "*/*/*/*Tests*.dll"))
 
 (defun me/csharp-find-csproj ()
   "Find project csproj."
@@ -1395,30 +1395,41 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   ("C-c s f F" . 'eglot-format)
   ("C-c s r" . 'eglot-rename))
 
+(defun me/csharp-tree-sitter-hook ()
+  (use-package csharp-mode
+    :mode "\\.cake\\'"
+    :bind
+    (:map csharp-tree-sitter-mode-map
+          ("C-c t f" . 'me/nunit-add-category-testfixture)
+          ("C-c t c" . 'me/nunit-add-category-testcase)
+          ("C-c t 2 m" . 'me/nunit2-run-tests-me)
+          ("C-c t 3 m" . 'me/nunit3-run-tests-me)
+          ("C-c t 2 a" . 'me/nunit2-run-tests-all)
+          ("C-c t 3 a" . 'me/nunit3-run-tests-all)
+          ("C-c t m" . 'me/nunit3-run-tests-me)
+          ("C-c t a" . 'me/nunit3-run-tests-all)
+          ("C-c b p" . 'me/csharp-build-csproj)
+          ("C-c b s" . 'me/csharp-build-sln)
+          ;; ("C-c s s" . 'me/start-language-server)
+          ;; ("C-c s a" . 'omnisharp-run-code-action-refactoring)
+          ;; ("C-c s i" . 'omnisharp-find-implementations)
+          ;; ("C-c s f f" . 'omnisharp-code-format-entire-file)
+          ;; ("C-c s f F" . 'omnisharp-code-format-region)
+          ;; ("C-c s r" . 'omnisharp-rename)
+          )))
+
 (use-package tree-sitter :ensure t)
-(use-package tree-sitter-langs :ensure t)
+(use-package tree-sitter-langs
+  :ensure t
+  :config
+  (use-package tree-sitter :ensure t)
+  :hook
+  (csharp-tree-sitter-mode . me/csharp-tree-sitter-hook))
+
+
 
 (use-package csharp-mode
   :mode "\\.cake\\'"
-  :bind
-  (:map csharp-tree-sitter-mode-map
-        ("C-c t f" . 'me/nunit-add-category-testfixture)
-        ("C-c t c" . 'me/nunit-add-category-testcase)
-        ("C-c t 2 m" . 'me/nunit2-run-tests-me)
-        ("C-c t 3 m" . 'me/nunit3-run-tests-me)
-        ("C-c t 2 a" . 'me/nunit2-run-tests-all)
-        ("C-c t 3 a" . 'me/nunit3-run-tests-all)
-        ("C-c t m" . 'me/nunit3-run-tests-me)
-        ("C-c t a" . 'me/nunit3-run-tests-all)
-        ("C-c b p" . 'me/csharp-build-csproj)
-        ("C-c b s" . 'me/csharp-build-sln)
-        ;; ("C-c s s" . 'me/start-language-server)
-        ;; ("C-c s a" . 'omnisharp-run-code-action-refactoring)
-        ;; ("C-c s i" . 'omnisharp-find-implementations)
-        ;; ("C-c s f f" . 'omnisharp-code-format-entire-file)
-        ;; ("C-c s f F" . 'omnisharp-code-format-region)
-        ;; ("C-c s r" . 'omnisharp-rename)
-        )
   :hook
   (csharp-mode . me/fix-csharp-mode)
   :config
@@ -1465,19 +1476,19 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (use-package restclient
   :mode ("\\.rest\\'" . restclient-mode))
 
-(use-package ace-window
-  :bind
-  ("C-c w w" . 'ace-window)
-  ("M-s-(" . 'ace-window)
-  :config
-  (setq aw-keys '(?q ?s ?d ?f ?g ?h ?j ?k ?l ?m)))
+;; (use-package ace-window
+;;   :bind
+;;   ;; ("C-c w w" . 'ace-window)
+;;   ("M-s-(" . 'ace-window)
+;;   :config
+;;   (setq aw-keys '(?q ?s ?d ?f ?g ?h ?j ?k ?l ?m)))
 
 (use-package which-key
   :diminish ""
   :init (which-key-mode)
-  :bind
-  ("C-c w m" . 'which-key-show-major-mode)
-  ("C-c w t" . 'which-key-show-top-level)
+  ;; :bind
+  ;; ("C-c w m" . 'which-key-show-major-mode)
+  ;; ("C-c w t" . 'which-key-show-top-level)
   :custom
   (which-key-idle-delay 0.1)
   (which-key-frame-max-height 50)
@@ -1485,7 +1496,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-side-window-max-height 0.4)
   (which-key-sort-order 'which-key-description-order)
   :config
-  (which-key-add-key-based-replacements "C-c w" "Windows/WhichKey")
+  ;; (which-key-add-key-based-replacements "C-c w" "Windows/WhichKey")
   (which-key-add-key-based-replacements "C-c S" "Slack")
   (which-key-add-key-based-replacements "C-c S m" "Messages")
   (which-key-add-key-based-replacements "C-c v" "Vim")

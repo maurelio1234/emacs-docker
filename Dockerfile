@@ -196,6 +196,10 @@ RUN wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linu
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
         unzip awscliv2.zip && \
         sudo ./aws/install -i /home/$USER/bin/
+# Pandoc
+RUN wget https://github.com/jgm/pandoc/releases/download/2.14/pandoc-2.14-linux-amd64.tar.gz && \
+    tar xvvf pandoc-2.14-linux-amd64.tar.gz && \
+    mv pandoc-2.14 /home/$USER/bin
 
 # Add JetBrains and Noto CJK fonts
 RUN mkdir -p ~/.local/share/fonts && \

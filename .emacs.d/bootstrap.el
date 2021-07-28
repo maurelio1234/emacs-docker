@@ -136,7 +136,7 @@
 (use-package tree-sitter-langs :ensure t)
 (use-package typescript-mode)
 (use-package restclient)
-(use-package ace-window)
+;; (use-package ace-window)
 (use-package which-key)
 (use-package company)
 (use-package jq-mode)
