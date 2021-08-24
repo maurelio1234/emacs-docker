@@ -1,4 +1,4 @@
-FROM maurelio1234/docker-emacs-native-compilation:latest
+FROM docker-emacs-native-compilation
 
 # Bring back man pages
 # https://github.com/tianon/docker-brew-ubuntu-core/issues/122#issuecomment-380529430

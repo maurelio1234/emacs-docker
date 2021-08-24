@@ -21,7 +21,9 @@ common_parametes=" --rm \
 mkdir -p /mnt/data/emacs/eln-cache
 
 if [[ "$mode" == "build" ]]; then
-    docker image pull maurelio1234/docker-emacs-native-compilation:latest
+    cd ../docker-emacs/master/ubuntu/18.04/dev/
+    docker build -t docker-emacs-native-compilation .
+    cd -
     docker build -t "$image" .
 elif [[ "$mode" == "text" ]]; then
     docker run $common_parametes \
