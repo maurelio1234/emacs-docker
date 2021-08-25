@@ -134,6 +134,7 @@
 (use-package eglot)
 (use-package tree-sitter :ensure t)
 (use-package tree-sitter-langs :ensure t)
+(use-package tree-sitter-indent :ensure t)
 (use-package typescript-mode)
 (use-package restclient)
 ;; (use-package ace-window)
@@ -150,17 +151,8 @@
 (use-package docker)
 (use-package dockerfile-mode)
 (use-package bug-hunter)
-(use-package slack
-  :straight (:host github :repo "maurelio1234/emacs-slack"
-                   :branch "master")
-  :custom (emojify-download-emojis-p t)
-  :config
-  (when me/bootstraping-p
-    (require 'emojify)
-    (emojify-ensure-images)))
 (use-package explain-pause-mode
   :straight (:host github :repo "lastquestion/explain-pause-mode"
                    :branch "master"))
-(use-package evil)
 (provide 'bootstrap)
 ;;; bootstrap.el ends here

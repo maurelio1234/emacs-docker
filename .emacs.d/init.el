@@ -101,61 +101,6 @@
         (buffer-name)))
     (circleci-build-mode 1)))
 
-;;; Browsh support
-(defun me/browsh-copy-page-url ()
-  "Copy the URL of the current page into the kill ring removing browsh prefix."
-  (interactive)
-  (let* ((url (eww-copy-page-url))
-         (browsh-url "http://localhost:4333/"))
-    (when (s-starts-with-p browsh-url url)
-      (kill-new (substring url (length browsh-url))))))
-
-(defun me/browsh-init ()
-  "Start the Browsh Process."
-  (async-shell-command "browsh --http-server-mode"))
-
-(defun me/browsh (url)
-  "Start the Browsh Process."
-  (interactive "sURL: ")
-  (eww (concat
-        (when current-prefix-arg
-          "http://localhost:4333/") url)))
-
-(define-derived-mode me/slack-alerts-mode special-mode "Slack Alerts"
-  "Alerts from Slack")
-
-;;; Slack alerts major mode
-(defun me/switch-to-alerts-buffer ()
-  "Switch to alerts buffer."
-  (interactive)
-  (switch-to-buffer "* Slack Alerts *"))
-
-(defun me/init-alerts-buffer ()
-  "Create and initialize the slack alerts buffer."
-  (with-current-buffer (get-buffer-create "* Slack Alerts *")
-    (me/slack-alerts-mode)))
-
-(defun me/slack-message-custom-nofifier (message room team)
-  "Better handling of slack MESSAGEs TEAM's ROOM."
-  (let ((team-name (oref team name))
-        (room-name (slack-room-name room team))
-        (text (with-temp-buffer
-                (goto-char (point-min))
-                (insert (slack-message-to-alert message team))
-                (slack-buffer-buttonize-link)
-                (buffer-substring-no-properties (point-min)
-                                                (point-max))))
-        (user-name (slack-message-sender-name message team))
-        (timestamp (format-time-string
-                    "%H:%M"
-                    (slack-message-time-stamp message))))
-    (with-current-buffer (get-buffer-create "* Slack Alerts *")
-      (read-only-mode -1)
-      (goto-char (point-max))
-      (insert (format "\nTeam: %s\nRoom: %s\nTimestamp: %s\nUser: %s\n\n%s\n\n"
-                      team-name room-name timestamp user-name text))
-      (read-only-mode 1))))
-
 (defun me/db (server user password db)
   "Connect to SQLServer in SERVER using USER and PASSWORD."
   (interactive)
@@ -743,8 +688,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   "Add TestMe category before the previous appearance of PATTERN."
   (search-backward pattern)
   (me/open-line-above)
-  (insert "[Category(\"TestMe\")]")
-  (when (boundp 'evil-local-mode) (evil -normal-state)))
+  (insert "[Category(\"TestMe\")]"))
 
 (defun me/nunit-add-category-testcase ()
   "Add TestMe to current test case."
@@ -983,7 +927,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :hook
   (prog-mode . me/prog-mode-hook)
   ;; (after-init . me/frame-fullscreen)
-  (after-init . me/browsh-init)
   (emacs-startup . me/emacs-startup-hook)
   (shell-mode . me/shell-hook)
   :config
@@ -1208,10 +1151,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :init
   (require 'youdao-dictionary)
   :bind
-  ("C-c e" . 'me/browsh)
   (:map eww-mode-map
-        ("G" . 'me/browsh)
-        ("w" . 'me/browsh-copy-page-url)
         ("C-c f" . 'me/eww/open-page-firefox)
         ("C-c y" . 'youdao-dictionary-search-at-point-tooltip)
         ("<f12>" . 'me/cc-cedict-selection)
@@ -1419,6 +1359,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
           )))
 
 (use-package tree-sitter :ensure t)
+(use-package tree-sitter-indent :ensure t)
 (use-package tree-sitter-langs
   :ensure t
   :config
@@ -1445,13 +1386,13 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
     (csharp-tree-sitter-mode . eglot-ensure)
     :config
     (add-to-list 'eglot-server-programs
-                 `(csharp-tree-sitter-mode . ("/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run" "-lsp"))))
+                 `(csharp-tree-sitter-mode . ("/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.13/run" "-lsp"))))
 
   (use-package omnisharp
     :disabled
     :after company
     :custom
-    (omnisharp-server-executable-path "/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.5/run")
+    (omnisharp-server-executable-path "/home/marcos/.emacs.d/.cache/omnisharp/server/v1.37.13/run")
     :hook
     (csharp-mode . omnisharp-mode)
     ;; from https://github.com/OmniSharp/omnisharp-emacs/issues/431
@@ -1497,7 +1438,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (which-key-sort-order 'which-key-description-order)
   :config
   ;; (which-key-add-key-based-replacements "C-c w" "Windows/WhichKey")
-  (which-key-add-key-based-replacements "C-c S" "Slack")
   (which-key-add-key-based-replacements "C-c S m" "Messages")
   (which-key-add-key-based-replacements "C-c v" "Vim")
   (which-key-add-key-based-replacements "C-c E" "Emacs")
@@ -1530,26 +1470,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   :bind
   ("C-c C-j" . 'jq-interactively))
 
-(use-package slack
-  :straight (:host github :repo "maurelio1234/emacs-slack"
-                   :branch "master")
-  :custom
-  (slack-buffer-emojify t)
-  (slack-prefer-current-team t)
-  (slack-message-custom-notifier 'me/slack-message-custom-nofifier)
-  :bind
-  ("C-c S r" . 'slack-select-rooms)
-  ("C-c S u" . 'slack-all-unreads)
-  ("C-c S m l" . 'me/switch-to-alerts-buffer)
-  ("C-c S m r" . 'slack-message-add-reaction)
-  ("C-c S m e" . 'slack-message-edit)
-  ("C-c S m j" . 'slack-insert-emoji)
-  ("C-c S m m" . 'slack-message-embed-mention)
-  ("C-c S m t" . 'slack-thread-show-or-create)
-  :config
-  (setq slack-modeline t)
-  (me/init-alerts-buffer))
-
 (use-package helpful
   :bind
   ("C-h f" . 'helpful-callable)
@@ -1581,12 +1501,6 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
                    :branch "master")
   :mode (("\\.yml\\'" . yaml-mode)
          ("\\.tpl\\'" . yaml-mode)))
-
-(use-package evil
-  :bind ("<f12>" . 'evil-local-mode)
-  :custom
-  ;; use C-b to scroll instead
-  (evil-want-C-u-scroll nil))
 
 (message "init.el successfully loaded!")
 
