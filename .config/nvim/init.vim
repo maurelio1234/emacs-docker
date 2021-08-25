@@ -1,3 +1,5 @@
+set shell=bash
+
 call plug#begin('~/.vim/plugged')
      Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
      Plug 'ibhagwan/fzf-lua'

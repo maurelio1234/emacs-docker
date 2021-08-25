@@ -229,6 +229,29 @@ RUN sudo apt-get install -y jq netcat coreutils
 # TODO find a way to read user name from variable
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 
+# Install neovim
+RUN wget https://github.com/neovim/neovim/releases/download/v0.5.0/nvim-linux64.tar.gz && \
+    gunzip nvim-linux64.tar.gz && \
+    tar xvvf nvim-linux64.tar
+
+RUN python3 -m pip install --user --upgrade pynvim
+
+RUN wget https://github.com/junegunn/fzf/releases/download/0.27.2/fzf-0.27.2-linux_amd64.tar.gz && \
+    tar -xf fzf-0.27.2-linux_amd64.tar.gz && \
+    sudo mv fzf /usr/local/bin
+
+RUN wget https://github.com/sharkdp/fd/releases/download/v8.2.1/fd_8.2.1_amd64.deb && \
+    sudo dpkg -i fd_8.2.1_amd64.deb
+
+RUN wget https://github.com/sharkdp/bat/releases/download/v0.18.3/bat_0.18.3_amd64.deb && \
+    sudo dpkg -i bat_0.18.3_amd64.deb
+
+RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/12.1.1/ripgrep_12.1.1_amd64.deb && \
+    sudo dpkg -i ripgrep_12.1.1_amd64.deb
+
+# Install Plug
+RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
 # Bootstrap emacs packages
 RUN BOOTSTRAPING=true \
         emacs -batch \
