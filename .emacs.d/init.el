@@ -828,6 +828,7 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 ;; https://github.com/raxod502/straight.el/issues/361
 (straight-use-package '(org :type built-in))
 (use-package emacs
+  :mode (("\\.xsd" . xml-mode))
   :diminish (subword-mode . " sW")
   :bind
   ("M-s-&" . 'me/async-shell-command)
