@@ -24,9 +24,9 @@ mkdir -p /mnt/data/emacs/eln-cache
 mkdir -p /mnt/data/vim/plugged
 
 if [[ "$mode" == "build" ]]; then
-    cd ../docker-emacs/master/ubuntu/18.04/dev/
-    docker build -t docker-emacs-native-compilation .
-    cd -
+    # cd ../docker-emacs/master/ubuntu/18.04/dev/
+    # docker build -t docker-emacs-native-compilation .
+    # cd -
     docker build -t "$image" .
 elif [[ "$mode" == "text" ]]; then
     docker run $common_parametes \
@@ -46,7 +46,7 @@ elif [[ "$mode" == "vim" ]]; then
            -v /tmp/.X11-unix:/tmp/.X11-unix \
            $volumes \
            "$image" \
-           /home/marcos/nvim-linux64/bin/nvim
+           /usr/local/bin/nvim
 else
     echo "usage: $0 [build|text|gui] [image]"
 fi

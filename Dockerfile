@@ -230,9 +230,11 @@ RUN sudo apt-get install -y jq netcat coreutils
 COPY --chown=marcos:marcos ./.emacs.d/bootstrap.el /home/$USER/.emacs.d/
 
 # Install neovim
-RUN wget https://github.com/neovim/neovim/releases/download/v0.5.0/nvim-linux64.tar.gz && \
-    gunzip nvim-linux64.tar.gz && \
-    tar xvvf nvim-linux64.tar
+RUN sudo apt-get install -y libtool autoconf automake cmake libncurses5-dev g++ pkg-config unzip git curl && \
+    git clone https://github.com/neovim/neovim.git nvim && \
+    cd nvim && \
+    make && sudo make install && \
+    cd ../ && rm -rf nvim
 
 RUN python3 -m pip install --user --upgrade pynvim
 
@@ -264,3 +266,6 @@ COPY --chown=marcos:marcos ./.emacs.d/ /home/$USER/.emacs.d/
 # Avoid errors like
 #        (emacs:1): dbind-WARNING **: 15:08:23.641: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-7Av9Aisyax: Connection refused
 ENV NO_AT_BRIDGE=1
+
+# So I can run puppeteer tests locally
+ENV PUPPETEER_CHROMIUM_PATH=/usr/bin/google-chrome

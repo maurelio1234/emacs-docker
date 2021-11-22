@@ -1,0 +1,427 @@
+
+# 2021-09-27 14:38:43.859759
++select * from "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-27 14:39:31.260458
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where "WorkflowInstanceId" = 'deb1205c-1287-4223-8a41-ff10684f087a'
+
+# 2021-09-27 14:39:35.749715
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where "WorkflowInstanceId" = "deb1205c-1287-4223-8a41-ff10684f087a"
+
+# 2021-09-27 14:39:51.448520
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = "deb1205c-1287-4223-8a41-ff10684f087a"
+
+# 2021-09-27 14:41:04.394288
++select count(*) from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = "deb1205c-1287-4223-8a41-ff10684f087a"
+
+# 2021-09-27 14:41:11.255773
++select count(*) from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = 'deb1205c-1287-4223-8a41-ff10684f087a'
+
+# 2021-09-27 14:41:14.758742
++DELETE FROM [Monitoring].[ScenarioInstanceIndexedInputData]
++DELETE FROM [Monitoring].[TaskDefinitionInfos]
++DELETE FROM [Monitoring].[TaskInstanceMonitoringEvents]
++DELETE FROM [Monitoring].[TaskStatusMessage]
++DELETE FROM [Monitoring].[WorkflowInstanceMonitoringEvents]
++delete from dbo."TaskStatusEvent"
++delete from dbo."TaskInstance"
++delete from dbo."WorkflowInstance"
++delete from dbo."TaskInstancesQueue"
++delete from dbo."CancelledTaskInstances"
++delete from Core.WorkflowInstances
++delete from Core.TaskInstances
++delete from dbo."WorkflowInstanceInformation"
++delete from dbo."WorkflowInstanceInformation"
++
+
+# 2021-09-27 14:49:59.279799
++select count(*) from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = "94403f54-1a70-4d86-a3de-248033bf024f"
+
+# 2021-09-27 14:50:05.964804
++select count(*) from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = '94403f54-1a70-4d86-a3de-248033bf024f'
+
+# 2021-09-27 14:50:12.856382
++select count(*) from "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-27 14:50:19.381882
++select * from "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-27 15:39:27.531791
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where Work
+
+# 2021-09-27 15:39:54.100752
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = "86cd71e4-ff04-4b3b-ba0d-306a1a53100f"
+
+# 2021-09-27 15:39:58.193859
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = '86cd71e4-ff04-4b3b-ba0d-306a1a53100f'
+
+# 2021-09-27 15:40:33.851795
++select * from "Monitoring"."ScenarioInstanceIndexedInputData" where WorkflowInstanceId = '4ba5d7bc-b9b4-460f-8f37-07f29d025f2a'
+
+# 2021-09-27 15:44:45.205314
++describe table "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-27 15:44:56.678635
++describe "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-29 10:38:39.581824
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-29 10:38:48.725067
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" TAKE 10
+
+# 2021-09-29 10:38:54.889412
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" TOP 10
+
+# 2021-09-29 10:39:30.991704
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" fetch next 10 rows only
+
+# 2021-09-29 10:39:42.710053
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" offset 0 fetch next 10 rows only
+
+# 2021-09-29 10:39:54.065089
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" offset 0 rows fetch next 10 rows only
+
+# 2021-09-29 10:40:14.671422
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData"
+
+# 2021-09-29 10:40:21.044118
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" coll
+
+# 2021-09-29 10:40:46.715780
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" collate "SQL_Latin1_General_CP1_CS_AS_KS_WS"
+
+# 2021-09-29 10:40:53.005122
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" collate 'SQL_Latin1_General_CP1_CS_AS_KS_WS'
+
+# 2021-09-29 10:41:29.441343
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate 'SQL_Latin1_General_CP1_CS_AS_KS_WS'
+
+# 2021-09-29 10:41:39.118629
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS_KS_WS
+
+# 2021-09-29 10:41:44.937102
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CI_CS_AS_KS_WS
+
+# 2021-09-29 10:41:56.566155
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate Latin1_General_CS_AI
+
+# 2021-09-29 10:42:13.194137
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CI_AS
+
+# 2021-09-29 10:42:24.902091
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS
+
+# 2021-09-29 10:42:32.098948
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS_KS
+
+# 2021-09-29 10:42:35.317286
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS_WS
+
+# 2021-09-29 10:42:38.178633
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS
+
+# 2021-09-29 10:43:54.413690
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS_KS
+
+# 2021-09-29 10:43:56.475145
++select InputDataName from "Monitoring"."ScenarioInstanceIndexedInputData" order by "InputDataName" collate SQL_Latin1_General_CP1_CS_AS
+
+# 2021-10-14 14:23:44.237695
++select count(*) from "dbo"."CronTriggers"
+
+# 2021-10-14 14:23:56.010317
++select "CronExpression" from "dbo"."CronTriggers"
+
+# 2021-10-14 14:36:19.368133
++DELETE FROM [Monitoring].[ScenarioInstanceIndexedInputData]
++DELETE FROM [Monitoring].[TaskDefinitionInfos]
++DELETE FROM [Monitoring].[TaskInstanceMonitoringEvents]
++DELETE FROM [Monitoring].[TaskStatusMessage]
++DELETE FROM [Monitoring].[WorkflowInstanceMonitoringEvents]
++delete from dbo."TaskStatusEvent"
++delete from dbo."TaskInstance"
++delete from dbo."WorkflowInstance"
++delete from dbo."TaskInstancesQueue"
++delete from dbo."CancelledTaskInstances"
++delete from Core.WorkflowInstances
++delete from Core.TaskInstances
++delete from dbo."WorkflowInstanceInformation"
++delete from dbo."WorkflowInstanceInformation"
++
+
+# 2021-10-14 14:40:27.942097
++delete * from "dbo"."CronTriggers"
+
+# 2021-10-14 14:40:36.424002
++delete from "dbo"."CronTriggers" 
+
+# 2021-11-03 16:44:34.021310
++\lt
+
+# 2021-11-03 16:44:54.155339
++select * from dbo."RefreshTokenWhitelist"
+
+# 2021-11-03 16:45:20.563489
++select * from dbo."RefreshTokenWhitelist" where name is like %CHOQUET%
+
+# 2021-11-03 16:45:24.957004
++select * from dbo."RefreshTokenWhitelist" where name like %CHOQUET%
+
+# 2021-11-03 16:45:30.072100
++select * from dbo."RefreshTokenWhitelist" where name like '%CHOQUET%'
+
+# 2021-11-03 16:45:34.901636
++select * from dbo."RefreshTokenWhitelist" where name like "%CHOQUET%"
+
+# 2021-11-03 16:45:45.840132
++select * from dbo."RefreshTokenWhitelist" where User like '%CHOQUET%'
+
+# 2021-11-03 16:46:05.067088
++select * from dbo."OidcUsers"
+
+# 2021-11-03 16:47:13.543805
++\lt
+
+# 2021-11-03 16:47:25.646163
++select * from dbo."OAuth2Users"
+
+# 2021-11-03 16:48:00.000898
++select * from dbo."ExternalUsers"
+
+# 2021-11-08 16:18:00.571266
++\lt
+
+# 2021-11-08 16:18:19.337389
++select count(*) from dbo."ac2_appConfig"
+
+# 2021-11-08 16:18:24.450862
++select count(*) from dbo."ac2_appHistory"
+
+# 2021-11-08 16:18:31.226484
++select count(*) from dbo."ac2_appProcessing"
+
+# 2021-11-08 16:18:38.024393
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-08 16:19:50.333636
++\lt
+
+# 2021-11-08 16:20:03.127267
++delete from dbo."ac2_appHistory"
+
+# 2021-11-08 16:20:12.623416
++delete from dbo."ac2_appHistory" where 1
+
+# 2021-11-08 16:20:17.652242
++delete from dbo."ac2_appProcessing"
+
+# 2021-11-09 08:54:45.962330
++\lt
+
+# 2021-11-09 08:54:56.178885
++select top(1) from dbo."ac2_appConfig"
+
+# 2021-11-09 08:55:19.502067
++select TOP(1) from dbo."ac2_appConfig"
+
+# 2021-11-09 08:55:26.334644
++select TOP(1) dbo."ac2_appConfig"
+
+# 2021-11-09 08:57:32.757199
++select count(*) from dbo."ac2_appConfig"
+
+# 2021-11-09 08:57:41.794334
++select top * from dbo."ac2_appConfig"
+
+# 2021-11-09 08:57:45.471528
++select top 1 * from dbo."ac2_appConfig"
+
+# 2021-11-09 08:57:55.674639
++select top 1 * from dbo."ac2_appH
+
+# 2021-11-09 08:57:58.889367
++select top 1 * from dbo."ac2_appHistory"
+
+# 2021-11-09 08:58:08.681491
++select top 1 * from dbo."ac2_appProcessing"
+
+# 2021-11-09 08:58:19.336535
++select top 1 * from dbo."ac2_compHistory"
+
+# 2021-11-09 08:58:30.401132
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-09 09:22:57.498560
++\lt
+
+# 2021-11-09 09:23:06.531492
++delete from dbo."ac2_appHistory"
+
+# 2021-11-09 09:28:15.757414
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-09 09:30:06.003403
++delete from dbo."ac2_appHistory"
+
+# 2021-11-09 09:30:32.144373
++d
+
+# 2021-11-09 09:30:45.538594
++\lt
+
+# 2021-11-09 09:30:51.339813
++delete from dbo."ac2_appProcessing"
+
+# 2021-11-09 09:35:12.604225
++delete from dbo."ac2_compHistory"
+
+# 2021-11-09 10:37:51.003161
++psce
+
+# 2021-11-09 10:38:12.047022
++DBCC SHRINKDATABASE ([appcontrol-master-db])
+
+# 2021-11-09 11:51:16.017580
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-09 11:52:15.740417
++select count(*) from dbo."ac2_appHistory"
+
+# 2021-11-09 11:52:23.005616
++\lt
+
+# 2021-11-09 11:52:42.348746
++select count(*) from dbo."ac2_appProcessing"
+
+# 2021-11-09 11:56:05.797245
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-09 14:34:55.585453
++ SELECT DATABASEPROPERTYEX('db1', 'MaxSizeInBytes') AS DatabaseDataMaxSizeInBytes 
+
+# 2021-11-09 14:35:17.090983
++SELECT SUM(size/128.0) AS DatabaseDataSpaceAllocatedInMB,
++SUM(size/128.0 - CAST(FILEPROPERTY(name, 'SpaceUsed') AS int)/128.0) AS DatabaseDataSpaceAllocatedUnusedInMB
++FROM sys.database_files
++GROUP BY type_desc
++HAVING type_desc = 'ROWS' 
+
+# 2021-11-09 14:36:26.251560
++SELECT TOP 1 storage_in_megabytes AS DatabaseDataSpaceUsedInMB
++FROM sys.resource_stats
++WHERE database_name = 'db1'
++ORDER BY end_time DESC 
+
+# 2021-11-09 14:36:38.444341
++SELECT SUM(size/128.0) AS DatabaseDataSpaceAllocatedInMB,
++SUM(size/128.0 - CAST(FILEPROPERTY(name, 'SpaceUsed') AS int)/128.0) AS DatabaseDataSpaceAllocatedUnusedInMB
++FROM sys.database_files
++GROUP BY type_desc
++HAVING type_desc = 'ROWS' 
+
+# 2021-11-09 14:39:09.329957
++sp_spaceused
+
+# 2021-11-09 14:39:21.941502
++EXEC sp_spaceused;
+
+# 2021-11-09 14:40:18.690753
++SELECT 
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.) 
++AS DatabaseSizeInBytes,
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024
++AS DatabaseSizeInMB,
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024/1024/1024 
++AS DatabaseSizeInGB
++FROM sys.database_files
++WHERE type_desc = 'ROWS';
+
+# 2021-11-09 14:40:58.467968
++exit
+
+# 2021-11-09 14:41:40.085577
++
+
+# 2021-11-09 14:41:41.922735
++
+
+# 2021-11-09 14:41:44.510464
++exit
+
+# 2021-11-09 14:43:19.091150
++SELECT 
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.) 
++AS DatabaseSizeInBytes,
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024
++AS DatabaseSizeInMB,
++SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024/1024/1024 
++AS DatabaseSizeInGB
++FROM sys.database_files
++WHERE type_desc = 'ROWS';
+
+# 2021-11-09 15:03:46.582030
++SELECT DatabaseSizeInMB, case when DatabaseSizeInMB < 2000 then 'true' else 'false' end AS IsQuotaExceed FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS')
+
+# 2021-11-09 15:04:30.661119
++SELECT DatabaseSizeInMB, case when DatabaseSizeInMB < 2000 then 'true' else 'false' end AS IsQuotaExceed FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS':)
+
+# 2021-11-09 15:04:33.466978
++SELECT DatabaseSizeInMB, case when DatabaseSizeInMB < 2000 then 'true' else 'false' end AS IsQuotaExceed FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS';)
+
+# 2021-11-09 15:05:02.341012
++SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS'
+
+# 2021-11-09 15:05:21.603707
++SELECT DatabaseSizeInMB FROM SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS'
+
+# 2021-11-09 15:05:27.687588
++SELECT DatabaseSizeInMB FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS')
+
+# 2021-11-09 15:06:11.431319
++SELECT DatabaseSizeInMB FROM SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS'
+
+# 2021-11-09 15:06:19.512422
++SELECT DatabaseSizeInMB FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS')
+
+# 2021-11-09 15:06:35.780670
++SELECT DatabaseSizeInMB FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS') q
+
+# 2021-11-09 15:06:48.488530
++SELECT DatabaseSizeInMB, case when DatabaseSizeInMB < 2000 then 'true' else 'false' end AS IsQuotaExceed FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS') q
+
+# 2021-11-09 15:07:01.992524
++SELECT DatabaseSizeInMB, case when DatabaseSizeInMB < 2000 then 'TRUE' else 'FALSE' end AS IsQuotaExceed FROM (SELECT SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.)/1024 /1024 AS DatabaseSizeInMB FROM sys.database_files WHERE type_desc = 'ROWS') q
+
+# 2021-11-17 15:16:38.006803
++select * from "dbo"."Workspace"
+
+# 2021-11-17 15:17:10.886414
++select * from "dbo"."Workspace" where Id = 'XComponent Team'
+
+# 2021-11-17 15:23:52.482132
++select * from "dbo"."Workspace" 
+
+# 2021-11-17 15:24:34.123506
++exit
+
+# 2021-11-18 11:15:24.663233
++select * from "dbo"."Workspace" 
+
+# 2021-11-18 11:17:43.564046
++select * from "dbo"."SamlProfile"" 
+
+# 2021-11-18 11:17:45.434989
++select * from "dbo"."SamlProfile"
+
+# 2021-11-18 11:17:59.321200
++select * from "dbo"."Profile"
+
+# 2021-11-22 15:25:52.115734
++select * from "dbo"."CronTriggers"
+
+# 2021-11-22 15:26:19.482803
++update dbo."CronTriggers" set Error
+
+# 2021-11-22 15:26:29.348355
++update dbo."CronTriggers" set "ErrorMessages" = '[]'

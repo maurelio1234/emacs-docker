@@ -1,0 +1,34 @@
+[
+  {
+    "name": "mssqlcli",
+    "properties": {
+      "Reserved.ChannelUsed": "aivortex",
+      "Reserved.SequenceNumber": 1,
+      "Reserved.EventId": "3b574d02-5690-4ee1-ad59-3ba8c04a406e",
+      "Reserved.SessionId": "d84d1640-5dff-45d5-afc8-fccc3e8b9489",
+      "Reserved.TimeSinceSessionStart": 0,
+      "Reserved.DataModel.Source": "DataModelAPI",
+      "Reserved.DataModel.EntitySchemaVersion": 4,
+      "Reserved.DataModel.Severity": 0,
+      "Reserved.DataModel.CorrelationId": "4924ec3e-15c2-4b7b-8757-c9946409f5e6",
+      "Context.Default.SQLTools.ExeName": "mssqlcli",
+      "Context.Default.SQLTools.ExeVersion": "1.0.0",
+      "Context.Default.SQLTools.OS.Type": "linux",
+      "Context.Default.SQLTools.OS.Version": "5.13.0-21-generic",
+      "Context.Default.SQLTools.IsDocker": false,
+      "Context.Default.SQLTools.User.Id": "18b37f3a0c4c0d203ec7d98e0779a72fa70ee32e8cadbc538a8146ed0ff0bc0d",
+      "Context.Default.SQLTools.User.IsMicrosoftInternal": "False",
+      "Context.Default.SQLTools.User.IsOptedIn": "True",
+      "Context.Default.SQLTools.ShellType": null,
+      "Context.Default.SQLTools.EnvironmentVariables": "[]",
+      "Context.Default.SQLTools.Locale": "en_US,UTF-8",
+      "Context.Default.SQLTools.StartTime": "2021-11-17 15:24:40.325736",
+      "Context.Default.SQLTools.EndTime": "2021-11-17 15:26:43.262472",
+      "Context.Default.SQLTools.SessionDuration": "122.936736",
+      "Context.Default.SQLTools.PythonVersion": "3.6.1",
+      "Context.Default.SQLTools.ServerVersion": "12.0.2000.8",
+      "Context.Default.SQLTools.ServerEdition": "Azure SQL DB",
+      "Context.Default.SQLTools.ConnectionType": "Azure"
+    }
+  }
+]
