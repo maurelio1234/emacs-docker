@@ -425,3 +425,123 @@
 
 # 2021-11-22 15:26:29.348355
 +update dbo."CronTriggers" set "ErrorMessages" = '[]'
+
+# 2021-11-23 09:14:11.486074
++select * from "dbo"."CronTriggers"
+
+# 2021-11-23 09:14:31.775408
++select Name,"ErrorMessages" from "dbo"."CronTriggers"
+
+# 2021-11-23 09:14:39.083517
++update dbo."CronTriggers" set "ErrorMessages" = '[]'
+
+# 2021-11-23 09:15:02.455820
++select Name,"CronExpression" from "dbo"."CronTriggers"
+
+# 2021-11-23 09:15:21.838870
++select Name,"CronExpression","WorkspaceName" from "dbo"."CronTriggers"
+
+# 2021-11-26 10:43:54.284067
++\lt
+
+# 2021-11-26 10:44:04.722655
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-26 10:46:17.241048
++select count(*) FROM [dbo].[ac2_compHistory] WHERE ac2_timestamp < DATEADD(day, -7, GETDATE())
+
+# 2021-11-26 10:53:40.376767
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-26 11:44:12.468138
++select count(*) FROM [dbo].[ac2_compHistory] WHERE ac2_timestamp < DATEADD(day, -7, GETDATE())
+
+# 2021-11-26 11:46:05.805700
++select count(*) FROM [dbo].[ac2_compHistory] WHERE ac2_timestamp > DATEADD(day, -7, GETDATE())
+
+# 2021-11-26 11:46:17.875655
++select count(*) FROM [dbo].[ac2_compHistory] WHERE ac2_timestamp < DATEADD(day, -7, GETDATE())
+
+# 2021-11-26 12:01:28.812970
++select count(*) from dbo."ac2_compHistory"
+
+# 2021-11-26 14:49:55.558227
++DBCC SHRINKDATABASE ([appcontrol-uat-db])
+
+# 2021-11-26 14:50:04.557725
++exit
+
+# 2021-11-26 14:50:18.406515
++DBCC SHRINKDATABASE ([appcontrol-uat-db])
+
+# 2021-11-26 14:55:44.400967
++exit
+
+# 2021-11-29 10:41:45.318669
++\lt
+
+# 2021-11-29 10:42:31.618488
++select * from User
+
+# 2021-11-29 10:42:36.265897
++select * from dbo.User
+
+# 2021-11-29 10:42:41.161680
++select * from "dbo.User"
+
+# 2021-11-29 10:43:01.544571
++select * from "dbo"."User"
+
+# 2021-11-29 10:43:15.312780
++select * from "dbo"."OidcUsers"
+
+# 2021-11-29 10:45:45.677521
++exit
+
+# 2021-12-02 11:06:34.234065
++\lt
+
+# 2021-12-02 11:06:45.216669
++exit
+
+# 2021-12-02 11:10:10.992284
++\lt
+
+# 2021-12-02 11:10:31.296104
++SELECT top(10) from "dbo"."ac2_appProcessing"
+
+# 2021-12-02 11:10:45.343984
++SELECT * from "dbo"."ac2_appProcessing" top(100)
+
+# 2021-12-02 11:11:09.850251
++SELECT top 100 * from "dbo"."ac2_appProcessing" 
+
+# 2021-12-02 12:03:12.154614
++SELECT top 100 * from "dbo"."ac2_appProcessing" where "ac2_startdate" > '2021-12-01 00:00:00'
+
+# 2021-12-02 13:39:10.835972
++\lt
+
+# 2021-12-02 13:39:25.795886
++SELECT top 100 * from "dbo"."ac2_compHistory" where "ac2_startdate" > '2021-12-01 00:00:00'
+
+# 2021-12-02 13:39:31.540782
++SELECT top 100 * from "dbo"."ac2_compHistory" 
+
+# 2021-12-02 14:02:36.594140
++SELECT top 100 * from "dbo"."ac2_compHistory" where "ac2_timestamp" > '2021-01-01 00:00:00'
+
+# 2021-12-02 14:21:12.000569
++SELECT top 100 * from "dbo"."ac2_compHistory" where "ac2_timestamp" > '2021-12-01 00:00:00'
+
+# 2021-12-07 16:30:20.184330
++SELECT top 100 * from "dbo"."ac2_compHistory" where "ac2_timestamp" > '2021-12-04 00:00:00'
+
+# 2021-12-07 16:32:11.592032
++SELECT count(*) from "dbo"."ac2_compHistory" where "ac2_timestamp" > '2021-12-04 00:00:00'
+
+# 2021-12-23 14:32:23.061820
++\lt
+
+# 2021-12-23 14:32:37.677248
++SELECT count(*) from "Core"."WorkflowInstances"
