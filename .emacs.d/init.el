@@ -62,6 +62,13 @@
   (interactive)
   (me/vterm-shell-command "."  "docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s" "*K9S*"))
 
+(defun me/k8s ()
+  "Run K8s."
+  (interactive)
+  (with-current-buffer (find-file-noselect "/home/marcos/.emacs.d/straight/repos/kubernetes-el/kubernetes-process.el")
+    (eval-buffer))
+  (kubernetes-overview))
+
 (defun me/vterm-shell-command (path command buffer-name)
   "Run vterm with COMMAND on a given PATH and BUFFER-NAME."
   (cd path)
