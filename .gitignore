@@ -1,2 +1,4 @@
 mssqlcli.log*
 mssqlcli_telemetry.log
+.config/google-chrome/Crash Reports
+.config/mssqlcli/mssqlcli_telemetry_id.txt

@@ -545,3 +545,194 @@
 
 # 2021-12-23 14:32:37.677248
 +SELECT count(*) from "Core"."WorkflowInstances"
+
+# 2021-12-27 16:00:38.582639
++psce
+
+# 2021-12-27 16:01:24.396868
++select * from Core.WorkflowInstance
+
+# 2021-12-27 16:01:28.228819
++select * from Core.WorkflowInstances
+
+# 2021-12-27 16:39:40.742311
++\
+
+# 2021-12-27 16:39:43.600216
++\lt
+
+# 2021-12-27 16:41:18.458421
++select count(*) from Core.WorkflowInstances where Status = 2
+
+# 2021-12-27 16:41:26.493524
++select count(*) from Core.WorkflowInstances where Status = 1
+
+# 2021-12-27 16:41:33.247692
++select count(*), Status from Core.WorkflowInstances where Status = 2
+
+# 2021-12-27 16:41:45.290645
++select Name from Core.WorkflowInstances where Status = 2
+
+# 2021-12-27 16:41:51.239568
++select count(*) from Core.WorkflowInstances where Status = 1
+
+# 2021-12-27 16:41:56.106448
++select count(*) from Core.WorkflowInstances where Status = 2
+
+# 2022-01-04 16:06:03.319648
++\lt
+
+# 2022-01-05 08:36:33.667009
++select * from Core.Slt
+
+# 2022-01-05 08:37:00.953365
++\lt
+
+# 2022-01-05 08:37:29.028217
++select * from Core.SanitizingWorkflowStoreHistory
+
+# 2022-01-05 14:47:23.779504
++select count(*) from Core.WorkflowInstances where Status = 1
+
+# 2022-01-05 14:50:17.576200
++select count(*) from Core.WorkflowInstances where Status = 2
+
+# 2022-01-05 16:44:03.821178
++select * from Core.WorkflowInstances where Id = '41548689-de11-410e-b392-6d21e48f4884'
+
+# 2022-01-05 16:44:57.590359
++select * from Core.WorkflowInstanceInformation
+
+# 2022-01-05 16:45:02.355224
++\lt
+
+# 2022-01-05 16:45:22.811103
++select * from dbo."WorkflowInstanceInformation"
+
+# 2022-01-05 16:45:51.335340
++select * from dbo."WorkflowInstanceInformation" where Id = '41548689-de11-410e-b392-6d21e48f4884'
+
+# 2022-01-05 16:46:00.808207
++select * from dbo."WorkflowInstanceInformation" where "WorkflowInstanceId" = '41548689-de11-410e-b392-6d21e48f4884'
+
+# 2022-01-05 16:49:22.245160
++select Id, StartDate from Core.WorkflowInstances where Id = '41548689-de11-410e-b392-6d21e48f4884'
+
+# 2022-01-05 16:50:56.198896
++select Id, StartDate from Core.WorkflowInstances where Id not in (select id from dbo."WorkflowInstanceInformation")
+
+# 2022-01-05 16:51:08.013231
++select Id, StartDate from Core.WorkflowInstances where Id not in (select WorkflowInstanceId from dbo."WorkflowInstanceInformation")
+
+# 2022-01-05 16:51:58.498450
++select Id, StartDate from Core.WorkflowInstances where Id not in (select WorkflowInstanceId from dbo."WorkflowInstanceInformation" where WorkflowInstanceId = Id)
+
+# 2022-01-05 16:52:31.765134
++select * from dbo."WorkflowInstanceInformation" where "WorkflowInstanceId" = '0187d21f-88e4-488f-8ca4-6ea0c41cbbec'
+
+# 2022-01-05 16:52:39.459772
++select count(*) from dbo."WorkflowInstanceInformation" where "WorkflowInstanceId" = '0187d21f-88e4-488f-8ca4-6ea0c41cbbec'
+
+# 2022-01-05 16:52:51.890875
++select count(*) from Core.WorkflowInstances where Id not in (select WorkflowInstanceId from dbo."WorkflowInstanceInformation" where WorkflowInstanceId = Id)
+
+# 2022-01-05 16:54:16.870767
++delete from Core.WorkflowInstances where Id not in (select WorkflowInstanceId from dbo."WorkflowInstanceInformation" where WorkflowInstanceId = Id)
+
+# 2022-01-05 17:02:21.183483
++select * from Core.Sa
+
+# 2022-01-05 17:02:24.035072
++select * from Core.SanitizingWorkflowStoreHistory
+
+# 2022-01-25 10:35:54.827648
++\lf
+
+# 2022-01-25 10:35:57.800405
++\lt
+
+# 2022-01-25 10:36:18.520232
++select * from dbo."ac2_appConfig" where ac2_app
+
+# 2022-01-25 10:36:22.408610
++select * from dbo."ac2_appConfig" where ac2_appl
+
+# 2022-01-25 10:37:27.905799
++select "ac2_lastloaddate", "ac2_Xml" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland' TOP 3
+
+# 2022-01-25 10:37:31.102619
++select "ac2_lastloaddate", "ac2_Xml" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland'
+
+# 2022-01-25 10:40:10.379354
++select "ac2_lastloaddate", "ac2_Xml" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland' or "ac2_application"= 'AppJSandbox-1,current@joao' or "ac2_application" = 'Application-From-Gateway,v1@AppControl DEMO' or ac
+
+# 2022-01-25 10:40:28.250416
++select "ac2_lastloaddate", "ac2_Xml" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland' or "ac2_application"= 'AppJSandbox-1,current@joao' or "ac2_application" = 'Application-From-Gateway,v1@AppControl DEMO' or "ac2_application" = 'AppGateway-1,current@St?phane PACHET'
+
+# 2022-01-25 10:41:03.925894
++select "ac2_application", "ac2_lastloaddate", "ac2_Xml" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland' or "ac2_application"= 'AppJSandbox-1,current@joao' or "ac2_application" = 'Application-From-Gateway,v1@AppControl DEMO' or "ac2_application" = 'AppGateway-1,current@Stéphane PACHET'
+
+# 2022-01-25 11:16:41.966072
++select "ac2_application", "ac2_lastloaddate", "ac2_insertiondate", "ac2_lastunloaddate" from dbo."ac2_appConfig" where "ac2_application" = 'AcialServices,1.6@XC Neverland' or "ac2_application"= 'AppJSandbox-1,current@joao' or "ac2_application" = 'Application-From-Gateway,v1@AppControl DEMO' or "ac2_application" = 'AppGateway-1,current@Stéphane PACHET'
+
+# 2022-01-26 15:03:43.935705
++DELETE FROM [Monitoring].[ScenarioInstanceIndexedInputData]
++DELETE FROM [Monitoring].[TaskDefinitionInfos]
++DELETE FROM [Monitoring].[TaskInstanceMonitoringEvents]
++DELETE FROM [Monitoring].[TaskStatusMessage]
++DELETE FROM [Monitoring].[WorkflowInstanceMonitoringEvents]
++delete from dbo."TaskStatusEvent"
++delete from dbo."TaskInstance"
++delete from dbo."WorkflowInstance"
++delete from dbo."TaskInstancesQueue"
++delete from dbo."CancelledTaskInstances"
++delete from Core.WorkflowInstances
++delete from Core.TaskInstances
++delete from dbo."WorkflowInstanceInformation"
++delete from dbo."WorkflowInstanceInformation"
++
+
+# 2022-01-26 15:12:46.600144
++exit
+
+# 2022-01-26 16:02:35.213092
++\lt
+
+# 2022-01-26 16:02:52.151570
++select count(*) from Core.TaskInstances
+
+# 2022-01-26 16:05:49.449927
++DELETE FROM [Monitoring].[ScenarioInstanceIndexedInputData]
++DELETE FROM [Monitoring].[TaskDefinitionInfos]
++DELETE FROM [Monitoring].[TaskInstanceMonitoringEvents]
++DELETE FROM [Monitoring].[TaskStatusMessage]
++DELETE FROM [Monitoring].[WorkflowInstanceMonitoringEvents]
++delete from dbo."TaskStatusEvent"
++delete from dbo."TaskInstance"
++delete from dbo."WorkflowInstance"
++delete from dbo."TaskInstancesQueue"
++delete from dbo."CancelledTaskInstances"
++delete from Core.WorkflowInstances
++delete from Core.TaskInstances
++delete from dbo."WorkflowInstanceInformation"
++delete from dbo."WorkflowInstanceInformation"
++
+
+# 2022-03-04 14:15:49.860702
++DBCC SHRINKDATABASE (0)
+
+# 2022-03-04 14:16:47.612126
++exit
+
+# 2022-03-04 14:16:58.582022
++DBCC SHRINKDATABASE (0)
+
+# 2022-03-18 15:39:54.412538
++DELETE FROM [dbo].[ac2_appHistory] WHERE ac2_timestamp < DATEADD(day, -7, GETDATE())
++DELETE FROM [dbo].[ac2_appProcessing] WHERE ac2_enddate < DATEADD(day, -7, GETDATE())
++DELETE FROM [dbo].[ac2_compHistory] WHERE ac2_timestamp < DATEADD(day, -7, GETDATE())
++DBCC SHRINKDATABASE (0)
++
+
+# 2022-03-18 16:15:28.565654
++DBCC SHRINKDATABASE (0)
