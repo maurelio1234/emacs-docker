@@ -176,6 +176,9 @@ RUN usermod -aG docker $USER
 USER $USER
 WORKDIR /home/marcos
 
+# Install nvm on my user
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
 # Configure git
 RUN git config --global user.name "Marcos Almeida" && \
         git config --global user.email marcos.almeida@xcomponent.com && \
