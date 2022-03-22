@@ -72,7 +72,7 @@
          (user-login-name)
          "/.emacs.d/.cache/omnisharp/server/v1.34.5/run"))
   (omnisharp--install-server nil t))
-(use-package company-jedi)
+;; (use-package company-jedi)
 (use-package helm-company)
 (use-package phi-search)
 (use-package cc-cedict)

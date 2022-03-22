@@ -612,10 +612,11 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/pretty-quick ()
   "Prettifies current node project."
   (interactive)
-  (let* ((root (locate-dominating-file (buffer-file-name nil) "package.json"))
-         (cmd (concat "cd " root " && npx pretty-quick")))
-    (save-window-excursion
-      (shell-command cmd))))
+  ;; (let* ((root (locate-dominating-file (buffer-file-name nil) "package.json"))
+  ;;        (cmd (concat "cd " root " && npx pretty-quick")))
+  ;;   (save-window-excursion
+  ;;     (shell-command cmd)))
+  )
 
 (defun me/nunit-find-test-dll ()
   "Find the generated test DLL."
@@ -1226,8 +1227,9 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
 (defun me/tide-after-save ()
   "Auto format for tide."
   (interactive)
-  (if (string-suffix-p ".tsx" (buffer-file-name))
-      (me/pretty-quick)))
+  ;; (if (string-suffix-p ".tsx" (buffer-file-name))
+  ;;     (me/pretty-quick))
+  )
 
 (use-package tide
   :bind (:map tide-mode-map
@@ -1463,12 +1465,12 @@ For more information: https://stackoverflow.com/questions/24725778/how-to-rebuil
   (company-idle-delay 0.1)
   :config
   (global-company-mode 1)
-  (use-package company-jedi
-    :mode
-    ("\\.py\\'" . python-mode)
-    ;; :config
-    ;; (add-to-list 'company-backends 'company-omnisharp)
-    )
+  ;; (use-package company-jedi
+  ;;   :mode
+  ;;   ("\\.py\\'" . python-mode)
+  ;;   ;; :config
+  ;;   ;; (add-to-list 'company-backends 'company-omnisharp)
+  ;;   )
   (use-package company-box
     :diminish ""
     :disabled t
