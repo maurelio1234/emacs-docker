@@ -67,6 +67,12 @@
   (interactive)
   (with-current-buffer (find-file-noselect "/home/marcos/.emacs.d/straight/repos/kubernetes-el/kubernetes-process.el")
     (eval-buffer))
+  (with-current-buffer (find-file-noselect "/home/marcos/.emacs.d/straight/repos/kubernetes-el/kubernetes-overview.el")
+    (eval-buffer))
+  (with-current-buffer (find-file-noselect "/home/marcos/.emacs.d/straight/repos/kubernetes-el/kubernetes-utils.el")
+    (eval-buffer))
+  (with-current-buffer (find-file-noselect "/home/marcos/.emacs.d/straight/repos/kubernetes-el/kubernetes-core.el")
+    (eval-buffer))
   (kubernetes-overview))
 
 (defun me/vterm-shell-command (path command buffer-name)
